@@ -1,0 +1,25 @@
+﻿@model List<MvcLogin.Models.UrunModel>
+
+
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "MyForm2" }))
+{
+    <p>Merhaba,</p>
+    <p>@Model[0].StartDate.ToShortDateString() ve @Model[0].EndDate.Date.ToShortDateString() tarihleri arasında</p>
+    <p>Haftalık kullanım limitlerimiz aşağıdaki gibidir;</p>
+
+    foreach (var item in Model)
+    {
+        if (item.Selected == true)
+        {
+            <p>@item.UrunAdi : @item.UretimMiktari @item.UrunTipiString</p>
+        }
+    }
+
+
+    <p>İyi çalışmalar.</p>
+}
+
+
+
+

@@ -1,0 +1,19 @@
+﻿@model MvcLogin.Models.HomepageModel
+
+@{
+    int index = 0;
+    foreach (var item in Model.kullaniciYorum.Take(5))
+    {
+        <div class="panel panel-info">
+            <div class="panel-heading" style="text-align:right; height:40px;">
+                <p>
+                    <span style="float:left;">@item.Kullanıcılar.KullanıcıAdı</span>
+                    <span style="float:right;">@item.Tarih.ToString("MM/dd/yyyy H:mm")</span>
+                </p>
+            </div>
+            <div class="panel-body">@Html.DisplayFor(x => x.kullaniciYorum[index].KullaniciYorumu)</div>
+        </div>
+        index++;
+    }
+
+}

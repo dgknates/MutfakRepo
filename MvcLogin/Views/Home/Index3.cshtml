@@ -1,0 +1,57 @@
+﻿@model IEnumerable<MvcLogin.Models.Kullanıcılar>
+@{
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+@{
+    ViewBag.Title = "Index3";
+}
+
+
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Isim)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Soyisim)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.GuncelBorc)
+            </th>
+
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            if (item.GrupId == 3)
+            {
+
+            }
+            else
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Isim)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Soyisim)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.GuncelBorc)
+                    </td>
+
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { kisiid = item.ObjectId }) |
+                        @Html.ActionLink("Delete", "Delete", new { kisiid = item.ObjectId })
+                    </td>
+                </tr>
+            }
+
+        }
+
+    </table>
+
+

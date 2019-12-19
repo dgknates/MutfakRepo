@@ -1,0 +1,69 @@
+﻿@model MvcLogin.Models.Kullanıcılar
+@{
+    ViewBag.Title = "Index";
+}
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<style>
+    #login-div {
+        /*margin:100px;*/
+        position: absolute;
+        left: 40%;
+        right: 40%;
+        border: 1px solid #ccc;
+        padding: 10px 10px;
+        text-align: center;
+    }
+</style>
+
+<title>Login Page</title>
+
+<div id="login-div">
+    <div class="col-md-12 ">
+        @using (Html.BeginForm("Authorize", "Login", FormMethod.Post))
+        {
+            <table>
+                <tr>
+                    <td></td>
+                    <td style="text-decoration:underline">Login</td>
+
+                </tr>
+                <tr>
+                    <td>
+                        @Html.LabelFor(model => model.KullanıcıAdı)
+                    </td>
+                    <td>
+                        @Html.EditorFor(model => model.KullanıcıAdı)
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        @Html.ValidationMessageFor(x => x.KullanıcıAdı)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.LabelFor(x => x.Parola)
+                    </td>
+                    <td>
+                        @Html.EditorFor(x => x.Parola)
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        @Html.ValidationMessageFor(x => x.Parola)
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        <input type="submit" name="name" value="Login" />
+                        <input type="reset" name="name" value="Clear" />
+                    </td>
+                </tr>
+            </table>
+
+        }
+    </div>
+</div>

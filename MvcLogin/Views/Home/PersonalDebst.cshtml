@@ -1,0 +1,90 @@
+﻿@model MvcLogin.Models.PersonalDebtsModel
+
+@{
+    ViewBag.Title = "PersonalDebst";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#SecilenAy').change(function () {
+            var secilenAy = $('#SecilenAy').val();
+
+            if (secilenAy != 0) {
+                console.log(secilenAy);
+
+                var divProductList = $('#divProductList');
+                $.ajax({
+                    type: 'GET',
+                    cache: false,
+                    /*
+                        - contentType is the type of data you're sending, so application/json; charset=utf-8 is a common one, as is application/x-www-form-urlencoded; charset=UTF-8, which is the default.
+                        - dataType is what you're expecting back from the server: json, html, text, etc. jQuery will use this to figure out how to populate the success function's parameter.
+                     */
+                    dataType: 'html',
+                    contentType: 'application/json; charset=utf-8',
+                    url: '/Home/GetPersonalDebst',
+                    data: { 'SecilenAy': secilenAy },
+                    success: function (data) {
+                        console.log("Data geldi !!!");
+
+                        //console.log(data);
+                        //console.log(data.length);
+                        /*for (var i = 0; i < data.length; i++) {
+                            var p = data[i];
+                            console.log(p.id + "---" + p.name);
+                        }*/
+
+
+
+                        //divTest.html('asdasd');
+                        //divTest.html(data);
+
+                        divProductList.html(data);
+                    },
+                    failure: function (response) {
+                        alert('Failed to retrieve products: ' + response.responseText);
+                    },
+                    error: function (response) {
+                        alert('Error: ' + response.responseText);
+                    }
+                });
+            } else {
+                console.log("Boş seçildi!");
+            }
+
+
+        });
+    });
+</script>
+
+
+
+
+
+@using (Html.BeginForm())
+{
+    <h2 style="padding-bottom:10px">Personal Debst</h2>
+
+    <div class="col-md-3">
+        <input id="selectall" name="selectall" type="checkbox"><label for='selectAll'>Select All</label>
+    </div>
+    <div class="col-md-3">
+        @Html.DropDownListFor(model => model.SecilenAy, (Model.Ay).Select((v, i) => new SelectListItem() { Text = v.Tarih, Value = (i + 1).ToString() }), "İşlem Yapılacak Ayı Seçiniz.", new { @class = "form-control copyTo2" })
+    </div>
+
+    <div id="divProductList">
+        @Html.Partial("_PartialBorclandirmaList", Model)
+    </div>
+
+
+    <div class="form-group">
+        <div class="col-md-offset-9 col-md-3">
+            <input type="submit" value="Güncelle" class="btn btn-success" />
+        </div>
+    </div>
+}
+
+
+

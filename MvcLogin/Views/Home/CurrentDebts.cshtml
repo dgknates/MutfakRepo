@@ -1,0 +1,88 @@
+﻿@model MvcLogin.Models.PersonalDebtsModel
+@{
+    ViewBag.Title = "CurrentDebts";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#myTable').DataTable();
+    });
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#SecilenAy').change(function () {
+            var secilenAy = $('#SecilenAy').val();
+
+            if (secilenAy != 0) {
+                console.log(secilenAy);
+
+                var divCurrentDebts = $('#divCurrentDebts');
+                $.ajax({
+                    type: 'GET',
+                    cache: false,
+                    /*
+                        - contentType is the type of data you're sending, so application/json; charset=utf-8 is a common one, as is application/x-www-form-urlencoded; charset=UTF-8, which is the default.
+                        - dataType is what you're expecting back from the server: json, html, text, etc. jQuery will use this to figure out how to populate the success function's parameter.
+                     */
+                    dataType: 'html',
+                    contentType: 'application/json; charset=utf-8',
+                    url: '/Home/GetCurrentDebts',
+                    data: { 'SecilenAy': secilenAy },
+                    success: function (data) {
+                        console.log("Data geldi !!!");
+
+                        //console.log(data);
+                        //console.log(data.length);
+                        /*for (var i = 0; i < data.length; i++) {
+                            var p = data[i];
+                            console.log(p.id + "---" + p.name);
+                        }*/
+
+
+
+                        //divTest.html('asdasd');
+                        //divTest.html(data);
+
+                        divCurrentDebts.html(data);
+                    },
+                    failure: function (response) {
+                        alert('Failed to retrieve products: ' + response.responseText);
+                    },
+                    error: function (response) {
+                        alert('Error: ' + response.responseText);
+                    }
+                });
+            } else {
+                console.log("Boş seçildi!");
+            }
+
+
+        });
+    });
+</script>
+
+
+@using (Html.BeginForm())
+{
+    <style>
+        .navbar-fixed-left + .container {
+            padding-top: 25px;
+        }
+    </style>
+    <div class="col-md-4 col-md-offset-8" style="margin-bottom:50px; ">
+        @Html.DropDownListFor(model => model.SecilenAy, (Model.Ay).Select((v, i) => new SelectListItem() { Text = v.Tarih, Value = (i + 1).ToString() }), "Borç Dönemini Seçiniz.", new { @class = "form-control copyTo2" })
+    </div>
+
+    <div id="divCurrentDebts">
+        @Html.Partial("_PartialCurrentDebts", Model)
+    </div>
+
+
+
+
+}

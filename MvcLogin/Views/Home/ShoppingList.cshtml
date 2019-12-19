@@ -1,0 +1,153 @@
+﻿@model IEnumerable<MvcLogin.Models.Alisveris>
+
+@{
+    ViewBag.Title = "ShoppingList";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+<link href="~/Content/LightBox.css" rel="stylesheet" />
+<h2>ShoppingList</h2>
+<style>
+    .close {
+        color: white !important;
+        font-size: xx-large !important;
+        opacity: 0.8 !important;
+        width: 100px;
+        top: 30px;
+    }
+
+    div.modal-content {
+        /*overflow:scroll !important;*/
+        background-color: transparent;
+        text-align: center;
+        /*overflow-y:scroll !important;*/
+        background-size: contain;
+        transform: scale(0.8);
+        margin-top: -150px;
+    }
+
+    .table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
+        vertical-align: middle !important;
+    }
+</style>
+
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    .zoom {
+        transition: transform .2s;
+        width: 200px;
+        height: 200px;
+        margin: 0 auto;
+    }
+
+        .zoom:hover {
+            -ms-transform: scale(2.0); /* IE 9 */
+            -webkit-transform: scale(2.0); /* Safari 3-8 */
+            transform: scale(2.0);
+        }
+</style>
+
+<script>
+    function openModal() {
+        document.getElementById("myModal").style.display = "block";
+    }
+
+    function closeModal() {
+        document.getElementById("myModal").style.display = "none";
+    }
+
+    var slideIndex = 1;
+    showSlides(slideIndex);
+
+    function plusSlides(n) {
+        showSlides(slideIndex += n);
+    }
+
+    function currentSlide(n) {
+        showSlides(slideIndex = n);
+    }
+
+    function showSlides(n) {
+        var i;
+        var slides = document.getElementsByClassName("mySlides");
+        var dots = document.getElementsByClassName("demo");
+        var captionText = document.getElementById("caption");
+        if (n > slides.length) { slideIndex = 1 }
+        if (n < 1) { slideIndex = slides.length }
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+        for (i = 0; i < dots.length; i++) {
+            dots[i].className = dots[i].className.replace(" active", "");
+        }
+        slides[slideIndex - 1].style.display = "block";
+        dots[slideIndex - 1].className += " active";
+        captionText.innerHTML = dots[slideIndex - 1].alt;
+    }
+</script>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.MarketAdi)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AlisverisTarihi)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FisTutari)
+        </th>
+        <th style="padding-left:90px;">
+            @Html.DisplayName("Fiş Fotoğrafı") 
+        </th>
+        <th></th>
+    </tr>
+    @{
+        int index = 1;
+    }
+
+    @foreach (var item in Model)
+    {
+
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.MarketAdi)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AlisverisTarihi.Value)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FisTutari)
+            </td>
+            <td>
+                @{
+                    string path = Server.MapPath("~/Uploads/" + item.ObjectId.ToString() + ".jpg");
+                    string path2 = "~/Uploads/" + item.ObjectId.ToString() + ".jpg";
+                }
+
+                @*<img src="@path" style="height:200px;width:200px;" />*@
+                <div class="zoom">
+                    <img src="@Url.Content(path2)" alt="IMAGES" style="height:200px; width:200px;" onclick="openModal();currentSlide(@index)" class="hover-shadow cursor" />
+                </div>
+            </td>
+        </tr>
+        index++;
+    }
+</table>
+
+<div id="myModal" class="modal">
+    <span class="close cursor" onclick="closeModal()">&times;</span>
+    <div class="modal-content">
+
+        @foreach (var item in Model)
+        {
+            string path2 = "~/Uploads/" + item.ObjectId.ToString() + ".jpg";
+            <div class="mySlides ">
+
+                <img src="@Url.Content(path2)" alt="IMAGES" @*style="width:500px; height:800px;"*@ />
+            </div>
+        }
+    </div>
+</div>

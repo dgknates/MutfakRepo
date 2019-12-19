@@ -1,0 +1,177 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <link href="~/Content/Site.css" rel="stylesheet" />
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <link href="~/Content/StyleSheet1.css" rel="stylesheet" />
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/Content/font-awesome.css" rel="stylesheet" />
+    <link href="~/Content/all.css" rel="stylesheet" />
+   
+
+
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+
+    <link href="~/Content/bootstrap-datepicker.css" rel="stylesheet" />
+    <script src="~/Scripts/bootstrap-datepicker.js"></script>
+
+
+    <style>
+        .modal {
+            overflow: scroll !important;
+        }
+
+        .close {
+            position: fixed !important;
+        }
+
+        shopping {
+            padding: 50px;
+        }
+
+        a.asdf {
+            margin-left: 900px !important;
+        }
+
+        .asd {
+            margin-left: -140px !important;
+            font-size: x-large !important;
+        }
+
+        .alisveris {
+            margin-right: -130px;
+        }
+
+        .navbar-nav > li > a {
+            width: 195px;
+        }
+
+        .navbar-fixed-left {
+            width: 205px !important;
+        }
+
+        .navbar-inverse .navbar-nav > .active > a, .navbar-inverse .navbar-nav > .active > a:focus, .navbar-inverse .navbar-nav > .active > a:hover {
+            background-color: red !important;
+        }
+
+        .navbar-nav li > a {
+            text-transform: capitalize;
+            color: #333;
+            transition: background-color .2s, color .2s;
+            padding-bottom: 60px !important;
+        }
+
+            .navbar-nav li > a:hover {
+                background-color: red !important;
+                color: #fff;
+            }
+
+            .navbar-nav li > a:focus {
+                background-color: red !important;
+                color: #fff;
+            }
+
+        .navbar-nav li a > i {
+            vertical-align: middle;
+            padding-bottom: 20px;
+        }
+
+        .navbar-nav li.active > a {
+            background-color: #333;
+            color: #fff;
+        }
+    </style>
+    @*<script>
+            $('.navbar-nav a').on('click', function () {
+                $('#.navbar-nav').find('li.active').removeClass('active');
+                $(this).parent('li').addClass('active');
+            });
+        </script>*@
+
+    @*<script>
+            $(".nav a").on("click", function () {
+                $(".nav").find(".active").removeClass("active");
+                $(this).parent().addClass("active");
+            });
+        </script>*@
+
+    <script>
+        $(document).ready(function () {
+            $('li.active').removeClass('active');
+            $('a[href="' + location.pathname + '"]').closest('li').addClass('active');
+        });
+    </script>
+
+
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+
+                @Html.ActionLink("Stok Kontrol", "Homepage", "Home", new { area = "" }, new { @class = "navbar-brand asd" })
+              
+                @Html.ActionLink(Session["username"].ToString() + "/Logout", "Logout", "Home", new { area = "" }, new { @class = " fas fa-sign-out-alt navbar-brand asdf"})
+
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <nav class="navbar navbar-inverse navbar-fixed-left">
+        <div class="container-fluid">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav">
+
+                    @*<li><i class="fas fa-box-open navbar-brand"></i>@Html.ActionLink("Stok Durumu", "Index3", "Home", new { area = "" }, new { @class = "navbar-brand" })</li>
+        <li><i class="fas fa-shopping-cart navbar-brand"></i>@Html.ActionLink("Alışveriş", "AddUser", "Home", new { area = "" }, new { @class = "navbar-brand alisveris" })</li>
+        <li><i class="fas fa-lira-sign navbar-brand"></i>@Html.ActionLink("Güncel Borçlar", "Index3", "Home", new { area = "" }, new { @class = "navbar-brand" })</li>
+        <li><i class="fas fa-wallet navbar-brand"></i>@Html.ActionLink("Borçlandırma", "AddUser", "Home", new { area = "" }, new { @class = "navbar-brand" })</li>
+
+        <li><i class="fas fa-user-edit navbar-brand"></i>@Html.ActionLink("Kişi Ekleme", "AddUser", "Home", new { area = "" }, new { @class = "navbar-brand" })</li>*@
+
+                    <li><a href="@Url.Action("CurrentDebts", "Home")" class="navbar-brand"><i class="fas fa-lira-sign navbar-brand"> Güncel Borçlar</i></a></li>
+                    <li class="active"><a href="@Url.Action("Products", "Home")" class="navbar-brand "><i class="fas fa-box-open navbar-brand"> Stok Durumu</i></a></li>
+                    <li><a href="@Url.Action("Shopping", "Home")" class="navbar-brand" style="padding-right:55px;"><i class="fas fa-shopping-cart navbar-brand"> Alışveriş</i></a></li>
+                    <li><a href="@Url.Action("PersonalDebst", "Home")" class="navbar-brand"><i class="fas fa-wallet navbar-brand"> Borçlandırma</i></a></li>
+                    <li><a href="@Url.Action("ShoppingList", "Home")" class="navbar-brand"><i class="fas fa-clipboard-list navbar-brand"> Alışveriş Listesi</i></a></li>
+                    <li><a href="@Url.Action("Announcement", "Home")" class="navbar-brand"><i class="fas fa-bullhorn navbar-brand"> Duyuru Ekle</i></a></li>
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+
+
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+
+
+        </footer>
+    </div>
+
+
+
+
+    <link href="~/Content/StyleSheet1.css" rel="stylesheet" />
+
+</body>
+</html>

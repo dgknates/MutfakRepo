@@ -1,0 +1,184 @@
+﻿@model List<MvcLogin.Models.UrunModel>
+
+@{
+    ViewBag.Title = "Products";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+
+
+
+
+@using (Html.BeginForm())
+{
+    <h2 style="padding-bottom:10px">Products</h2>
+
+
+
+    <script>
+        function myFunction(val) {
+            var inputs = document.querySelectorAll('.copyTo')
+            inputs.forEach(function (input) {
+                input.value = val
+
+            });
+        }
+
+    </script>
+
+    @*<script>
+        $(document).ready(function () {
+            $('#myTable').DataTable();
+        });
+    </script>*@
+
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#selectall').click(function (event) {  //on click
+                if (this.checked) { // check select status
+                    $(":checkbox").attr("checked", true);
+                } else {
+                    $(":checkbox").attr("checked", false);
+                }
+            });
+
+        });
+    </script>
+
+
+
+    <div class="col-md-3">
+        <input id="selectall" name="selectall" type="checkbox"><label for='selectAll'>Select All</label>
+    </div>
+    <div class="col-md-offset-7">
+        <input type="text" name="txt" value="" onkeyup="myFunction(this.value)" class="form-control" placeholder="Copy To All">
+
+    </div>
+    <br />
+
+    <table id="myTable" class="table">
+        <tr>
+            <td>
+            </td>
+            <td>
+            </td>
+            <th>
+                @Html.DisplayNameFor(model => model[0].UrunAdi)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model[0].StokMiktari)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].UrunTipi)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].DolapAdi)
+            </th>
+            <th></th>
+        </tr>
+        @{ int index = 0; }
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.HiddenFor(modelItem => Model[index].ObjectId)
+                </td>
+                <td>
+                    @Html.CheckBoxFor(modelItem => Model[index].Selected, false)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UrunAdi)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.StokMiktari)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UrunTipiString)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.DolapAdi)
+                </td>
+               
+
+                <td>
+                    @Html.TextBoxFor(modelItem => Model[index].UretimMiktari, new { @class = "form-control copyTo" })
+                </td>
+
+
+            </tr>
+
+            index++;
+        }
+
+
+
+
+    </table>
+
+    <div class="form-group">
+        <div class="col-md-offset-9 col-md-3">
+            <input type="submit" value="Güncelle" class="btn btn-success" />
+        </div>
+    </div>
+
+
+
+
+}
+
+
+<button type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#AddProduct">
+    Ürün Ekle
+</button>
+
+<div class="modal fade" id="AddProduct" tabindex="-1" role="dialog" aria-labelledby="">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" style="font-size:xx-large; margin-left:500px;">×</span></button>
+                <h4 class="modal-title" id="myModalLabel">Ürün Ekle</h4>
+            </div>
+            <form method="post" action="/Home/AddProduct" style="margin-left:50px; margin-top:20px;">
+
+                <div class="form-group">
+                    <label>
+                        Ürün Adı
+                    </label>
+                    <input type="text" name="urunAdi" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label>Stok Miktarı</label>
+                    <input type="number" name="stokMiktari" class="form-control" />
+                </div>
+                @Html.DropDownList("Dolaplar",
+                 new List<SelectListItem> {
+                     new SelectListItem {
+                        Text="Dolap1",
+                        Value="1",
+                        // Selected = true, seçili olarak gelsin
+                        // Disabled = true  disable olarak gelsin istersek kullanıyoruz
+                     },
+                     new SelectListItem {
+                        Text="Dolap2",
+                        Value="2",
+
+                     },
+
+                 }, "Dolap Seçiniz", new { @class = "form-control" })
+
+                <br />
+                    @Html.DropDownListFor(model => model[0].UrunTipi, (Model[0].UrunTipi).Select((v, i) => new SelectListItem() { Text = v.UrunTipi1, Value = (i + 1).ToString() }), "Ürün tipi seçiniz.", new { @class = "form-control " })
+                
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Kapat</button>
+                    <button type="submit" class="btn btn-primary">Ürün Ekle</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

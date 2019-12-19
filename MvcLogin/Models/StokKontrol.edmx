@@ -1,0 +1,1243 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="db_StokKontrolModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AdminMutfakYorum">
+          <Key>
+            <PropertyRef Name="ObjectId" />
+          </Key>
+          <Property Name="ObjectId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="KisiId" Type="int" Nullable="false" />
+          <Property Name="Tarih" Type="datetime" Nullable="false" />
+          <Property Name="AdminYorumu" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="Deleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Alisveris">
+          <Key>
+            <PropertyRef Name="ObjectId" />
+          </Key>
+          <Property Name="ObjectId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MarketAdi" Type="nvarchar" MaxLength="50" />
+          <Property Name="AlisverisTarihi" Type="datetime" />
+          <Property Name="FisTutari" Type="int" />
+          <Property Name="FisPath" Type="nvarchar" MaxLength="50" />
+          <Property Name="FisVisibleName" Type="nvarchar" MaxLength="50" />
+          <Property Name="FisName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Deleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Aylar">
+          <Key>
+            <PropertyRef Name="ObjectId" />
+          </Key>
+          <Property Name="ObjectId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Tarih" Type="nvarchar" MaxLength="50" />
+          <Property Name="Deleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Borclandirma">
+          <Key>
+            <PropertyRef Name="ObjectId" />
+          </Key>
+          <Property Name="ObjectId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="KisiId" Type="int" Nullable="false" />
+          <Property Name="BorlandirmaTarihiId" Type="int" Nullable="false" />
+          <Property Name="BorcMiktari" Type="int" Nullable="false" />
+          <Property Name="Deleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Dolap">
+          <Key>
+            <PropertyRef Name="ObjectId" />
+          </Key>
+          <Property Name="ObjectId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DolapAdi" Type="nvarchar" MaxLength="50" />
+          <Property Name="Deleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Duyuru">
+          <Key>
+            <PropertyRef Name="ObjectId" />
+          </Key>
+          <Property Name="ObjectId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PersonId" Type="int" Nullable="false" />
+          <Property Name="StartDate" Type="datetime" />
+          <Property Name="EndDate" Type="datetime" />
+          <Property Name="ExtraNote" Type="nvarchar" MaxLength="250" />
+          <Property Name="Deleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DuyuruBilgi">
+          <Key>
+            <PropertyRef Name="ObjectId" />
+          </Key>
+          <Property Name="ObjectId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UrunId" Type="int" Nullable="false" />
+          <Property Name="Adet" Type="int" />
+          <Property Name="DuyuruId" Type="int" Nullable="false" />
+          <Property Name="Deleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Grup">
+          <Key>
+            <PropertyRef Name="ObjectId" />
+          </Key>
+          <Property Name="ObjectId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GrupAdı" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Deleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Kullanıcılar">
+          <Key>
+            <PropertyRef Name="ObjectId" />
+          </Key>
+          <Property Name="ObjectId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Isim" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Soyisim" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="KullanıcıAdı" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Parola" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="GrupId" Type="int" Nullable="false" />
+          <Property Name="GuncelBorc" Type="int" />
+          <Property Name="Deleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="KullaniciYorum">
+          <Key>
+            <PropertyRef Name="ObjectId" />
+          </Key>
+          <Property Name="ObjectId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="KisiId" Type="int" Nullable="false" />
+          <Property Name="Tarih" Type="datetime" Nullable="false" />
+          <Property Name="KullaniciYorumu" Type="nvarchar" MaxLength="250" />
+          <Property Name="Deleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Kullanim">
+          <Key>
+            <PropertyRef Name="ObjectId" />
+          </Key>
+          <Property Name="ObjectId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UrunId" Type="int" Nullable="false" />
+          <Property Name="ToplamKullanim" Type="int" />
+          <Property Name="Deleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="StokAlisveris">
+          <Key>
+            <PropertyRef Name="ObjectId" />
+          </Key>
+          <Property Name="ObjectId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MarketAdi" Type="nvarchar" MaxLength="50" />
+          <Property Name="AlisverisTarihi" Type="datetime" />
+          <Property Name="FisTutari" Type="int" />
+          <Property Name="FisPath" Type="nvarchar" MaxLength="50" />
+          <Property Name="FisVisibleName" Type="nvarchar" MaxLength="50" />
+          <Property Name="FisName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Deleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Urun">
+          <Key>
+            <PropertyRef Name="ObjectId" />
+          </Key>
+          <Property Name="ObjectId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DolapId" Type="int" Nullable="false" />
+          <Property Name="UrunAdi" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Fotograf" Type="image" />
+          <Property Name="StokMiktari" Type="int" />
+          <Property Name="Guncelleme" Type="int" />
+          <Property Name="UrunTipId" Type="int" />
+          <Property Name="Deleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UrunAlis">
+          <Key>
+            <PropertyRef Name="ObjectId" />
+          </Key>
+          <Property Name="ObjectId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UrunId" Type="int" Nullable="false" />
+          <Property Name="AlisId" Type="int" Nullable="false" />
+          <Property Name="AlisMiktari" Type="int" />
+          <Property Name="BirimFiyat" Type="int" />
+          <Property Name="Deleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UrunTipi">
+          <Key>
+            <PropertyRef Name="ObjectId" />
+          </Key>
+          <Property Name="ObjectId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UrunTipi" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Deleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'db_StokKontrol.dbo.w_GenelGorunum' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="w_GenelGorunum">
+          <Key>
+            <PropertyRef Name="UrunAdi" />
+            <PropertyRef Name="Deleted" />
+          </Key>
+          <Property Name="UrunAdi" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Fotograf" Type="image" />
+          <Property Name="StokMiktari" Type="int" />
+          <Property Name="DolapAdi" Type="nvarchar" MaxLength="50" />
+          <Property Name="ToplamKullanim" Type="int" />
+          <Property Name="BirimFiyat" Type="int" />
+          <Property Name="FisFoto" Type="image" />
+          <Property Name="Deleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'db_StokKontrol.dbo.w_UrunGenel' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="w_UrunGenel">
+          <Key>
+            <PropertyRef Name="UrunAdi" />
+            <PropertyRef Name="Deleted" />
+          </Key>
+          <Property Name="UrunAdi" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Fotograf" Type="image" />
+          <Property Name="StokMiktari" Type="int" />
+          <Property Name="DolapAdi" Type="nvarchar" MaxLength="50" />
+          <Property Name="ToplamKullanim" Type="int" />
+          <Property Name="Deleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_AdminMutfakYorum_Kullanıcılar">
+          <End Role="Kullanıcılar" Type="Self.Kullanıcılar" Multiplicity="1" />
+          <End Role="AdminMutfakYorum" Type="Self.AdminMutfakYorum" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kullanıcılar">
+              <PropertyRef Name="ObjectId" />
+            </Principal>
+            <Dependent Role="AdminMutfakYorum">
+              <PropertyRef Name="KisiId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Borclandirma_Aylar">
+          <End Role="Aylar" Type="Self.Aylar" Multiplicity="1" />
+          <End Role="Borclandirma" Type="Self.Borclandirma" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Aylar">
+              <PropertyRef Name="ObjectId" />
+            </Principal>
+            <Dependent Role="Borclandirma">
+              <PropertyRef Name="BorlandirmaTarihiId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Borclandirma_Kullanıcılar">
+          <End Role="Kullanıcılar" Type="Self.Kullanıcılar" Multiplicity="1" />
+          <End Role="Borclandirma" Type="Self.Borclandirma" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kullanıcılar">
+              <PropertyRef Name="ObjectId" />
+            </Principal>
+            <Dependent Role="Borclandirma">
+              <PropertyRef Name="KisiId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Duyuru_Kullanıcılar">
+          <End Role="Kullanıcılar" Type="Self.Kullanıcılar" Multiplicity="1" />
+          <End Role="Duyuru" Type="Self.Duyuru" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kullanıcılar">
+              <PropertyRef Name="ObjectId" />
+            </Principal>
+            <Dependent Role="Duyuru">
+              <PropertyRef Name="PersonId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DuyuruEdit_Duyuru">
+          <End Role="Duyuru" Type="Self.Duyuru" Multiplicity="1" />
+          <End Role="DuyuruBilgi" Type="Self.DuyuruBilgi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Duyuru">
+              <PropertyRef Name="ObjectId" />
+            </Principal>
+            <Dependent Role="DuyuruBilgi">
+              <PropertyRef Name="DuyuruId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DuyuruEdit_Urun">
+          <End Role="Urun" Type="Self.Urun" Multiplicity="1" />
+          <End Role="DuyuruBilgi" Type="Self.DuyuruBilgi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Urun">
+              <PropertyRef Name="ObjectId" />
+            </Principal>
+            <Dependent Role="DuyuruBilgi">
+              <PropertyRef Name="UrunId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Kullanıcılar_Grup">
+          <End Role="Grup" Type="Self.Grup" Multiplicity="1" />
+          <End Role="Kullanıcılar" Type="Self.Kullanıcılar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Grup">
+              <PropertyRef Name="ObjectId" />
+            </Principal>
+            <Dependent Role="Kullanıcılar">
+              <PropertyRef Name="GrupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_KullaniciYorum_Kullanıcılar">
+          <End Role="Kullanıcılar" Type="Self.Kullanıcılar" Multiplicity="1" />
+          <End Role="KullaniciYorum" Type="Self.KullaniciYorum" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kullanıcılar">
+              <PropertyRef Name="ObjectId" />
+            </Principal>
+            <Dependent Role="KullaniciYorum">
+              <PropertyRef Name="KisiId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Kullanim_Urun">
+          <End Role="Urun" Type="Self.Urun" Multiplicity="1" />
+          <End Role="Kullanim" Type="Self.Kullanim" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Urun">
+              <PropertyRef Name="ObjectId" />
+            </Principal>
+            <Dependent Role="Kullanim">
+              <PropertyRef Name="UrunId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Urun_Dolap">
+          <End Role="Dolap" Type="Self.Dolap" Multiplicity="1" />
+          <End Role="Urun" Type="Self.Urun" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dolap">
+              <PropertyRef Name="ObjectId" />
+            </Principal>
+            <Dependent Role="Urun">
+              <PropertyRef Name="DolapId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Urun_UrunTipi">
+          <End Role="UrunTipi" Type="Self.UrunTipi" Multiplicity="0..1" />
+          <End Role="Urun" Type="Self.Urun" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UrunTipi">
+              <PropertyRef Name="ObjectId" />
+            </Principal>
+            <Dependent Role="Urun">
+              <PropertyRef Name="UrunTipId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UrunAlis_Alis">
+          <End Role="Alisveris" Type="Self.Alisveris" Multiplicity="1" />
+          <End Role="UrunAlis" Type="Self.UrunAlis" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Alisveris">
+              <PropertyRef Name="ObjectId" />
+            </Principal>
+            <Dependent Role="UrunAlis">
+              <PropertyRef Name="AlisId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UrunAlis_Urun">
+          <End Role="Urun" Type="Self.Urun" Multiplicity="1" />
+          <End Role="UrunAlis" Type="Self.UrunAlis" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Urun">
+              <PropertyRef Name="ObjectId" />
+            </Principal>
+            <Dependent Role="UrunAlis">
+              <PropertyRef Name="UrunId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+        <Function Name="prc_UrunEkle" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Dolap" Type="int" Mode="In" />
+          <Parameter Name="Urunİsmi" Type="nvarchar" Mode="In" />
+          <Parameter Name="UrunDurumu" Type="bit" Mode="In" />
+        </Function>
+        <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <EntityContainer Name="db_StokKontrolModelStoreContainer">
+          <EntitySet Name="AdminMutfakYorum" EntityType="Self.AdminMutfakYorum" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Alisveris" EntityType="Self.Alisveris" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Aylar" EntityType="Self.Aylar" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Borclandirma" EntityType="Self.Borclandirma" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Dolap" EntityType="Self.Dolap" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Duyuru" EntityType="Self.Duyuru" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DuyuruBilgi" EntityType="Self.DuyuruBilgi" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Grup" EntityType="Self.Grup" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Kullanıcılar" EntityType="Self.Kullanıcılar" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="KullaniciYorum" EntityType="Self.KullaniciYorum" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Kullanim" EntityType="Self.Kullanim" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StokAlisveris" EntityType="Self.StokAlisveris" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Urun" EntityType="Self.Urun" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UrunAlis" EntityType="Self.UrunAlis" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UrunTipi" EntityType="Self.UrunTipi" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="w_GenelGorunum" EntityType="Self.w_GenelGorunum" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [w_GenelGorunum].[UrunAdi] AS [UrunAdi], 
+    [w_GenelGorunum].[Fotograf] AS [Fotograf], 
+    [w_GenelGorunum].[StokMiktari] AS [StokMiktari], 
+    [w_GenelGorunum].[DolapAdi] AS [DolapAdi], 
+    [w_GenelGorunum].[ToplamKullanim] AS [ToplamKullanim], 
+    [w_GenelGorunum].[BirimFiyat] AS [BirimFiyat], 
+    [w_GenelGorunum].[FisFoto] AS [FisFoto], 
+    [w_GenelGorunum].[Deleted] AS [Deleted]
+    FROM [dbo].[w_GenelGorunum] AS [w_GenelGorunum]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="w_UrunGenel" EntityType="Self.w_UrunGenel" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [w_UrunGenel].[UrunAdi] AS [UrunAdi], 
+    [w_UrunGenel].[Fotograf] AS [Fotograf], 
+    [w_UrunGenel].[StokMiktari] AS [StokMiktari], 
+    [w_UrunGenel].[DolapAdi] AS [DolapAdi], 
+    [w_UrunGenel].[ToplamKullanim] AS [ToplamKullanim], 
+    [w_UrunGenel].[Deleted] AS [Deleted]
+    FROM [dbo].[w_UrunGenel] AS [w_UrunGenel]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_AdminMutfakYorum_Kullanıcılar" Association="Self.FK_AdminMutfakYorum_Kullanıcılar">
+            <End Role="Kullanıcılar" EntitySet="Kullanıcılar" />
+            <End Role="AdminMutfakYorum" EntitySet="AdminMutfakYorum" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Borclandirma_Aylar" Association="Self.FK_Borclandirma_Aylar">
+            <End Role="Aylar" EntitySet="Aylar" />
+            <End Role="Borclandirma" EntitySet="Borclandirma" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Borclandirma_Kullanıcılar" Association="Self.FK_Borclandirma_Kullanıcılar">
+            <End Role="Kullanıcılar" EntitySet="Kullanıcılar" />
+            <End Role="Borclandirma" EntitySet="Borclandirma" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Duyuru_Kullanıcılar" Association="Self.FK_Duyuru_Kullanıcılar">
+            <End Role="Kullanıcılar" EntitySet="Kullanıcılar" />
+            <End Role="Duyuru" EntitySet="Duyuru" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DuyuruEdit_Duyuru" Association="Self.FK_DuyuruEdit_Duyuru">
+            <End Role="Duyuru" EntitySet="Duyuru" />
+            <End Role="DuyuruBilgi" EntitySet="DuyuruBilgi" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DuyuruEdit_Urun" Association="Self.FK_DuyuruEdit_Urun">
+            <End Role="Urun" EntitySet="Urun" />
+            <End Role="DuyuruBilgi" EntitySet="DuyuruBilgi" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Kullanıcılar_Grup" Association="Self.FK_Kullanıcılar_Grup">
+            <End Role="Grup" EntitySet="Grup" />
+            <End Role="Kullanıcılar" EntitySet="Kullanıcılar" />
+          </AssociationSet>
+          <AssociationSet Name="FK_KullaniciYorum_Kullanıcılar" Association="Self.FK_KullaniciYorum_Kullanıcılar">
+            <End Role="Kullanıcılar" EntitySet="Kullanıcılar" />
+            <End Role="KullaniciYorum" EntitySet="KullaniciYorum" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Kullanim_Urun" Association="Self.FK_Kullanim_Urun">
+            <End Role="Urun" EntitySet="Urun" />
+            <End Role="Kullanim" EntitySet="Kullanim" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Urun_Dolap" Association="Self.FK_Urun_Dolap">
+            <End Role="Dolap" EntitySet="Dolap" />
+            <End Role="Urun" EntitySet="Urun" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Urun_UrunTipi" Association="Self.FK_Urun_UrunTipi">
+            <End Role="UrunTipi" EntitySet="UrunTipi" />
+            <End Role="Urun" EntitySet="Urun" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UrunAlis_Alis" Association="Self.FK_UrunAlis_Alis">
+            <End Role="Alisveris" EntitySet="Alisveris" />
+            <End Role="UrunAlis" EntitySet="UrunAlis" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UrunAlis_Urun" Association="Self.FK_UrunAlis_Urun">
+            <End Role="Urun" EntitySet="Urun" />
+            <End Role="UrunAlis" EntitySet="UrunAlis" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="db_StokKontrolModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="db_StokKontrolEntities" annotation:LazyLoadingEnabled="true">
+          <FunctionImport Name="prc_UrunEkle">
+            <Parameter Name="Dolap" Mode="In" Type="Int32" />
+            <Parameter Name="Urunİsmi" Mode="In" Type="String" />
+            <Parameter Name="UrunDurumu" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="sp_alterdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_creatediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_dropdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(db_StokKontrolModel.sp_helpdiagramdefinition_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(db_StokKontrolModel.sp_helpdiagrams_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_renamediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="new_diagramname" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_upgraddiagrams" />
+          <EntitySet Name="AdminMutfakYorum" EntityType="db_StokKontrolModel.AdminMutfakYorum" />
+          <EntitySet Name="Alisveris" EntityType="db_StokKontrolModel.Alisveris" />
+          <EntitySet Name="Aylar" EntityType="db_StokKontrolModel.Aylar" />
+          <EntitySet Name="Borclandirma" EntityType="db_StokKontrolModel.Borclandirma" />
+          <EntitySet Name="Dolap" EntityType="db_StokKontrolModel.Dolap" />
+          <EntitySet Name="Duyuru" EntityType="db_StokKontrolModel.Duyuru" />
+          <EntitySet Name="DuyuruBilgi" EntityType="db_StokKontrolModel.DuyuruBilgi" />
+          <EntitySet Name="Grup" EntityType="db_StokKontrolModel.Grup" />
+          <EntitySet Name="Kullanıcılar" EntityType="db_StokKontrolModel.Kullanıcılar" />
+          <EntitySet Name="KullaniciYorum" EntityType="db_StokKontrolModel.KullaniciYorum" />
+          <EntitySet Name="Kullanim" EntityType="db_StokKontrolModel.Kullanim" />
+          <EntitySet Name="StokAlisveris" EntityType="db_StokKontrolModel.StokAlisveris" />
+          <EntitySet Name="sysdiagrams" EntityType="db_StokKontrolModel.sysdiagrams" />
+          <EntitySet Name="Urun" EntityType="db_StokKontrolModel.Urun" />
+          <EntitySet Name="UrunAlis" EntityType="db_StokKontrolModel.UrunAlis" />
+          <EntitySet Name="UrunTipi" EntityType="db_StokKontrolModel.UrunTipi" />
+          <EntitySet Name="w_GenelGorunum" EntityType="db_StokKontrolModel.w_GenelGorunum" />
+          <EntitySet Name="w_UrunGenel" EntityType="db_StokKontrolModel.w_UrunGenel" />
+          <AssociationSet Name="FK_AdminMutfakYorum_Kullanıcılar" Association="db_StokKontrolModel.FK_AdminMutfakYorum_Kullanıcılar">
+            <End Role="Kullanıcılar" EntitySet="Kullanıcılar" />
+            <End Role="AdminMutfakYorum" EntitySet="AdminMutfakYorum" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UrunAlis_Alis" Association="db_StokKontrolModel.FK_UrunAlis_Alis">
+            <End Role="Alisveris" EntitySet="Alisveris" />
+            <End Role="UrunAlis" EntitySet="UrunAlis" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Borclandirma_Aylar" Association="db_StokKontrolModel.FK_Borclandirma_Aylar">
+            <End Role="Aylar" EntitySet="Aylar" />
+            <End Role="Borclandirma" EntitySet="Borclandirma" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Borclandirma_Kullanıcılar" Association="db_StokKontrolModel.FK_Borclandirma_Kullanıcılar">
+            <End Role="Kullanıcılar" EntitySet="Kullanıcılar" />
+            <End Role="Borclandirma" EntitySet="Borclandirma" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Urun_Dolap" Association="db_StokKontrolModel.FK_Urun_Dolap">
+            <End Role="Dolap" EntitySet="Dolap" />
+            <End Role="Urun" EntitySet="Urun" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Duyuru_Kullanıcılar" Association="db_StokKontrolModel.FK_Duyuru_Kullanıcılar">
+            <End Role="Kullanıcılar" EntitySet="Kullanıcılar" />
+            <End Role="Duyuru" EntitySet="Duyuru" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DuyuruEdit_Duyuru" Association="db_StokKontrolModel.FK_DuyuruEdit_Duyuru">
+            <End Role="Duyuru" EntitySet="Duyuru" />
+            <End Role="DuyuruBilgi" EntitySet="DuyuruBilgi" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DuyuruEdit_Urun" Association="db_StokKontrolModel.FK_DuyuruEdit_Urun">
+            <End Role="Urun" EntitySet="Urun" />
+            <End Role="DuyuruBilgi" EntitySet="DuyuruBilgi" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Kullanıcılar_Grup" Association="db_StokKontrolModel.FK_Kullanıcılar_Grup">
+            <End Role="Grup" EntitySet="Grup" />
+            <End Role="Kullanıcılar" EntitySet="Kullanıcılar" />
+          </AssociationSet>
+          <AssociationSet Name="FK_KullaniciYorum_Kullanıcılar" Association="db_StokKontrolModel.FK_KullaniciYorum_Kullanıcılar">
+            <End Role="Kullanıcılar" EntitySet="Kullanıcılar" />
+            <End Role="KullaniciYorum" EntitySet="KullaniciYorum" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Kullanim_Urun" Association="db_StokKontrolModel.FK_Kullanim_Urun">
+            <End Role="Urun" EntitySet="Urun" />
+            <End Role="Kullanim" EntitySet="Kullanim" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Urun_UrunTipi" Association="db_StokKontrolModel.FK_Urun_UrunTipi">
+            <End Role="UrunTipi" EntitySet="UrunTipi" />
+            <End Role="Urun" EntitySet="Urun" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UrunAlis_Urun" Association="db_StokKontrolModel.FK_UrunAlis_Urun">
+            <End Role="Urun" EntitySet="Urun" />
+            <End Role="UrunAlis" EntitySet="UrunAlis" />
+          </AssociationSet>
+          </EntityContainer>
+        <ComplexType Name="sp_helpdiagramdefinition_Result">
+          <Property Type="Int32" Name="version" Nullable="true" />
+          <Property Type="Binary" Name="definition" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_helpdiagrams_Result">
+          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+          <Property Type="Int32" Name="OwnerID" Nullable="false" />
+        </ComplexType>
+        <EntityType Name="AdminMutfakYorum">
+          <Key>
+            <PropertyRef Name="ObjectId" />
+          </Key>
+          <Property Name="ObjectId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="KisiId" Type="Int32" Nullable="false" />
+          <Property Name="Tarih" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="AdminYorumu" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Deleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Kullanıcılar" Relationship="db_StokKontrolModel.FK_AdminMutfakYorum_Kullanıcılar" FromRole="AdminMutfakYorum" ToRole="Kullanıcılar" />
+        </EntityType>
+        <EntityType Name="Alisveris">
+          <Key>
+            <PropertyRef Name="ObjectId" />
+          </Key>
+          <Property Name="ObjectId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MarketAdi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AlisverisTarihi" Type="DateTime" Precision="3" />
+          <Property Name="FisTutari" Type="Int32" />
+          <Property Name="FisPath" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FisVisibleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FisName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Deleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="UrunAlis" Relationship="db_StokKontrolModel.FK_UrunAlis_Alis" FromRole="Alisveris" ToRole="UrunAlis" />
+        </EntityType>
+        <EntityType Name="Aylar">
+          <Key>
+            <PropertyRef Name="ObjectId" />
+          </Key>
+          <Property Name="ObjectId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Tarih" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Deleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Borclandirma" Relationship="db_StokKontrolModel.FK_Borclandirma_Aylar" FromRole="Aylar" ToRole="Borclandirma" />
+        </EntityType>
+        <EntityType Name="Borclandirma">
+          <Key>
+            <PropertyRef Name="ObjectId" />
+          </Key>
+          <Property Name="ObjectId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="KisiId" Type="Int32" Nullable="false" />
+          <Property Name="BorlandirmaTarihiId" Type="Int32" Nullable="false" />
+          <Property Name="BorcMiktari" Type="Int32" Nullable="false" />
+          <Property Name="Deleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Aylar" Relationship="db_StokKontrolModel.FK_Borclandirma_Aylar" FromRole="Borclandirma" ToRole="Aylar" />
+          <NavigationProperty Name="Kullanıcılar" Relationship="db_StokKontrolModel.FK_Borclandirma_Kullanıcılar" FromRole="Borclandirma" ToRole="Kullanıcılar" />
+        </EntityType>
+        <EntityType Name="Dolap">
+          <Key>
+            <PropertyRef Name="ObjectId" />
+          </Key>
+          <Property Name="ObjectId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DolapAdi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Deleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Urun" Relationship="db_StokKontrolModel.FK_Urun_Dolap" FromRole="Dolap" ToRole="Urun" />
+        </EntityType>
+        <EntityType Name="Duyuru">
+          <Key>
+            <PropertyRef Name="ObjectId" />
+          </Key>
+          <Property Name="ObjectId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PersonId" Type="Int32" Nullable="false" />
+          <Property Name="StartDate" Type="DateTime" Precision="3" />
+          <Property Name="EndDate" Type="DateTime" Precision="3" />
+          <Property Name="ExtraNote" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Deleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Kullanıcılar" Relationship="db_StokKontrolModel.FK_Duyuru_Kullanıcılar" FromRole="Duyuru" ToRole="Kullanıcılar" />
+          <NavigationProperty Name="DuyuruBilgi" Relationship="db_StokKontrolModel.FK_DuyuruEdit_Duyuru" FromRole="Duyuru" ToRole="DuyuruBilgi" />
+        </EntityType>
+        <EntityType Name="DuyuruBilgi">
+          <Key>
+            <PropertyRef Name="ObjectId" />
+          </Key>
+          <Property Name="ObjectId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UrunId" Type="Int32" Nullable="false" />
+          <Property Name="Adet" Type="Int32" />
+          <Property Name="DuyuruId" Type="Int32" Nullable="false" />
+          <Property Name="Deleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Duyuru" Relationship="db_StokKontrolModel.FK_DuyuruEdit_Duyuru" FromRole="DuyuruBilgi" ToRole="Duyuru" />
+          <NavigationProperty Name="Urun" Relationship="db_StokKontrolModel.FK_DuyuruEdit_Urun" FromRole="DuyuruBilgi" ToRole="Urun" />
+        </EntityType>
+        <EntityType Name="Grup">
+          <Key>
+            <PropertyRef Name="ObjectId" />
+          </Key>
+          <Property Name="ObjectId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GrupAdı" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Deleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Kullanıcılar" Relationship="db_StokKontrolModel.FK_Kullanıcılar_Grup" FromRole="Grup" ToRole="Kullanıcılar" />
+        </EntityType>
+        <EntityType Name="Kullanıcılar">
+          <Key>
+            <PropertyRef Name="ObjectId" />
+          </Key>
+          <Property Name="ObjectId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Isim" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Soyisim" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="KullanıcıAdı" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Parola" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="GrupId" Type="Int32" Nullable="false" />
+          <Property Name="GuncelBorc" Type="Int32" />
+          <Property Name="Deleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="AdminMutfakYorum" Relationship="db_StokKontrolModel.FK_AdminMutfakYorum_Kullanıcılar" FromRole="Kullanıcılar" ToRole="AdminMutfakYorum" />
+          <NavigationProperty Name="Borclandirma" Relationship="db_StokKontrolModel.FK_Borclandirma_Kullanıcılar" FromRole="Kullanıcılar" ToRole="Borclandirma" />
+          <NavigationProperty Name="Duyuru" Relationship="db_StokKontrolModel.FK_Duyuru_Kullanıcılar" FromRole="Kullanıcılar" ToRole="Duyuru" />
+          <NavigationProperty Name="Grup" Relationship="db_StokKontrolModel.FK_Kullanıcılar_Grup" FromRole="Kullanıcılar" ToRole="Grup" />
+          <NavigationProperty Name="KullaniciYorum" Relationship="db_StokKontrolModel.FK_KullaniciYorum_Kullanıcılar" FromRole="Kullanıcılar" ToRole="KullaniciYorum" />
+        </EntityType>
+        <EntityType Name="KullaniciYorum">
+          <Key>
+            <PropertyRef Name="ObjectId" />
+          </Key>
+          <Property Name="ObjectId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="KisiId" Type="Int32" Nullable="false" />
+          <Property Name="Tarih" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="KullaniciYorumu" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Deleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Kullanıcılar" Relationship="db_StokKontrolModel.FK_KullaniciYorum_Kullanıcılar" FromRole="KullaniciYorum" ToRole="Kullanıcılar" />
+        </EntityType>
+        <EntityType Name="Kullanim">
+          <Key>
+            <PropertyRef Name="ObjectId" />
+          </Key>
+          <Property Name="ObjectId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UrunId" Type="Int32" Nullable="false" />
+          <Property Name="ToplamKullanim" Type="Int32" />
+          <Property Name="Deleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Urun" Relationship="db_StokKontrolModel.FK_Kullanim_Urun" FromRole="Kullanim" ToRole="Urun" />
+        </EntityType>
+        <EntityType Name="StokAlisveris">
+          <Key>
+            <PropertyRef Name="ObjectId" />
+          </Key>
+          <Property Name="ObjectId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MarketAdi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AlisverisTarihi" Type="DateTime" Precision="3" />
+          <Property Name="FisTutari" Type="Int32" />
+          <Property Name="FisPath" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FisVisibleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FisName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Deleted" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Urun">
+          <Key>
+            <PropertyRef Name="ObjectId" />
+          </Key>
+          <Property Name="ObjectId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DolapId" Type="Int32" Nullable="false" />
+          <Property Name="UrunAdi" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Fotograf" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="StokMiktari" Type="Int32" />
+          <Property Name="Guncelleme" Type="Int32" />
+          <Property Name="UrunTipId" Type="Int32" />
+          <Property Name="Deleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Dolap" Relationship="db_StokKontrolModel.FK_Urun_Dolap" FromRole="Urun" ToRole="Dolap" />
+          <NavigationProperty Name="DuyuruBilgi" Relationship="db_StokKontrolModel.FK_DuyuruEdit_Urun" FromRole="Urun" ToRole="DuyuruBilgi" />
+          <NavigationProperty Name="Kullanim" Relationship="db_StokKontrolModel.FK_Kullanim_Urun" FromRole="Urun" ToRole="Kullanim" />
+          <NavigationProperty Name="UrunTipi" Relationship="db_StokKontrolModel.FK_Urun_UrunTipi" FromRole="Urun" ToRole="UrunTipi" />
+          <NavigationProperty Name="UrunAlis" Relationship="db_StokKontrolModel.FK_UrunAlis_Urun" FromRole="Urun" ToRole="UrunAlis" />
+        </EntityType>
+        <EntityType Name="UrunAlis">
+          <Key>
+            <PropertyRef Name="ObjectId" />
+          </Key>
+          <Property Name="ObjectId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UrunId" Type="Int32" Nullable="false" />
+          <Property Name="AlisId" Type="Int32" Nullable="false" />
+          <Property Name="AlisMiktari" Type="Int32" />
+          <Property Name="BirimFiyat" Type="Int32" />
+          <Property Name="Deleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Alisveris" Relationship="db_StokKontrolModel.FK_UrunAlis_Alis" FromRole="UrunAlis" ToRole="Alisveris" />
+          <NavigationProperty Name="Urun" Relationship="db_StokKontrolModel.FK_UrunAlis_Urun" FromRole="UrunAlis" ToRole="Urun" />
+        </EntityType>
+        <EntityType Name="UrunTipi">
+          <Key>
+            <PropertyRef Name="ObjectId" />
+          </Key>
+          <Property Name="ObjectId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UrunTipi1" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Deleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Urun" Relationship="db_StokKontrolModel.FK_Urun_UrunTipi" FromRole="UrunTipi" ToRole="Urun" />
+        </EntityType>
+        <EntityType Name="w_GenelGorunum">
+          <Key>
+            <PropertyRef Name="UrunAdi" />
+            <PropertyRef Name="Deleted" />
+          </Key>
+          <Property Name="UrunAdi" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Fotograf" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="StokMiktari" Type="Int32" />
+          <Property Name="DolapAdi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ToplamKullanim" Type="Int32" />
+          <Property Name="BirimFiyat" Type="Int32" />
+          <Property Name="FisFoto" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Deleted" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="w_UrunGenel">
+          <Key>
+            <PropertyRef Name="UrunAdi" />
+            <PropertyRef Name="Deleted" />
+          </Key>
+          <Property Name="UrunAdi" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Fotograf" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="StokMiktari" Type="Int32" />
+          <Property Name="DolapAdi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ToplamKullanim" Type="Int32" />
+          <Property Name="Deleted" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_AdminMutfakYorum_Kullanıcılar">
+          <End Type="db_StokKontrolModel.Kullanıcılar" Role="Kullanıcılar" Multiplicity="1" />
+          <End Type="db_StokKontrolModel.AdminMutfakYorum" Role="AdminMutfakYorum" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kullanıcılar">
+              <PropertyRef Name="ObjectId" />
+            </Principal>
+            <Dependent Role="AdminMutfakYorum">
+              <PropertyRef Name="KisiId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UrunAlis_Alis">
+          <End Type="db_StokKontrolModel.Alisveris" Role="Alisveris" Multiplicity="1" />
+          <End Type="db_StokKontrolModel.UrunAlis" Role="UrunAlis" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Alisveris">
+              <PropertyRef Name="ObjectId" />
+            </Principal>
+            <Dependent Role="UrunAlis">
+              <PropertyRef Name="AlisId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Borclandirma_Aylar">
+          <End Type="db_StokKontrolModel.Aylar" Role="Aylar" Multiplicity="1" />
+          <End Type="db_StokKontrolModel.Borclandirma" Role="Borclandirma" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Aylar">
+              <PropertyRef Name="ObjectId" />
+            </Principal>
+            <Dependent Role="Borclandirma">
+              <PropertyRef Name="BorlandirmaTarihiId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Borclandirma_Kullanıcılar">
+          <End Type="db_StokKontrolModel.Kullanıcılar" Role="Kullanıcılar" Multiplicity="1" />
+          <End Type="db_StokKontrolModel.Borclandirma" Role="Borclandirma" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kullanıcılar">
+              <PropertyRef Name="ObjectId" />
+            </Principal>
+            <Dependent Role="Borclandirma">
+              <PropertyRef Name="KisiId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Urun_Dolap">
+          <End Type="db_StokKontrolModel.Dolap" Role="Dolap" Multiplicity="1" />
+          <End Type="db_StokKontrolModel.Urun" Role="Urun" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dolap">
+              <PropertyRef Name="ObjectId" />
+            </Principal>
+            <Dependent Role="Urun">
+              <PropertyRef Name="DolapId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Duyuru_Kullanıcılar">
+          <End Type="db_StokKontrolModel.Kullanıcılar" Role="Kullanıcılar" Multiplicity="1" />
+          <End Type="db_StokKontrolModel.Duyuru" Role="Duyuru" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kullanıcılar">
+              <PropertyRef Name="ObjectId" />
+            </Principal>
+            <Dependent Role="Duyuru">
+              <PropertyRef Name="PersonId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DuyuruEdit_Duyuru">
+          <End Type="db_StokKontrolModel.Duyuru" Role="Duyuru" Multiplicity="1" />
+          <End Type="db_StokKontrolModel.DuyuruBilgi" Role="DuyuruBilgi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Duyuru">
+              <PropertyRef Name="ObjectId" />
+            </Principal>
+            <Dependent Role="DuyuruBilgi">
+              <PropertyRef Name="DuyuruId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DuyuruEdit_Urun">
+          <End Type="db_StokKontrolModel.Urun" Role="Urun" Multiplicity="1" />
+          <End Type="db_StokKontrolModel.DuyuruBilgi" Role="DuyuruBilgi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Urun">
+              <PropertyRef Name="ObjectId" />
+            </Principal>
+            <Dependent Role="DuyuruBilgi">
+              <PropertyRef Name="UrunId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Kullanıcılar_Grup">
+          <End Type="db_StokKontrolModel.Grup" Role="Grup" Multiplicity="1" />
+          <End Type="db_StokKontrolModel.Kullanıcılar" Role="Kullanıcılar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Grup">
+              <PropertyRef Name="ObjectId" />
+            </Principal>
+            <Dependent Role="Kullanıcılar">
+              <PropertyRef Name="GrupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_KullaniciYorum_Kullanıcılar">
+          <End Type="db_StokKontrolModel.Kullanıcılar" Role="Kullanıcılar" Multiplicity="1" />
+          <End Type="db_StokKontrolModel.KullaniciYorum" Role="KullaniciYorum" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kullanıcılar">
+              <PropertyRef Name="ObjectId" />
+            </Principal>
+            <Dependent Role="KullaniciYorum">
+              <PropertyRef Name="KisiId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Kullanim_Urun">
+          <End Type="db_StokKontrolModel.Urun" Role="Urun" Multiplicity="1" />
+          <End Type="db_StokKontrolModel.Kullanim" Role="Kullanim" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Urun">
+              <PropertyRef Name="ObjectId" />
+            </Principal>
+            <Dependent Role="Kullanim">
+              <PropertyRef Name="UrunId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Urun_UrunTipi">
+          <End Type="db_StokKontrolModel.UrunTipi" Role="UrunTipi" Multiplicity="0..1" />
+          <End Type="db_StokKontrolModel.Urun" Role="Urun" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UrunTipi">
+              <PropertyRef Name="ObjectId" />
+            </Principal>
+            <Dependent Role="Urun">
+              <PropertyRef Name="UrunTipId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UrunAlis_Urun">
+          <End Type="db_StokKontrolModel.Urun" Role="Urun" Multiplicity="1" />
+          <End Type="db_StokKontrolModel.UrunAlis" Role="UrunAlis" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Urun">
+              <PropertyRef Name="ObjectId" />
+            </Principal>
+            <Dependent Role="UrunAlis">
+              <PropertyRef Name="UrunId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="db_StokKontrolModelStoreContainer" CdmEntityContainer="db_StokKontrolEntities">
+          <FunctionImportMapping FunctionImportName="prc_UrunEkle" FunctionName="db_StokKontrolModel.Store.prc_UrunEkle" />
+          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="db_StokKontrolModel.Store.sp_alterdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="db_StokKontrolModel.Store.sp_creatediagram" />
+          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="db_StokKontrolModel.Store.sp_dropdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="db_StokKontrolModel.Store.sp_helpdiagramdefinition">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="db_StokKontrolModel.sp_helpdiagramdefinition_Result">
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="db_StokKontrolModel.Store.sp_helpdiagrams">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="db_StokKontrolModel.sp_helpdiagrams_Result">
+                <ScalarProperty Name="Database" ColumnName="Database" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Owner" ColumnName="Owner" />
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="db_StokKontrolModel.Store.sp_renamediagram" />
+          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="db_StokKontrolModel.Store.sp_upgraddiagrams" />
+          <EntitySetMapping Name="AdminMutfakYorum">
+            <EntityTypeMapping TypeName="db_StokKontrolModel.AdminMutfakYorum">
+              <MappingFragment StoreEntitySet="AdminMutfakYorum">
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="AdminYorumu" ColumnName="AdminYorumu" />
+                <ScalarProperty Name="Tarih" ColumnName="Tarih" />
+                <ScalarProperty Name="KisiId" ColumnName="KisiId" />
+                <ScalarProperty Name="ObjectId" ColumnName="ObjectId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Alisveris">
+            <EntityTypeMapping TypeName="db_StokKontrolModel.Alisveris">
+              <MappingFragment StoreEntitySet="Alisveris">
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="FisName" ColumnName="FisName" />
+                <ScalarProperty Name="FisVisibleName" ColumnName="FisVisibleName" />
+                <ScalarProperty Name="FisPath" ColumnName="FisPath" />
+                <ScalarProperty Name="FisTutari" ColumnName="FisTutari" />
+                <ScalarProperty Name="AlisverisTarihi" ColumnName="AlisverisTarihi" />
+                <ScalarProperty Name="MarketAdi" ColumnName="MarketAdi" />
+                <ScalarProperty Name="ObjectId" ColumnName="ObjectId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Aylar">
+            <EntityTypeMapping TypeName="db_StokKontrolModel.Aylar">
+              <MappingFragment StoreEntitySet="Aylar">
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="Tarih" ColumnName="Tarih" />
+                <ScalarProperty Name="ObjectId" ColumnName="ObjectId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Borclandirma">
+            <EntityTypeMapping TypeName="db_StokKontrolModel.Borclandirma">
+              <MappingFragment StoreEntitySet="Borclandirma">
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="BorcMiktari" ColumnName="BorcMiktari" />
+                <ScalarProperty Name="BorlandirmaTarihiId" ColumnName="BorlandirmaTarihiId" />
+                <ScalarProperty Name="KisiId" ColumnName="KisiId" />
+                <ScalarProperty Name="ObjectId" ColumnName="ObjectId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Dolap">
+            <EntityTypeMapping TypeName="db_StokKontrolModel.Dolap">
+              <MappingFragment StoreEntitySet="Dolap">
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="DolapAdi" ColumnName="DolapAdi" />
+                <ScalarProperty Name="ObjectId" ColumnName="ObjectId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Duyuru">
+            <EntityTypeMapping TypeName="db_StokKontrolModel.Duyuru">
+              <MappingFragment StoreEntitySet="Duyuru">
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="ExtraNote" ColumnName="ExtraNote" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="PersonId" ColumnName="PersonId" />
+                <ScalarProperty Name="ObjectId" ColumnName="ObjectId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DuyuruBilgi">
+            <EntityTypeMapping TypeName="db_StokKontrolModel.DuyuruBilgi">
+              <MappingFragment StoreEntitySet="DuyuruBilgi">
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="DuyuruId" ColumnName="DuyuruId" />
+                <ScalarProperty Name="Adet" ColumnName="Adet" />
+                <ScalarProperty Name="UrunId" ColumnName="UrunId" />
+                <ScalarProperty Name="ObjectId" ColumnName="ObjectId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Grup">
+            <EntityTypeMapping TypeName="db_StokKontrolModel.Grup">
+              <MappingFragment StoreEntitySet="Grup">
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="GrupAdı" ColumnName="GrupAdı" />
+                <ScalarProperty Name="ObjectId" ColumnName="ObjectId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Kullanıcılar">
+            <EntityTypeMapping TypeName="db_StokKontrolModel.Kullanıcılar">
+              <MappingFragment StoreEntitySet="Kullanıcılar">
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="GuncelBorc" ColumnName="GuncelBorc" />
+                <ScalarProperty Name="GrupId" ColumnName="GrupId" />
+                <ScalarProperty Name="Parola" ColumnName="Parola" />
+                <ScalarProperty Name="KullanıcıAdı" ColumnName="KullanıcıAdı" />
+                <ScalarProperty Name="Soyisim" ColumnName="Soyisim" />
+                <ScalarProperty Name="Isim" ColumnName="Isim" />
+                <ScalarProperty Name="ObjectId" ColumnName="ObjectId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="KullaniciYorum">
+            <EntityTypeMapping TypeName="db_StokKontrolModel.KullaniciYorum">
+              <MappingFragment StoreEntitySet="KullaniciYorum">
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="KullaniciYorumu" ColumnName="KullaniciYorumu" />
+                <ScalarProperty Name="Tarih" ColumnName="Tarih" />
+                <ScalarProperty Name="KisiId" ColumnName="KisiId" />
+                <ScalarProperty Name="ObjectId" ColumnName="ObjectId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Kullanim">
+            <EntityTypeMapping TypeName="db_StokKontrolModel.Kullanim">
+              <MappingFragment StoreEntitySet="Kullanim">
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="ToplamKullanim" ColumnName="ToplamKullanim" />
+                <ScalarProperty Name="UrunId" ColumnName="UrunId" />
+                <ScalarProperty Name="ObjectId" ColumnName="ObjectId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StokAlisveris">
+            <EntityTypeMapping TypeName="db_StokKontrolModel.StokAlisveris">
+              <MappingFragment StoreEntitySet="StokAlisveris">
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="FisName" ColumnName="FisName" />
+                <ScalarProperty Name="FisVisibleName" ColumnName="FisVisibleName" />
+                <ScalarProperty Name="FisPath" ColumnName="FisPath" />
+                <ScalarProperty Name="FisTutari" ColumnName="FisTutari" />
+                <ScalarProperty Name="AlisverisTarihi" ColumnName="AlisverisTarihi" />
+                <ScalarProperty Name="MarketAdi" ColumnName="MarketAdi" />
+                <ScalarProperty Name="ObjectId" ColumnName="ObjectId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="db_StokKontrolModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Urun">
+            <EntityTypeMapping TypeName="db_StokKontrolModel.Urun">
+              <MappingFragment StoreEntitySet="Urun">
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="UrunTipId" ColumnName="UrunTipId" />
+                <ScalarProperty Name="Guncelleme" ColumnName="Guncelleme" />
+                <ScalarProperty Name="StokMiktari" ColumnName="StokMiktari" />
+                <ScalarProperty Name="Fotograf" ColumnName="Fotograf" />
+                <ScalarProperty Name="UrunAdi" ColumnName="UrunAdi" />
+                <ScalarProperty Name="DolapId" ColumnName="DolapId" />
+                <ScalarProperty Name="ObjectId" ColumnName="ObjectId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UrunAlis">
+            <EntityTypeMapping TypeName="db_StokKontrolModel.UrunAlis">
+              <MappingFragment StoreEntitySet="UrunAlis">
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="BirimFiyat" ColumnName="BirimFiyat" />
+                <ScalarProperty Name="AlisMiktari" ColumnName="AlisMiktari" />
+                <ScalarProperty Name="AlisId" ColumnName="AlisId" />
+                <ScalarProperty Name="UrunId" ColumnName="UrunId" />
+                <ScalarProperty Name="ObjectId" ColumnName="ObjectId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UrunTipi">
+            <EntityTypeMapping TypeName="db_StokKontrolModel.UrunTipi">
+              <MappingFragment StoreEntitySet="UrunTipi">
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="UrunTipi1" ColumnName="UrunTipi" />
+                <ScalarProperty Name="ObjectId" ColumnName="ObjectId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="w_GenelGorunum">
+            <EntityTypeMapping TypeName="db_StokKontrolModel.w_GenelGorunum">
+              <MappingFragment StoreEntitySet="w_GenelGorunum">
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="FisFoto" ColumnName="FisFoto" />
+                <ScalarProperty Name="BirimFiyat" ColumnName="BirimFiyat" />
+                <ScalarProperty Name="ToplamKullanim" ColumnName="ToplamKullanim" />
+                <ScalarProperty Name="DolapAdi" ColumnName="DolapAdi" />
+                <ScalarProperty Name="StokMiktari" ColumnName="StokMiktari" />
+                <ScalarProperty Name="Fotograf" ColumnName="Fotograf" />
+                <ScalarProperty Name="UrunAdi" ColumnName="UrunAdi" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="w_UrunGenel">
+            <EntityTypeMapping TypeName="db_StokKontrolModel.w_UrunGenel">
+              <MappingFragment StoreEntitySet="w_UrunGenel">
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="ToplamKullanim" ColumnName="ToplamKullanim" />
+                <ScalarProperty Name="DolapAdi" ColumnName="DolapAdi" />
+                <ScalarProperty Name="StokMiktari" ColumnName="StokMiktari" />
+                <ScalarProperty Name="Fotograf" ColumnName="Fotograf" />
+                <ScalarProperty Name="UrunAdi" ColumnName="UrunAdi" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

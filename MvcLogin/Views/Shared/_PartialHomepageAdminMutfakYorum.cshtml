@@ -1,0 +1,23 @@
+﻿@model MvcLogin.Models.HomepageModel
+
+@{
+    int index = 0;
+    foreach (var item in Model.adminMutfakYorum.Take(5))
+    {
+
+        <div class="panel panel-danger">
+            <div class="panel-heading" style="background-color:#92000a; color:white; height:40px;">
+                <p>
+                    <span style="float:left;">@Html.DisplayFor(x => x.adminMutfakYorum[index].Kullanıcılar.KullanıcıAdı)</span>
+                    <span style="float:right;">@item.Tarih.ToString("MM/dd/yyyy H:mm")</span>
+                </p>
+            </div>
+            <div class="panel-body">@Html.DisplayFor(x => x.adminMutfakYorum[index].AdminYorumu)</div>
+        </div>
+
+        index++;
+
+
+    }
+
+}

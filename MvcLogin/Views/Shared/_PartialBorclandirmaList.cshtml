@@ -1,0 +1,140 @@
+﻿@model MvcLogin.Models.PersonalDebtsModel
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+
+<script type="text/javascript">
+    $(document).getElementByClass('selected-month-dropdown').selectedIndex(function () {
+        if ($(this).value != 'None') {
+            window.location.href = "https://localhost:44357/Home/PersonalDebst/" + $(this).value;
+        };
+    });
+</script>
+
+<script>
+    function myFunction(val) {
+        var inputs = document.querySelectorAll('.copyTo')
+        inputs.forEach(function (input) {
+            input.value = val
+
+        });
+    }
+
+</script>
+
+<script>
+    function myFunction2(val) {
+        var inputs = document.querySelectorAll('.copyTo2')
+        inputs.forEach(function (input) {
+            input.value = val
+
+        });
+    }
+
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#selectall').click(function (event) {  //on click
+            if (this.checked) { // check select status
+                $(":checkbox").attr("checked", true);
+            } else {
+                $(":checkbox").attr("checked", false);
+            }
+        });
+
+    });
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="col-md-offset-7">
+    <input type="text" name="txt" value="" onkeyup="myFunction(this.value)" class="form-control" placeholder="Copy To All">
+
+</div>
+<br />
+
+<table class="table">
+    <thead>
+        <tr>
+            <td>
+            </td>
+            <td>
+            </td>
+            <th>
+                @Html.DisplayNameFor(model => model.Kullanici[0].Isim)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.Kullanici[0].Soyisim)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.Kullanici[0].GuncelBorc)
+            </th>
+
+
+            <th>
+                @Html.DisplayNameFor(model => model.Borclandirma)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    @{ }
+    @for (int index = 0; index < Model.Kullanici.Count(); index++)
+    {
+        if (Model.Kullanici[index].GrupId == 3)
+        {
+
+        }
+        else
+        {
+            <tbody>
+                <tr>
+                    <td>
+                        @Html.HiddenFor(modelItem => Model.Kullanici[index].ObjectId)
+                    </td>
+                    <td>
+                        @Html.CheckBoxFor(modelItem => Model.Selected[index], false)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => Model.Kullanici[index].Isim)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => Model.Kullanici[index].Soyisim)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => Model.GuncelBorc[index])
+                    </td>
+
+
+                    <td>
+                        @Html.TextBoxFor(modelItem => Model.Borclandirma[index], new { @class = "form-control copyTo" })
+                    </td>
+
+
+                </tr>
+            </tbody>
+
+
+        }
+    }
+
+
+
+
+</table>
+

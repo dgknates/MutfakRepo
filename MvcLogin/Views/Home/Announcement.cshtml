@@ -1,0 +1,264 @@
+﻿@model List<MvcLogin.Models.UrunModel>
+
+@{
+    ViewBag.Title = "Products";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+
+
+
+<script>
+    $(function () {
+        // a tagimizde bulunan .view classımıza click olduğunda
+        $("body").on("click", "#btnAnnouncement", function () {
+
+            console.log("post oncesi")
+
+
+            $.ajax({
+                type: "POST",
+                url: '/Home/AddAnnouncement',     //your action
+                data: $('#MyForm').serialize(),   //your form name.it takes all the values of model
+                dataType: 'html',
+
+                success: function (data) {
+                    console.log("done!!")
+                    $("#AddAnnouncement .modal-body").html(data);
+                    $("#AddAnnouncement").modal("show");
+                },
+                failure: function (data) {
+                    console.log("fail!!")
+                },
+                error: function (data) {
+                    console.log(data)
+                    $("#AddAnnouncement .modal-body").html(data);
+                    $("#AddAnnouncement").modal("show");
+                }
+            });
+
+
+
+
+        });
+    })
+</script>
+
+<script>
+    $(function () {
+        // a tagimizde bulunan .view classımıza click olduğunda
+        $("body").on("click", "#btnAddAnnouncement", function () {
+
+            console.log("post oncesi yeni")
+
+
+            $.ajax({
+                type: "POST",
+                url: '/Home/Announcement',     //your action
+                data: $('#MyForm').serialize(),   //your form name.it takes all the values of model
+                dataType: 'html',
+
+                success: function (data) {
+                    console.log("done!!")
+                    $("#AddAnnouncement").modal("hide");
+                    window.location.href = "Announcement"
+                },
+                failure: function (data) {
+                    console.log("fail!!")
+                },
+                error: function (data) {
+                    console.log("error!!")
+                    
+                }
+            });
+
+
+
+
+        });
+    })
+</script>
+
+
+
+
+
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "MyForm" }))
+{
+    <h2 style="padding-bottom:10px">Products</h2>
+
+
+    <script>
+        function myFunction(val) {
+            var inputs = document.querySelectorAll('.copyTo')
+            inputs.forEach(function (input) {
+                input.value = val
+
+            });
+        }
+
+    </script>
+
+    @*<script>
+            $(document).ready(function () {
+                $('#myTable').DataTable();
+            });
+        </script>*@
+    <script type="text/javascript">
+
+
+    </script>
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#selectall').click(function (event) {  //on click
+                if (this.checked) { // check select status
+                    $(":checkbox").attr("checked", true);
+                } else {
+                    $(":checkbox").attr("checked", false);
+                }
+            });
+
+        });
+    </script>
+
+
+
+    <script>
+        $(document).ready(function () {
+            $.fn.datepicker.defaults.format = "dd/mm/yyyy";
+            $('.datepicker').datepicker(); //
+        });
+    </script>
+
+
+    <div class="container">
+        <div class="col-md-3">
+            @Html.EditorFor(model => model[0].StartDate, new { htmlAttributes = new { @class = "form-control  datepicker" } })
+        </div>
+        <div class="col-md-3">
+            @Html.EditorFor(model => model[0].EndDate, new { htmlAttributes = new { @class = "form-control  datepicker" } })
+        </div>
+    </div>
+
+
+    <br />
+    <br />
+
+
+    <div class="col-md-3">
+        <input id="selectall" name="selectall" type="checkbox"><label for='selectAll'>Select All</label>
+    </div>
+    <div class="col-md-offset-7">
+        <input type="text" name="txt" value="" onkeyup="myFunction(this.value)" class="form-control" placeholder="Copy To All">
+
+    </div>
+    <br />
+
+    <table id="myTable" class="table">
+        <tr>
+            <td>
+            </td>
+            <td>
+            </td>
+            <th>
+                @Html.DisplayNameFor(model => model[0].UrunAdi)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model[0].StokMiktari)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model[0].DolapAdi)
+            </th>
+            <th></th>
+        </tr>
+        @{ int index = 0; }
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.HiddenFor(modelItem => Model[index].ObjectId)
+                </td>
+                <td>
+                    @Html.CheckBoxFor(modelItem => Model[index].Selected, false)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UrunAdi)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.StokMiktari)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.DolapAdi)
+                </td>
+
+
+                <td>
+                    @Html.TextBoxFor(modelItem => Model[index].UretimMiktari, new { @class = "form-control copyTo" })
+                </td>
+
+
+
+            </tr>
+
+            index++;
+        }
+
+
+
+
+    </table>
+
+
+
+    <input id="btnAnnouncement" type="button" value="Duyuru Ekle YENİ" class="btn btn-success" data-toggle="modal" />
+
+
+}
+
+
+
+<div class="modal fade" id="AddAnnouncement" tabindex="-1" role="dialog" aria-labelledby="">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" style="font-size:xx-large; margin-left:500px;">×</span></button>
+                <h4 class="modal-title" id="myModalLabel">Duyuru Ekle</h4>
+            </div>
+            
+
+                <div class="modal-body">
+                    @*Merhaba,
+
+                        Haftalık kullanım limitlerimiz aşağıdaki gibidir:
+                        @{
+                            foreach (var item in Model)
+                            {
+                                if (item.Selected == true)
+                                {
+                                    <p>@item.UrunAdi</p>
+                                }
+                            }
+                        }*@
+
+                   
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Kapat</button>
+                    <button type="submit" id="btnAddAnnouncement" class="btn btn-primary">Duyuruyu Ekle</button>
+                </div>
+            
+        </div>
+    </div>
+</div>
+
+
+
+
+
+

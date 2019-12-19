@@ -1,0 +1,376 @@
+﻿@model MvcLogin.Models.HomepageModel
+@{
+    ViewBag.Title = "Homepage";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+
+
+<h2 style="text-align:center; margin-bottom:50px;">Homepage</h2>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+
+        $('.kullanici li').click(function () {
+            var pageNumber = $(this).text();
+            console.log(pageNumber);
+
+            if (pageNumber != 0) {
+                console.log(pageNumber);
+
+                var divKullaniciYorum = $('#divKullaniciYorum');
+                $.ajax({
+                    type: 'GET',
+                    cache: false,
+                    /*
+                        - contentType is the type of data you're sending, so application/json; charset=utf-8 is a common one, as is application/x-www-form-urlencoded; charset=UTF-8, which is the default.
+                        - dataType is what you're expecting back from the server: json, html, text, etc. jQuery will use this to figure out how to populate the success function's parameter.
+                     */
+                    dataType: 'html',
+                    contentType: 'application/json; charset=utf-8',
+                    url: '/Home/GetKullaniciYorum',
+                    data: { 'sayfaNo': pageNumber },
+                    success: function (data) {
+                        console.log("Data geldi !!!");
+
+                        //console.log(data);
+                        //console.log(data.length);
+                        /*for (var i = 0; i < data.length; i++) {
+                            var p = data[i];
+                            console.log(p.id + "---" + p.name);
+                        }*/
+
+
+
+                        //divTest.html('asdasd');
+                        //divTest.html(data);
+
+                        divKullaniciYorum.html(data);
+                    },
+                    failure: function (response) {
+                        alert('Failed to retrieve products: ' + response.responseText);
+                    },
+                    error: function (response) {
+                        alert('Error: ' + response.responseText);
+                    }
+                });
+            } else {
+                console.log("Boş seçildi!");
+            }
+
+
+
+
+            pageNumber++;
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+
+        $('.admin li').click(function () {
+            var pageNumber = $(this).text();
+            console.log(pageNumber);
+
+            if (pageNumber != 0) {
+                console.log(pageNumber);
+
+                var divAdminYorum = $('#divAdminYorum');
+                $.ajax({
+                    type: 'GET',
+                    cache: false,
+
+                    dataType: 'html',
+                    contentType: 'application/json; charset=utf-8',
+                    url: '/Home/GetAdminYorum',
+                    data: { 'sayfaNo': pageNumber },
+                    success: function (data) {
+                        console.log("Data geldi !!!");
+
+
+
+                        divAdminYorum.html(data);
+                    },
+                    failure: function (response) {
+                        alert('Failed to retrieve products: ' + response.responseText);
+                    },
+                    error: function (response) {
+                        alert('Error: ' + response.responseText);
+                    }
+                });
+            } else {
+                console.log("Boş seçildi!");
+            }
+
+
+
+
+            pageNumber++;
+        });
+    });
+</script>
+<style>
+    body {
+        margin-right: 170px;
+    }
+
+    .col-md-3 {
+        border-color: #ddd !important;
+        border-width: medium;
+        display: block;
+        border-radius: 4px;
+        border: 4px solid;
+        box-sizing: border-box;
+    }
+
+    .btnKullaniciYorum {
+        background-color: DodgerBlue; /* Blue background */
+        border: none; /* Remove borders */
+        color: white; /* White text */
+        padding: 3px 6px;
+        font-size: 20px;
+        cursor: pointer; /* Mouse pointer on hover */
+        margin-left: 20px;
+    }
+
+        /* Darker background on mouse-over */
+        .btnKullaniciYorum:hover {
+            background-color: RoyalBlue;
+            color: white;
+        }
+</style>
+
+
+<div class="container">
+
+
+    <div class="col-md-3" style="border-color:green; border-width:medium; display:block;">
+
+        <h4 style="text-align:center;">
+            <i class="fas fa-users" style="color:green; font-size:x-large; margin-right:10px;"></i>Kullanıcı Yorumları
+            <button class="btn btnKullaniciYorum" data-toggle="modal" data-target="#AddKullaniciYorum"> <i class="fas fa-plus-circle"></i></button>
+        </h4>
+
+        @using (Html.BeginForm())
+        {
+            <div id="divKullaniciYorum" class="panel-group ">
+
+                @Html.Partial("_PartialHomepageKullaniciYorum", Model)
+
+            </div>
+
+            <nav aria-label="Page navigation">
+                <ul class="pagination kullanici">
+                    <li>
+                        <a href="#" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    @{
+                        int pageNumber = Model.kullaniciYorum.Count() / 5;
+                        int y = Model.kullaniciYorum.Count() % 5 == 0 ? 0 : pageNumber++;
+
+                        for (int i = 1; i <= pageNumber; i++)
+                        {
+                            <li><a class="sayfalandirma" id=@i href="#">@i</a></li>
+                        }
+                    }
+
+
+                    <li>
+                        <a href="#" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        }
+
+
+
+        <div class="modal fade" id="AddKullaniciYorum" tabindex="-1" role="dialog" aria-labelledby="">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content" style="margin-right:200px;">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" style="font-size:xx-large; margin-left:350px;">×</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Ürün Ekle</h4>
+                    </div>
+                    <form method="post" action="/Home/AddKullaniciYorum" style="margin-left:50px; margin-top:20px;">
+
+                        <div class="form-group">
+                            <label>
+                                Kullanıcı Adı:
+                            </label>
+                            @Session["username"]
+                        </div>
+                        <div class="form-group">
+                            <label>Kullanici Yorumu:</label>
+                            @*<text type="text" name="KullaniciYorumEkle" class="form-control" />*@
+                            <textarea rows="5" cols="350" name="KullaniciYorumEkle" class="form-control" maxlength="250" placeholder="Yorum Ekleyiniz."></textarea>
+                        </div>
+
+
+                        <br />
+
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Kapat</button>
+                            <button type="submit" class="btn btn-primary">Yorum Ekle</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+
+
+
+    <div class="col-md-6" style="text-align:center; font-size:large;">
+        @using (Html.BeginForm("EditMutfakDuyuru", "Home", FormMethod.Post, new { id = "MyForm" }))
+        {
+            <div class="panel panel-default" style="border-width:medium;">
+                <div class="panel-heading" style="border-width:medium;">
+                    <i class="fas fa-bell" style="color:green; margin-right:50px; font-size:x-large; "></i>
+                    Genel Mutfak Duyurusu
+                    <i class="fas fa-bell" style="color:green; margin-left:50px; font-size: x-large;"></i>
+                </div>
+
+                <div class="panel-body" style="border-width:medium;">
+                    <div class="">
+                        @{
+                            if (Model.duyuruBilgi.Count() != 0)
+                            {
+                                <p>Merhaba,</p>
+                                <p>@Model.duyuruBilgi[0].Duyuru.StartDate.Value.Date.ToShortDateString() ve @Model.duyuruBilgi[0].Duyuru.EndDate.Value.Date.ToShortDateString() tarihleri arasında</p>
+                                <p>Haftalık kullanım limitlerimiz aşağıdaki gibidir;</p>
+
+                                int index = 0;
+                                foreach (var item in Model.duyuruBilgi)
+                                {
+
+                                    if (item.Deleted == false)
+                                    {
+                                        <p>@item.Urun.UrunAdi : @item.Adet @Model.UrunTipiString[index] </p>
+                                        if (item.Duyuru.ExtraNote != null)
+                                        {
+                                            <p>@item.Duyuru.ExtraNote</p>
+                                        }
+                                    }
+                                    index++;
+                                }
+
+
+
+                                <p>İyi çalışmalar.</p>
+                            }
+                        }
+
+                    </div>
+                </div>
+
+            </div>
+
+            if (Session["grup"].Equals(3) && Model.duyuruBilgi.Count() != 0)
+            {
+
+
+                @Html.ActionLink("Duyuru Edit", "EditAnnouncement", "Home", new { duyuruId = Model.duyuruBilgi[0].DuyuruId }, new { @class = "btn btn-warning", @role = "button" })
+            }
+
+        }
+
+
+    </div>
+
+
+
+
+    <div class="col-md-3">
+        <h4 style="text-align:center; font:bold;">
+            <i class="fas fa-utensils" style="color:green; font-size:x-large; margin-right:10px;"></i>Mutfak Duyuruları @if (Session["grup"].Equals(3))
+            {
+
+                <button class="btn btnKullaniciYorum" data-toggle="modal" data-target="#AddAdminMutfakYorum"> <i class="fas fa-plus-circle"></i></button>
+            }
+        </h4>
+        @using (Html.BeginForm())
+        {
+
+
+            <div id="divAdminYorum" class="panel-group">
+
+                @Html.Partial("_PartialHomepageAdminMutfakYorum", Model)
+
+            </div>
+
+            <nav aria-label="Page navigation">
+                <ul class="pagination admin">
+                    <li>
+                        <a href="#" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    @{
+                        int pageNumber = 1;
+                        for (int i = 0; i <= Model.adminMutfakYorum.Count(); i = i + 5)
+                        {
+                            <li><a class="sayfalandirma" id=@pageNumber href="#">@pageNumber</a></li>
+                            pageNumber++;
+                        }
+                    }
+
+
+                    <li>
+                        <a href="#" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        }
+
+        <div class="modal fade" id="AddAdminMutfakYorum" tabindex="-1" role="dialog" aria-labelledby="">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content" style="margin-right:200px;">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" style="font-size:xx-large; margin-left:350px;">×</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Ürün Ekle</h4>
+                    </div>
+                    <form method="post" action="/Home/AddAdminMutfakYorum" style="margin-left:50px; margin-top:20px;">
+
+                        <div class="form-group">
+                            <label>
+                                Kullanıcı Adı:
+                            </label>
+                            @Session["username"]
+                        </div>
+                        <div class="form-group">
+                            <label>Admin Mutfak Yorumu:</label>
+                            @*<text type="text" name="KullaniciYorumEkle" class="form-control" />*@
+                            <textarea rows="5" cols="350" placeholder="Mutfak yorumu Ekleyiniz." name="AdminYorumEkle" class="form-control" maxlength="250"></textarea>
+                        </div>
+
+
+                        <br />
+
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Kapat</button>
+                            <button type="submit" class="btn btn-primary">Yorum Ekle</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+</div>
+
+

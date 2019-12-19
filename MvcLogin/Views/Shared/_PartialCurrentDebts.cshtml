@@ -1,0 +1,91 @@
+﻿@model MvcLogin.Models.PersonalDebtsModel
+
+
+
+
+<table id="myTable" class="table display">
+    <thead>
+        <tr>
+            <td>
+            </td>
+
+            <th>
+                @Html.DisplayNameFor(model => model.Kullanici[0].Isim)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.Kullanici[0].Soyisim)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.Kullanici[0].GuncelBorc)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.SecilenAy)
+            </th>
+
+
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @{ }
+        @for (int index = 0; index < Model.Kullanici.Count(); index++)
+        {
+            if (Model.Kullanici[index].GrupId == 3)
+            {
+
+            }
+            else
+            {
+                <tr>
+                    <td>
+                        @Html.HiddenFor(modelItem => Model.Kullanici[index].ObjectId)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => Model.Kullanici[index].Isim)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => Model.Kullanici[index].Soyisim)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => Model.GuncelBorc[index])
+                    </td>
+
+                    <td>
+                        @{
+                            if (Model.Ay[Model.SecilenAy].Tarih != null && Model.SecilenAy != 0)
+                            {
+                                @Html.DisplayFor(modelItem => Model.Ay[Model.SecilenAy - 1].Tarih)
+                            }
+                            else if (Model.SecilenAy == 0)
+                            {
+                                @Html.DisplayFor(modelItem => Model.Ay[Model.SecilenAy].Tarih)
+                            }
+                            else
+                            {
+
+                            }
+
+                        }
+                    </td>
+
+
+
+
+
+                </tr>
+
+            }
+        }
+    </tbody>
+
+
+
+
+</table>
