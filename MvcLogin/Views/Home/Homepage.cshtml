@@ -5,7 +5,7 @@
 }
 
 
-<h2 style="text-align:center; margin-bottom:50px;">Homepage</h2>
+
 
 <script type="text/javascript">
     $(document).ready(function () {
@@ -112,9 +112,7 @@
     });
 </script>
 <style>
-    body {
-        margin-right: 170px;
-    }
+    
 
     .col-md-3 {
         border-color: #ddd !important;
@@ -143,7 +141,7 @@
 </style>
 
 
-<div class="container">
+<div class="" style="margin-top:30px; display:flow-root;">
 
 
     <div class="col-md-3" style="border-color:green; border-width:medium; display:block;">
@@ -238,6 +236,14 @@
                     <i class="fas fa-bell" style="color:green; margin-right:50px; font-size:x-large; "></i>
                     Genel Mutfak Duyurusu
                     <i class="fas fa-bell" style="color:green; margin-left:50px; font-size: x-large;"></i>
+                    @{
+                        if (Session["grup"].Equals(3) && Model.duyuruBilgi.Count() != 0)
+                        {
+                            <a href="@Url.Action("EditAnnouncement", "Home", new { duyuruId = Model.duyuruBilgi[0].DuyuruId })" class="btn btn-warning" style="float:right;margin-top:-4px;">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                        }
+                    }
                 </div>
 
                 <div class="panel-body" style="border-width:medium;">
@@ -263,28 +269,17 @@
                                     }
                                     index++;
                                 }
-
-
-
                                 <p>İyi çalışmalar.</p>
                             }
+                            else
+                            {
+                                <p>Güncel Duyuru Bulunmamaktadır.</p>
+                            }
                         }
-
                     </div>
                 </div>
-
             </div>
-
-            if (Session["grup"].Equals(3) && Model.duyuruBilgi.Count() != 0)
-            {
-
-
-                @Html.ActionLink("Duyuru Edit", "EditAnnouncement", "Home", new { duyuruId = Model.duyuruBilgi[0].DuyuruId }, new { @class = "btn btn-warning", @role = "button" })
-            }
-
         }
-
-
     </div>
 
 
@@ -294,20 +289,15 @@
         <h4 style="text-align:center; font:bold;">
             <i class="fas fa-utensils" style="color:green; font-size:x-large; margin-right:10px;"></i>Mutfak Duyuruları @if (Session["grup"].Equals(3))
             {
-
                 <button class="btn btnKullaniciYorum" data-toggle="modal" data-target="#AddAdminMutfakYorum"> <i class="fas fa-plus-circle"></i></button>
             }
         </h4>
         @using (Html.BeginForm())
         {
-
-
             <div id="divAdminYorum" class="panel-group">
-
                 @Html.Partial("_PartialHomepageAdminMutfakYorum", Model)
-
             </div>
-
+            
             <nav aria-label="Page navigation">
                 <ul class="pagination admin">
                     <li>
@@ -342,23 +332,19 @@
                         <h4 class="modal-title" id="myModalLabel">Ürün Ekle</h4>
                     </div>
                     <form method="post" action="/Home/AddAdminMutfakYorum" style="margin-left:50px; margin-top:20px;">
-
                         <div class="form-group">
                             <label>
                                 Kullanıcı Adı:
                             </label>
                             @Session["username"]
                         </div>
+
                         <div class="form-group">
                             <label>Admin Mutfak Yorumu:</label>
                             @*<text type="text" name="KullaniciYorumEkle" class="form-control" />*@
                             <textarea rows="5" cols="350" placeholder="Mutfak yorumu Ekleyiniz." name="AdminYorumEkle" class="form-control" maxlength="250"></textarea>
                         </div>
-
-
                         <br />
-
-
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Kapat</button>
                             <button type="submit" class="btn btn-primary">Yorum Ekle</button>

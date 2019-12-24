@@ -11,7 +11,7 @@
     <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
     <link href="~/Content/font-awesome.css" rel="stylesheet" />
     <link href="~/Content/all.css" rel="stylesheet" />
-   
+
 
 
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
@@ -33,12 +33,20 @@
             padding: 50px;
         }
 
-        a.asdf {
+        /*a.asdf {
             margin-left: 900px !important;
-        }
+        }*/
+
+        /*@@media (min-width: 1200px) {
+            .visible-lg {
+                display: none !important;
+            }
+        }*/
+
+
 
         .asd {
-            margin-left: -140px !important;
+            /*margin-left: -140px !important;*/
             font-size: x-large !important;
         }
 
@@ -111,23 +119,19 @@
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
+        <div class="visible-lg">
 
-                @Html.ActionLink("Stok Kontrol", "Homepage", "Home", new { area = "" }, new { @class = "navbar-brand asd" })
-              
-                @Html.ActionLink(Session["username"].ToString() + "/Logout", "Logout", "Home", new { area = "" }, new { @class = " fas fa-sign-out-alt navbar-brand asdf"})
 
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                </ul>
-            </div>
+
+            @Html.ActionLink("Stok Kontrol", "Homepage", "Home", new { area = "" }, new { @class = "navbar-brand asd" })
+
+
+            <span style="float:right;" class="visible-lg">
+                @Html.ActionLink(Session["username"].ToString() + "/Logout", "Logout", "Home", new { area = "" }, new { @class = " fas fa-sign-out-alt navbar-brand asdf" })
+
+            </span>
+
+
         </div>
     </div>
 
@@ -137,12 +141,12 @@
                 <ul class="nav navbar-nav">
 
                     @*<li><i class="fas fa-box-open navbar-brand"></i>@Html.ActionLink("Stok Durumu", "Index3", "Home", new { area = "" }, new { @class = "navbar-brand" })</li>
-        <li><i class="fas fa-shopping-cart navbar-brand"></i>@Html.ActionLink("Alışveriş", "AddUser", "Home", new { area = "" }, new { @class = "navbar-brand alisveris" })</li>
-        <li><i class="fas fa-lira-sign navbar-brand"></i>@Html.ActionLink("Güncel Borçlar", "Index3", "Home", new { area = "" }, new { @class = "navbar-brand" })</li>
-        <li><i class="fas fa-wallet navbar-brand"></i>@Html.ActionLink("Borçlandırma", "AddUser", "Home", new { area = "" }, new { @class = "navbar-brand" })</li>
+                        <li><i class="fas fa-shopping-cart navbar-brand"></i>@Html.ActionLink("Alışveriş", "AddUser", "Home", new { area = "" }, new { @class = "navbar-brand alisveris" })</li>
+                        <li><i class="fas fa-lira-sign navbar-brand"></i>@Html.ActionLink("Güncel Borçlar", "Index3", "Home", new { area = "" }, new { @class = "navbar-brand" })</li>
+                        <li><i class="fas fa-wallet navbar-brand"></i>@Html.ActionLink("Borçlandırma", "AddUser", "Home", new { area = "" }, new { @class = "navbar-brand" })</li>
 
-        <li><i class="fas fa-user-edit navbar-brand"></i>@Html.ActionLink("Kişi Ekleme", "AddUser", "Home", new { area = "" }, new { @class = "navbar-brand" })</li>*@
-
+                        <li><i class="fas fa-user-edit navbar-brand"></i>@Html.ActionLink("Kişi Ekleme", "AddUser", "Home", new { area = "" }, new { @class = "navbar-brand" })</li>*@
+                    <li><a href="@Url.Action("Homepage", "Home")" class="navbar-brand"><i class="fas fa-home navbar-brand"> Anasayfa</i></a></li>
                     <li><a href="@Url.Action("CurrentDebts", "Home")" class="navbar-brand"><i class="fas fa-lira-sign navbar-brand"> Güncel Borçlar</i></a></li>
                     <li class="active"><a href="@Url.Action("Products", "Home")" class="navbar-brand "><i class="fas fa-box-open navbar-brand"> Stok Durumu</i></a></li>
                     <li><a href="@Url.Action("Shopping", "Home")" class="navbar-brand" style="padding-right:55px;"><i class="fas fa-shopping-cart navbar-brand"> Alışveriş</i></a></li>
@@ -158,7 +162,7 @@
 
 
 
-    <div class="container body-content">
+    <div class=" body-content" style="margin-left:210px;">
         @RenderBody()
         <hr />
         <footer>

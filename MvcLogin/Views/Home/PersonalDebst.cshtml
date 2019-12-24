@@ -65,23 +65,38 @@
 
 @using (Html.BeginForm())
 {
-    <h2 style="padding-bottom:10px">Personal Debst</h2>
-
-    <div class="col-md-3">
-        <input id="selectall" name="selectall" type="checkbox"><label for='selectAll'>Select All</label>
-    </div>
-    <div class="col-md-3">
-        @Html.DropDownListFor(model => model.SecilenAy, (Model.Ay).Select((v, i) => new SelectListItem() { Text = v.Tarih, Value = (i + 1).ToString() }), "İşlem Yapılacak Ayı Seçiniz.", new { @class = "form-control copyTo2" })
-    </div>
-
-    <div id="divProductList">
-        @Html.Partial("_PartialBorclandirmaList", Model)
-    </div>
 
 
-    <div class="form-group">
-        <div class="col-md-offset-9 col-md-3">
-            <input type="submit" value="Güncelle" class="btn btn-success" />
+    <div class="panel panel-default" style="margin-top:50px;">
+        <div class="panel-heading">
+            <h3>
+                Kişi Borçlandırma
+                <span style="float:right;">
+                    @Html.DropDownListFor(model => model.SecilenAy, (Model.Ay).Select((v, i) => new SelectListItem() { Text = v.Tarih, Value = (i + 1).ToString() }), "İşlem Yapılacak Ayı Seçiniz.", new { @class = "form-control copyTo2" })
+                </span>
+            </h3>
+
+
+        </div>
+        <div class="panel-body">
+            <div class="col-md-3">
+                <input id="selectall" name="selectall" type="checkbox"><label for='selectAll'>Select All</label>
+            </div>
+
+
+            <div id="divProductList">
+                @Html.Partial("_PartialBorclandirmaList", Model)
+            </div>
+
+
+            <div class="form-group">
+                <div class="col-md-offset-9 col-md-3">
+                    <input type="submit" value="Güncelle" class="btn btn-success" />
+                </div>
+            </div>
+        </div>
+        <div class="panel-footer">
+            Footer.
         </div>
     </div>
 }
