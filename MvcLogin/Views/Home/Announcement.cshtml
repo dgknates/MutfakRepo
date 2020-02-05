@@ -99,11 +99,7 @@
 
     </script>
 
-    @*<script>
-            $(document).ready(function () {
-                $('#myTable').DataTable();
-            });
-        </script>*@
+
     <script type="text/javascript">
 
 
@@ -133,7 +129,7 @@
     </script>
 
 
-    <div class="panel panel-default" style="margin-top: 50px;">
+    <div class="panel panel-primary" style="margin-top: 50px;">
         <div class="panel-heading" style="text-align:center;">
             <h4>Duyuru Ekle</h4>
         </div>
@@ -146,12 +142,12 @@
 
                 <div class="col-md-3">
                     @Html.EditorFor(model => model[0].StartDate, new { htmlAttributes = new { @class = "form-control  datepicker" } })
-                    
+
                 </div>
                 <div class="col-md-1" style="margin-right:-60px;">
                     <p style="font-size:x-large;">/</p>
                 </div>
-                
+
                 <div class="col-md-3">
                     @Html.EditorFor(model => model[0].EndDate, new { htmlAttributes = new { @class = "form-control  datepicker" } })
                 </div>
@@ -172,56 +168,72 @@
             <br />
 
             <table id="myTable" class="table">
-                <tr>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <th>
-                        @Html.DisplayNameFor(model => model[0].UrunAdi)
-                    </th>
 
-                    <th>
-                        @Html.DisplayNameFor(model => model[0].StokMiktari)
-                    </th>
+                @{
 
-                    <th>
-                        @Html.DisplayNameFor(model => model[0].DolapAdi)
-                    </th>
-                    <th></th>
-                </tr>
-                @{ int index = 0; }
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td>
-                            @Html.HiddenFor(modelItem => Model[index].ObjectId)
-                        </td>
-                        <td>
-                            @Html.CheckBoxFor(modelItem => Model[index].Selected, false)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.UrunAdi)
-                        </td>
+                    if (Model.Count() != 0)
+                    {
+                        <tr>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                            <th>
+                                @Html.DisplayNameFor(model => model[0].UrunAdi)
+                            </th>
 
-                        <td>
-                            @Html.DisplayFor(modelItem => item.StokMiktari)
-                        </td>
+                            <th>
+                                @Html.DisplayNameFor(model => model[0].StokMiktari)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model[0].UrunTipi)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model[0].DolapAdi)
+                            </th>
+                            <th></th>
+                        </tr>
+                        int index = 0;
+                        foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.HiddenFor(modelItem => Model[index].ObjectId)
+                                </td>
+                                <td>
+                                    @Html.CheckBoxFor(modelItem => Model[index].Selected, false)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.UrunAdi)
+                                </td>
 
-                        <td>
-                            @Html.DisplayFor(modelItem => item.DolapAdi)
-                        </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.StokMiktari)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.UrunTipiString)
+                                </td>
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.DolapAdi)
+                                </td>
 
 
-                        <td>
-                            @Html.TextBoxFor(modelItem => Model[index].UretimMiktari, new { @class = "form-control copyTo" })
-                        </td>
+                                <td>
+                                    @Html.TextBoxFor(modelItem => Model[index].UretimMiktari, new { @class = "form-control copyTo" })
+                                </td>
 
 
+                            </tr>
 
-                    </tr>
+                            index++;
+                        }
 
-                    index++;
+                    }
+                    else
+                    {
+                        <caption style="text-align:center;font-size:xx-large">Güncel Ürün Bulunmamaktadır...</caption>
+                    }
                 }
 
 
@@ -234,9 +246,7 @@
             </div>
 
         </div>
-        <div class="panel-footer">
-            Footer.
-        </div>
+       
     </div>
 
 
@@ -254,20 +264,7 @@
 
 
             <div class="modal-body">
-                @*Merhaba,
-
-                    Haftalık kullanım limitlerimiz aşağıdaki gibidir:
-                    @{
-                        foreach (var item in Model)
-                        {
-                            if (item.Selected == true)
-                            {
-                                <p>@item.UrunAdi</p>
-                            }
-                        }
-                    }*@
-
-
+               
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Kapat</button>

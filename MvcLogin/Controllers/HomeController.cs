@@ -103,21 +103,26 @@ namespace MvcLogin.Controllers
         {
             List<AdminMutfakYorum> adminMutfakYorum = StokKontrolEntitiesProvider.GetAllAdminMutfakYorum();
             List<KullaniciYorum> kullaniciYorum = StokKontrolEntitiesProvider.GetAllKullaniciYorum();
-            List<DuyuruBilgi> duyuruBilgi = StokKontrolEntitiesProvider.GetLastDuyuruBilgiToList(StokKontrolEntitiesProvider.FindLastAnnouncement());
-            List<string> UrunTipiString = new List<string>();
-
-            foreach (var item in duyuruBilgi)
+            List<DuyuruBilgi> duyuruBilgi = null;
+            List<string> UrunTipiString = null;
+            if (StokKontrolEntitiesProvider.FindLastAnnouncement() != 0)
             {
-                if (StokKontrolEntitiesProvider.getProductNameByObjectId(item.Urun.ObjectId).UrunTipi != null)
+                 duyuruBilgi = StokKontrolEntitiesProvider.GetLastDuyuruBilgiToList(StokKontrolEntitiesProvider.FindLastAnnouncement());
+                 UrunTipiString = new List<string>();
+
+                foreach (var item in duyuruBilgi)
                 {
-                    UrunTipiString.Add(StokKontrolEntitiesProvider.getProductNameByObjectId(item.Urun.ObjectId).UrunTipi.UrunTipi1);
+                    if (StokKontrolEntitiesProvider.getProductNameByObjectId(item.Urun.ObjectId).UrunTipi != null)
+                    {
+                        UrunTipiString.Add(StokKontrolEntitiesProvider.getProductNameByObjectId(item.Urun.ObjectId).UrunTipi.UrunTipi1);
+
+                    }
+                    else
+                    {
+                        UrunTipiString.Add("Birim");
+                    }
 
                 }
-                else
-                {
-                    UrunTipiString.Add("Birim");
-                }
-
             }
             HomepageModel model = new HomepageModel(kullaniciYorum, duyuruBilgi, adminMutfakYorum, UrunTipiString);
 
@@ -129,9 +134,23 @@ namespace MvcLogin.Controllers
         [System.Web.Mvc.HttpPost]
         public ActionResult AddKullaniciYorum(HomepageModel gelenler)
         {
-            StokKontrolEntitiesProvider.AddKullaniciYorum(gelenler.KullaniciYorumEkle, Convert.ToInt32(Session["UserObjectId"]));
+            KullaniciYorum sonuc = new KullaniciYorum();
+            if (gelenler.KullaniciYorumEkle != null)
+            {
+                sonuc = StokKontrolEntitiesProvider.AddKullaniciYorum(gelenler.KullaniciYorumEkle, Convert.ToInt32(Session["UserObjectId"]));
 
-            return RedirectToAction("Homepage", "Home");
+            }
+            if (sonuc.KullaniciYorumu != null)
+            {
+                return RedirectToAction("Homepage", "Home");
+            }
+            else
+            {
+                return RedirectToAction("Homepage", "Home");
+            }
+
+
+
         }
 
 
@@ -140,9 +159,21 @@ namespace MvcLogin.Controllers
         {
             if (Session["grup"].Equals(3))
             {
-                StokKontrolEntitiesProvider.AddAdminMutfakYorum(gelenler.AdminYorumEkle, Convert.ToInt32(Session["UserObjectId"]));
+                AdminMutfakYorum adminMutfakYorum = new AdminMutfakYorum();
+                if (gelenler.AdminYorumEkle != null)
+                {
+                    adminMutfakYorum = StokKontrolEntitiesProvider.AddAdminMutfakYorum(gelenler.AdminYorumEkle, Convert.ToInt32(Session["UserObjectId"]));
+                }
+                if (adminMutfakYorum.AdminYorumu != null)
+                {
+                    return RedirectToAction("Homepage", "Home");
+                }
+                else
+                {
+                    return RedirectToAction("Homepage", "Home");
+                }
 
-                return RedirectToAction("Homepage", "Home");
+
             }
             else
             {

@@ -57,6 +57,9 @@
                         alert('Error: ' + response.responseText);
                     }
                 });
+            } else if (secilenAy == 0) {
+                 window.location.href = "CurrentDebts"
+
             } else {
                 console.log("Boş seçildi!");
             }
@@ -69,17 +72,31 @@
 
 @using (Html.BeginForm())
 {
-    <style>
-        .navbar-fixed-left + .container {
-            padding-top: 25px;
-        }
-    </style>
-    <div class="col-md-4 col-md-offset-8" style="margin-bottom:50px; ">
-        @Html.DropDownListFor(model => model.SecilenAy, (Model.Ay).Select((v, i) => new SelectListItem() { Text = v.Tarih, Value = (i + 1).ToString() }), "Borç Dönemini Seçiniz.", new { @class = "form-control copyTo2" })
-    </div>
 
-    <div id="divCurrentDebts">
-        @Html.Partial("_PartialCurrentDebts", Model)
+
+    <div class="panel panel-primary" style="margin-top:50px;">
+        <div class="panel-heading">
+            <h4 style="text-align:center;">
+                Güncel Borçlar
+                <span style="float:right;shape-outside: padding-box; margin-top:-5px;">
+                    @Html.DropDownListFor(model => model.SecilenAy, (Model.Ay).Select((v, i) => new SelectListItem() { Text = v.Tarih, Value = (i + 1).ToString() }), "Toplam borç tutarı", new { @class = "form-control copyTo2" })
+                </span>
+            </h4>
+
+        </div>
+        <div class="panel-body">
+            <style>
+                .navbar-fixed-left + .container {
+                    padding-top: 25px;
+                }
+            </style>
+
+
+            <div id="divCurrentDebts">
+                @Html.Partial("_PartialCurrentDebts", Model)
+            </div>
+        </div>
+      
     </div>
 
 

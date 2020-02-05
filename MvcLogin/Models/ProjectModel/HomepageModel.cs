@@ -27,29 +27,24 @@ namespace MvcLogin.Models
                 kullaniciYorum.Add(item);
             }
 
-            foreach (var item in _duyuruBilgi)
+            if (_duyuruBilgi != null)
             {
-                duyuruBilgi.Add(item);
-
-                //if (StokKontrolEntitiesProvider.getProductNameByObjectId(item.ObjectId).UrunTipi != null)
-                //{
-                //    item.UrunTipiString = StokKontrolEntitiesProvider.getProductNameByObjectId(item.ObjectId).UrunTipi.UrunTipi1;
-
-                //}
-                //else
-                //{
-                //    item.UrunTipiString = "Birim";
-                //}
-                //item.UrunAdi = StokKontrolEntitiesProvider.getProductNameByObjectId(item.ObjectId).UrunAdi;
+                foreach (var item in _duyuruBilgi)
+                {
+                    duyuruBilgi.Add(item);
+                }
             }
             foreach (var item in _adminMutfakYorum)
             {
                 adminMutfakYorum.Add(item);
             }
 
-            foreach (var item in _urunTipiString)
+            if (_urunTipiString != null)
             {
-                UrunTipiString.Add(item);
+                foreach (var item in _urunTipiString)
+                {
+                    UrunTipiString.Add(item);
+                }
             }
 
             

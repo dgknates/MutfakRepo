@@ -11,7 +11,7 @@ namespace MvcLogin.Models
 {
     using System;
     using System.Collections.Generic;
-    
+
     public partial class Duyuru
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -19,14 +19,14 @@ namespace MvcLogin.Models
         {
             this.DuyuruBilgi = new HashSet<DuyuruBilgi>();
         }
-    
+        
         public int ObjectId { get; set; }
         public int PersonId { get; set; }
         public Nullable<System.DateTime> StartDate { get; set; }
         public Nullable<System.DateTime> EndDate { get; set; }
         public string ExtraNote { get; set; }
         public bool Deleted { get; set; }
-    
+
         public virtual Kullanıcılar Kullanıcılar { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DuyuruBilgi> DuyuruBilgi { get; set; }

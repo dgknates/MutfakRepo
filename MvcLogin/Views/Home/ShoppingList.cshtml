@@ -5,7 +5,6 @@
     Layout = "~/Views/Shared/_Layout2.cshtml";
 }
 <link href="~/Content/LightBox.css" rel="stylesheet" />
-<h2>ShoppingList</h2>
 <style>
     .close {
         color: white !important;
@@ -16,10 +15,8 @@
     }
 
     div.modal-content {
-        /*overflow:scroll !important;*/
         background-color: transparent;
         text-align: center;
-        /*overflow-y:scroll !important;*/
         background-size: contain;
         transform: scale(0.8);
         margin-top: -150px;
@@ -88,66 +85,84 @@
     }
 </script>
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.MarketAdi)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.AlisverisTarihi)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.FisTutari)
-        </th>
-        <th style="padding-left:90px;">
-            @Html.DisplayName("Fiş Fotoğrafı") 
-        </th>
-        <th></th>
-    </tr>
+<div class="panel panel-primary" style="margin-top:50px;">
+    <div class="panel-heading" style="text-align:center;">
+        <h4>
+            Alışverişler
+        </h4>
+    </div>
     @{
-        int index = 1;
-    }
-
-    @foreach (var item in Model)
-    {
-
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.MarketAdi)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AlisverisTarihi.Value)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FisTutari)
-            </td>
-            <td>
-                @{
-                    string path = Server.MapPath("~/Uploads/" + item.ObjectId.ToString() + ".jpg");
-                    string path2 = "~/Uploads/" + item.ObjectId.ToString() + ".jpg";
-                }
-
-                @*<img src="@path" style="height:200px;width:200px;" />*@
-                <div class="zoom">
-                    <img src="@Url.Content(path2)" alt="IMAGES" style="height:200px; width:200px;" onclick="openModal();currentSlide(@index)" class="hover-shadow cursor" />
-                </div>
-            </td>
-        </tr>
-        index++;
-    }
-</table>
-
-<div id="myModal" class="modal">
-    <span class="close cursor" onclick="closeModal()">&times;</span>
-    <div class="modal-content">
-
-        @foreach (var item in Model)
+        if (Model.Count() != 0)
         {
-            string path2 = "~/Uploads/" + item.ObjectId.ToString() + ".jpg";
-            <div class="mySlides ">
+            <div class="panel-body">
+                <table class="table">
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.MarketAdi)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.AlisverisTarihi)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.FisTutari)
+                        </th>
+                        <th style="padding-left:90px;">
+                            @Html.DisplayName("Fiş Fotoğrafı")
+                        </th>
+                        <th></th>
+                    </tr>
+                    @{
+                        int index = 1;
+                    }
 
-                <img src="@Url.Content(path2)" alt="IMAGES" @*style="width:500px; height:800px;"*@ />
+                    @foreach (var item in Model)
+                    {
+
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.MarketAdi)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.AlisverisTarihi.Value)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.FisTutari)
+                            </td>
+                            <td>
+                                @{
+                                    string path = Server.MapPath("~/Uploads/" + item.ObjectId.ToString() + ".jpg");
+                                    string path2 = "~/Uploads/" + item.ObjectId.ToString() + ".jpg";
+                                }
+
+                                <div class="zoom">
+                                    <img src="@Url.Content(path2)" alt="IMAGES" style="height:200px; width:200px;" onclick="openModal();currentSlide(@index)" class="hover-shadow cursor" />
+                                </div>
+                            </td>
+                        </tr>
+                        index++;
+                    }
+                </table>
+
+                <div id="myModal" class="modal">
+                    <span class="close cursor" onclick="closeModal()">&times;</span>
+                    <div class="modal-content">
+
+                        @foreach (var item in Model)
+                        {
+                            string path2 = "~/Uploads/" + item.ObjectId.ToString() + ".jpg";
+                            <div class="mySlides ">
+
+                                <img src="@Url.Content(path2)" alt="IMAGES"/>
+                            </div>
+                        }
+                    </div>
+                </div>
             </div>
         }
-    </div>
+        else
+        {
+            <p style="text-align:center;font-size:xx-large; height:150px; padding-top:50px">Güncel Alışveriş Bulunmamaktadır.</p>
+        }
+    }
+
 </div>

@@ -10,7 +10,9 @@
     $(document).ready(function () {
         $('#SecilenAy').change(function () {
             var secilenAy = $('#SecilenAy').val();
-
+            if (secilenAy == 0) {
+                window.location.href="PersonalDebst"
+            }
             if (secilenAy != 0) {
                 console.log(secilenAy);
 
@@ -29,17 +31,7 @@
                     success: function (data) {
                         console.log("Data geldi !!!");
 
-                        //console.log(data);
-                        //console.log(data.length);
-                        /*for (var i = 0; i < data.length; i++) {
-                            var p = data[i];
-                            console.log(p.id + "---" + p.name);
-                        }*/
-
-
-
-                        //divTest.html('asdasd');
-                        //divTest.html(data);
+                       
 
                         divProductList.html(data);
                     },
@@ -67,14 +59,14 @@
 {
 
 
-    <div class="panel panel-default" style="margin-top:50px;">
+    <div class="panel panel-primary" style="margin-top:50px;">
         <div class="panel-heading">
-            <h3>
+            <h4 style="text-align:center;">
                 Kişi Borçlandırma
-                <span style="float:right;">
-                    @Html.DropDownListFor(model => model.SecilenAy, (Model.Ay).Select((v, i) => new SelectListItem() { Text = v.Tarih, Value = (i + 1).ToString() }), "İşlem Yapılacak Ayı Seçiniz.", new { @class = "form-control copyTo2" })
+                <span style="float:right; shape-outside: padding-box; margin-top:-5px;">
+                    @Html.DropDownListFor(model => model.SecilenAy, (Model.Ay).Select((v, i) => new SelectListItem() { Text = v.Tarih, Value = (i + 1).ToString() }), "İşlem Yapılacak Ayı Seçiniz.", new { @class = "form-control copyTo2", @style="padding-buttom:10px;" })
                 </span>
-            </h3>
+            </h4>
 
 
         </div>
@@ -95,9 +87,7 @@
                 </div>
             </div>
         </div>
-        <div class="panel-footer">
-            Footer.
-        </div>
+   
     </div>
 }
 

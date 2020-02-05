@@ -1,22 +1,43 @@
 ﻿@model MvcLogin.Models.HomepageModel
 
-@{
-    int index = 0;
-    foreach (var item in Model.adminMutfakYorum.Take(5))
+@{if (Model.adminMutfakYorum.Count() != 0)
     {
-
-        <div class="panel panel-danger">
-            <div class="panel-heading" style="background-color:#92000a; color:white; height:40px;">
-                <p>
-                    <span style="float:left;">@Html.DisplayFor(x => x.adminMutfakYorum[index].Kullanıcılar.KullanıcıAdı)</span>
-                    <span style="float:right;">@item.Tarih.ToString("MM/dd/yyyy H:mm")</span>
-                </p>
+        int index = 0;
+        foreach (var item in Model.adminMutfakYorum.Take(5))
+        {
+            <style>
+                .crop {
+                    width: 100px;
+                    overflow: hidden;
+                    height: 50px;
+                    line-height: 50px;
+                }
+                p {
+                    word-break: break-all
+                }
+            </style>
+            <div class="panel panel-danger">
+                <div class="panel-heading" style="background-color:#92000a; color:white; height:40px;">
+                    <p>
+                        <span style="float:left;">@Html.DisplayFor(x => x.adminMutfakYorum[index].Kullanıcılar.KullanıcıAdı)</span>
+                        <span style="float:right;">@item.Tarih.ToString("MM/dd/yyyy H:mm")</span>
+                    </p>
+                </div>
+                <div class="panel-body">
+                    <p>
+                        @item.AdminYorumu
+                    </p>
+                </div>
             </div>
-            <div class="panel-body">@Html.DisplayFor(x => x.adminMutfakYorum[index].AdminYorumu)</div>
-        </div>
 
-        index++;
+            index++;
 
+        }
     }
-
+    else
+    {
+        <div class="panel panel-body" style="font-size: xx-large;align-content: center;height: 500px;text-align: center;padding-top: 200px; ">
+            <p style="text-align:center;">Güncel Yorum Bulunmamaktadır...</p>
+        </div>
+    }
 }

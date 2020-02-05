@@ -11,13 +11,15 @@ namespace MvcLogin.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class KullaniciYorum
     {
         public int ObjectId { get; set; }
         public int KisiId { get; set; }
 
         public System.DateTime Tarih { get; set; }
+        [Required(), MaxLength(250, ErrorMessage ="Lütfen 250 den fazla karakter girmeyiniz.")]
         public string KullaniciYorumu { get; set; }
         public bool Deleted { get; set; }
     

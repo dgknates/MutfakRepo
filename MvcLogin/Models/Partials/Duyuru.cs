@@ -26,7 +26,14 @@ namespace MvcLogin.Models
 
         public int FindLastAnnouncement()
         {
-            return Duyuru.OrderByDescending(x => x.ObjectId).FirstOrDefault(x => x.Deleted == false).ObjectId;
+            if (Duyuru.OrderByDescending(x => x.ObjectId).FirstOrDefault(x => x.Deleted == false) !=null)
+            {
+                return Duyuru.OrderByDescending(x => x.ObjectId).FirstOrDefault(x => x.Deleted == false).ObjectId;
+            }
+            else
+            {
+                return 0;
+            }
         }
 
 

@@ -1,19 +1,37 @@
 ﻿@model MvcLogin.Models.HomepageModel
 
 @{
-    int index = 0;
-    foreach (var item in Model.kullaniciYorum.Take(5))
+    if (Model.kullaniciYorum.Count() != 0)
     {
-        <div class="panel panel-info">
-            <div class="panel-heading" style="text-align:right; height:40px;">
-                <p>
-                    <span style="float:left;">@item.Kullanıcılar.KullanıcıAdı</span>
-                    <span style="float:right;">@item.Tarih.ToString("MM/dd/yyyy H:mm")</span>
-                </p>
+        int index = 0;
+        foreach (var item in Model.kullaniciYorum.Take(5))
+        {
+            <div class="panel panel-info">
+                <div class="panel-heading" style="text-align:right; height:40px;">
+                    <p>
+                        <span style="float:left;">@item.Kullanıcılar.KullanıcıAdı</span>
+                        <span style="float:right;">@item.Tarih.ToString("MM/dd/yyyy H:mm")</span>
+                    </p>
+                </div>
+                <div class="panel-body">
+                    <div>
+
+                        <p>
+                            @Html.DisplayFor(x => x.kullaniciYorum[index].KullaniciYorumu)
+                        </p>
+                    </div>
+                </div>
             </div>
-            <div class="panel-body">@Html.DisplayFor(x => x.kullaniciYorum[index].KullaniciYorumu)</div>
+            index++;
+        }
+    }
+    else
+    {
+
+        <div class="panel panel-body" style="font-size: xx-large;align-content: center;height: 500px;text-align: center;padding-top: 200px; ">
+            <p style="text-align:center;">Güncel Yorum Bulunmamaktadır...</p>
         </div>
-        index++;
+
     }
 
 }

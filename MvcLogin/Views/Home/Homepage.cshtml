@@ -5,27 +5,305 @@
 }
 
 
+<script src="https://cdn.jsdelivr.net/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.15.1/jquery.validate.min.js"></script>
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(function () {
+            // Initialize form validation on the registration form.
+            // It has the name attribute "registration"
+            $("form[name='kullaniciYorumEkleForm']").validate({
+                // Specify validation rules
+                rules: {
+
+                    KullaniciYorumEkle: {
+                        required: true,
+                        maxlength: 250
+                    }
+                },
+                // Specify validation error messages
+                messages: {
+
+                    KullaniciYorumEkle: {
+                        required: "Bu alan boş bırakılamaz.",
+                        maxlength: "Maksimum 250 karakter girmelisiniz."
+                    }
+                },
+                // Make sure the form is submitted to the destination defined
+                // in the "action" attribute of the form when valid
+                submitHandler: function (form) {
+                    form.submit();
+                }
+            });
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(function () {
+            // Initialize form validation on the registration form.
+            // It has the name attribute "registration"
+            $("form[name='AdminYorumEkleForm']").validate({
+                // Specify validation rules
+                rules: {
+
+                    AdminYorumEkle: {
+                        required: true,
+                        maxlength: 250
+                    }
+                },
+                // Specify validation error messages
+                messages: {
+
+                    AdminYorumEkle: {
+                        required: "Bu alan boş bırakılamaz.",
+                        maxlength: "Maksimum 250 karakter girmelisiniz."
+                    }
+                },
+                // Make sure the form is submitted to the destination defined
+                // in the "action" attribute of the form when valid
+                submitHandler: function (form) {
+                    form.submit();
+                }
+            });
+        });
+    });
+</script>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.kullanici li.beforenext').click(function () {
+            var pageNumber = $(this).text();
+
+            var test = $(this).closest("ul.kullanici").find("li").find("a.sayfalandirma").last().text();
+            var sayi = Number(test);
+            var yorumSayisi = Number($('sayi').text().trim());
+
+
+            if (pageNumber.trim() == "Sonraki") {
+                if ($(this).closest("ul.kullanici").find("li").find("a.sayfalandirma").first().text() == 1) {
+
+                    if ($(this).closest("ul.kullanici").find("li.sayfalandirma").first().next().hasClass("active") || $(this).closest("ul.kullanici").find("li.sayfalandirma").last().hasClass("active")) {
+                        $(this).closest("ul.kullanici").find("li").find("a.noktailk").removeClass("hidden");
+                    }
+                    if ($(this).closest("ul.kullanici").find("li.sayfalandirma").first().next().hasClass("active")) {
+                        document.getElementById("1").innerHTML = (sayi - 1).toString();
+                        document.getElementById("2").innerHTML = (sayi).toString();
+                        document.getElementById("3").innerHTML = (sayi + 1).toString();
+                    } else if ($(this).closest("ul.kullanici").find("li.sayfalandirma").last().hasClass("active")) {
+                        document.getElementById("1").innerHTML = (sayi - 1).toString();
+                        document.getElementById("2").innerHTML = (sayi).toString();
+                        document.getElementById("3").innerHTML = (sayi + 1).toString();
+                        $(this).closest("ul.kullanici").find("li.sayfalandirma").first().next().addClass("active");
+                        $(this).closest("ul.kullanici").find("li.sayfalandirma").last().removeClass("active");
+                    } else {
+                        $(this).closest("ul.kullanici").find("li.sayfalandirma").first().next().addClass("active");
+                        $(this).closest("ul.kullanici").find("li.sayfalandirma").first().removeClass("active");
+                    }
+
+                }
+                else if (sayi < yorumSayisi) {
+
+
+                    if (document.getElementById("2").innerHTML == (yorumSayisi - 1).toString()) {
+                        $(this).closest("ul.kullanici").find("li.sayfalandirma").first().next().removeClass("active");
+                        $(this).closest("ul.kullanici").find("li.sayfalandirma").last().addClass("active");
+                    } else if ($(this).closest("ul.kullanici").find("li.sayfalandirma").first().hasClass("active")) {
+                        $(this).closest("ul.kullanici").find("li.sayfalandirma").first().next().addClass("active");
+                        $(this).closest("ul.kullanici").find("li.sayfalandirma").first().removeClass("active");
+                    }
+
+                    if (sayi + 1 <= yorumSayisi) {
+
+                        document.getElementById("1").innerHTML = (sayi - 1).toString();
+                        document.getElementById("2").innerHTML = (sayi).toString();
+                        document.getElementById("3").innerHTML = (sayi + 1).toString();
+                        if (sayi + 1 == yorumSayisi || sayi == yorumSayisi) {
+                            $(this).closest("ul.kullanici").find("li").find("a.noktason").addClass("hidden");
+
+                        }
+                    }
+
+                } else if (sayi == yorumSayisi) {
+                    if ($(this).closest("ul.kullanici").find("li.sayfalandirma").first().hasClass("active")) {
+                        $(this).closest("ul.kullanici").find("li.sayfalandirma").first().next().addClass("active");
+                        $(this).closest("ul.kullanici").find("li.sayfalandirma").first().removeClass("active");
+                    } else if ($(this).closest("ul.kullanici").find("li.sayfalandirma").first().next().hasClass("active")) {
+                        $(this).closest("ul.kullanici").find("li.sayfalandirma").first().next().removeClass("active");
+                        $(this).closest("ul.kullanici").find("li.sayfalandirma").last().addClass("active");
+                    }
+                }
+            } else if ($(this).hasClass("noktailk")) {
+                if (sayi >= 3) {
+                    if (sayi >= 6) {
+                        var a = document.getElementById("1").innerHTML = (sayi - 5).toString();
+                        var a = document.getElementById("2").innerHTML = (sayi - 4).toString();
+                        var a = document.getElementById("3").innerHTML = (sayi - 3).toString();
+                        $(this).closest("ul.kullanici").find("li.sayfalandirma").last().addClass("active");
+
+                    }
+
+                    if (sayi - 3 == 3) {
+                        $(this).closest("ul.kullanici").find("li").find("a.noktailk").addClass("hidden");
+                        $(this).closest("ul.kullanici").find("li").find("a.noktason").removeClass("hidden");
+                        $(this).closest("ul.kullanici").find("li.sayfalandirma").last().addClass("active");
+
+
+                    } else if (sayi < 6) {
+                        var a = document.getElementById("1").innerHTML = "1";
+                        var a = document.getElementById("2").innerHTML = "2";
+                        var a = document.getElementById("3").innerHTML = "3";
+                        $(this).closest("ul.kullanici").find("li").find("a.noktailk").addClass("hidden");
+                        $(this).closest("ul.kullanici").find("li.sayfalandirma").last().addClass("active");
+
+                    }
+
+                    $(this).closest("ul.kullanici").find("li.sayfalandirma").last().addClass("active");
+                    $(this).closest("ul.kullanici").find("li.sayfalandirma").last().before().removeClass("active");
+
+                }
+            } else if ($(this).hasClass("noktason")) {
+
+                if (sayi <= yorumSayisi) {
+                    if (sayi == yorumSayisi) {
+                        $(this).closest("ul.kullanici").find("li").find("a.noktason").addClass("hidden");
+                    } else if (sayi + 3 <= yorumSayisi) {
+                        var a = document.getElementById("1").innerHTML = (sayi + 1).toString();
+                        var a = document.getElementById("2").innerHTML = (sayi + 2).toString();
+                        var a = document.getElementById("3").innerHTML = (sayi + 3).toString();
+
+                    } else {
+                        var a = document.getElementById("1").innerHTML = (yorumSayisi - 2).toString();
+                        var a = document.getElementById("2").innerHTML = (yorumSayisi - 1).toString();
+                        var a = document.getElementById("3").innerHTML = (yorumSayisi).toString();
+                    }
+                    if (sayi == 3) {
+                        $(this).closest("ul.kullanici").find("li").find("a.noktailk").removeClass("hidden");
+                    }
+                    if (sayi + 3 >= yorumSayisi) {
+                        $(this).closest("ul.kullanici").find("li").find("a.noktason").addClass("hidden");
+                    }
+
+                }
+
+
+
+            } else if (pageNumber.trim() == "Önceki") {
+                if (sayi != 3) {
+
+                    if (sayi == 4) {
+                        $(this).closest("ul.kullanici").find("li").find("a.noktailk").addClass("hidden");
+
+                    }
+                    if (sayi == yorumSayisi) {
+                        if ($(this).closest("ul.kullanici").find("li.sayfalandirma").first().next().hasClass("active")) {
+                            $(this).closest("ul.kullanici").find("li").find("a.noktason").removeClass("hidden");
+                            var a = document.getElementById("1").innerHTML = (sayi - 3).toString();
+                            var a = document.getElementById("2").innerHTML = (sayi - 2).toString();
+                            var a = document.getElementById("3").innerHTML = (sayi - 1).toString();
+                        }
+                        if ($(this).closest("ul.kullanici").find("li.sayfalandirma").last().hasClass("active")) {
+                            $(this).closest("ul.kullanici").find("li.sayfalandirma").last().removeClass("active");
+                            $(this).closest("ul.kullanici").find("li.sayfalandirma").first().next().addClass("active");
+                        }
+                    } else {
+                        var a = document.getElementById("1").innerHTML = (sayi - 3).toString();
+                        var a = document.getElementById("2").innerHTML = (sayi - 2).toString();
+                        var a = document.getElementById("3").innerHTML = (sayi - 1).toString();
+                    }
+                } else if (sayi == 3) {
+                    if ($(this).closest("ul.kullanici").find("li.sayfalandirma").first().next().hasClass("active")) {
+                        $(this).closest("ul.kullanici").find("li.sayfalandirma").first().next().removeClass("active");
+                        $(this).closest("ul.kullanici").find("li.sayfalandirma").first().addClass("active");
+                    } else if ($(this).closest("ul.kullanici").find("li.sayfalandirma").last().hasClass("active")) {
+                        $(this).closest("ul.kullanici").find("li.sayfalandirma").first().next().addClass("active");
+                        $(this).closest("ul.kullanici").find("li.sayfalandirma").last().removeClass("active");
+                    }
+                }
+
+
+
+
+
+            }
+
+
+            var pageNo = Number($(this).closest("ul.kullanici").find("li.active").text());
+
+            console.log(pageNo)
+
+            if (pageNo != 0) {
+
+                var divKullaniciYorum = $('#divKullaniciYorum');
+                $.ajax({
+                    type: 'GET',
+                    cache: false,
+
+                    dataType: 'html',
+                    contentType: 'application/json; charset=utf-8',
+                    url: '/Home/GetKullaniciYorum',
+                    data: { 'sayfaNo': pageNo },
+                    success: function (data) {
+                        console.log("Data geldi !!!");
+
+                        divKullaniciYorum.html(data);
+                    },
+                    failure: function (response) {
+                        //alert('Failed to retrieve products: ' + response.responseText);
+                        console.log(pageNumber)
+                    },
+                    error: function (response) {
+                        //alert('Error: ' + response.responseText);
+                        console.log(pageNumber)
+
+                    }
+                });
+            } else {
+                console.log("Boş seçildi!");
+            }
+
+
+
+
+        });
+    });
+</script>
+
 
 
 <script type="text/javascript">
     $(document).ready(function () {
 
 
-        $('.kullanici li').click(function () {
-            var pageNumber = $(this).text();
-            console.log(pageNumber);
+        $('.kullanici li.sayfalandirma').click(function () {
+            $('li.active').removeClass('active');
+            $(this).closest("li.sayfalandirma").addClass("active");
 
-            if (pageNumber != 0) {
-                console.log(pageNumber);
+
+            var pageNumber = $(this).text();
+
+
+
+            var test = $(this).closest("ul.kullanici").find("li").find("a.sayfalandirma").last().text();
+            var sayi = Number(test);
+            var yorumSayisi = Number($('sayi').text().trim());
+
+
+
+
+
+            if (pageNumber != 0 && pageNumber.trim() != "Sonraki" && pageNumber.trim() != "Önceki" && pageNumber != "...") {
 
                 var divKullaniciYorum = $('#divKullaniciYorum');
                 $.ajax({
                     type: 'GET',
                     cache: false,
-                    /*
-                        - contentType is the type of data you're sending, so application/json; charset=utf-8 is a common one, as is application/x-www-form-urlencoded; charset=UTF-8, which is the default.
-                        - dataType is what you're expecting back from the server: json, html, text, etc. jQuery will use this to figure out how to populate the success function's parameter.
-                     */
+
                     dataType: 'html',
                     contentType: 'application/json; charset=utf-8',
                     url: '/Home/GetKullaniciYorum',
@@ -33,25 +311,16 @@
                     success: function (data) {
                         console.log("Data geldi !!!");
 
-                        //console.log(data);
-                        //console.log(data.length);
-                        /*for (var i = 0; i < data.length; i++) {
-                            var p = data[i];
-                            console.log(p.id + "---" + p.name);
-                        }*/
-
-
-
-                        //divTest.html('asdasd');
-                        //divTest.html(data);
-
                         divKullaniciYorum.html(data);
                     },
                     failure: function (response) {
-                        alert('Failed to retrieve products: ' + response.responseText);
+                        //alert('Failed to retrieve products: ' + response.responseText);
+                        console.log(pageNumber)
                     },
                     error: function (response) {
-                        alert('Error: ' + response.responseText);
+                        //alert('Error: ' + response.responseText);
+                        console.log(pageNumber)
+
                     }
                 });
             } else {
@@ -68,10 +337,231 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-
-
-        $('.admin li').click(function () {
+        $('.admin li.beforenext').click(function () {
             var pageNumber = $(this).text();
+
+            var test = $(this).closest("ul.admin").find("li").find("a.sayfalandirma").last().text();
+            var sayi = Number(test);
+            var yorumSayisi = Number($('sayiadmin').text().trim());
+
+
+            if (pageNumber.trim() == "Sonraki") {
+                if ($(this).closest("ul.admin").find("li").find("a.sayfalandirma").first().text() == 1) {
+
+                    if ($(this).closest("ul.admin").find("li.sayfalandirma").first().next().hasClass("active") || $(this).closest("ul.admin").find("li.sayfalandirma").last().hasClass("active")) {
+                        if (yorumSayisi > 3) {
+                            $(this).closest("ul.admin").find("li").find("a.noktailk").removeClass("hidden");
+
+                        }
+                    }
+                    if ($(this).closest("ul.admin").find("li.sayfalandirma").first().next().hasClass("active")) {
+                        if (yorumSayisi <= 3) {
+                            if ($(this).closest("ul.admin").find("li.sayfalandirma").first().hasClass("active")) {
+                                $(this).closest("ul.admin").find("li.sayfalandirma").first().next().addClass("active");
+                                $(this).closest("ul.admin").find("li.sayfalandirma").first().removeClass("active");
+                            } else if ($(this).closest("ul.admin").find("li.sayfalandirma").first().next().hasClass("active")) {
+                                $(this).closest("ul.admin").find("li.sayfalandirma").first().next().removeClass("active");
+                                $(this).closest("ul.admin").find("li.sayfalandirma").last().addClass("active");
+                            }
+                        } else {
+                            document.getElementById("1").innerHTML = (sayi - 1).toString();
+                            document.getElementById("2").innerHTML = (sayi).toString();
+                            document.getElementById("3").innerHTML = (sayi + 1).toString();
+                        }
+                    } else if ($(this).closest("ul.admin").find("li.sayfalandirma").last().hasClass("active")) {
+                        if (yorumSayisi >= 3) {
+
+                        } else {
+                            document.getElementById("1").innerHTML = (sayi - 1).toString();
+                            document.getElementById("2").innerHTML = (sayi).toString();
+                            document.getElementById("3").innerHTML = (sayi + 1).toString();
+                            $(this).closest("ul.admin").find("li.sayfalandirma").first().next().addClass("active");
+                            $(this).closest("ul.admin").find("li.sayfalandirma").last().removeClass("active");
+                        }
+                    } else {
+                        $(this).closest("ul.admin").find("li.sayfalandirma").first().next().addClass("active");
+                        $(this).closest("ul.admin").find("li.sayfalandirma").first().removeClass("active");
+                    }
+
+                }
+                else if (sayi < yorumSayisi) {
+
+
+                    if (document.getElementById("2").innerHTML == (yorumSayisi - 1).toString()) {
+                        $(this).closest("ul.admin").find("li.sayfalandirma").first().next().removeClass("active");
+                        $(this).closest("ul.admin").find("li.sayfalandirma").last().addClass("active");
+                    } else if ($(this).closest("ul.admin").find("li.sayfalandirma").first().hasClass("active")) {
+                        $(this).closest("ul.admin").find("li.sayfalandirma").first().next().addClass("active");
+                        $(this).closest("ul.admin").find("li.sayfalandirma").first().removeClass("active");
+                    }
+
+                    if (sayi + 1 <= yorumSayisi) {
+
+                        document.getElementById("1").innerHTML = (sayi - 1).toString();
+                        document.getElementById("2").innerHTML = (sayi).toString();
+                        document.getElementById("3").innerHTML = (sayi + 1).toString();
+                        if (sayi + 1 == yorumSayisi || sayi == yorumSayisi) {
+                            $(this).closest("ul.admin").find("li").find("a.noktason").addClass("hidden");
+
+                        }
+                    }
+
+                } else if (sayi == yorumSayisi) {
+                    if ($(this).closest("ul.admin").find("li.sayfalandirma").first().hasClass("active")) {
+                        $(this).closest("ul.admin").find("li.sayfalandirma").first().next().addClass("active");
+                        $(this).closest("ul.admin").find("li.sayfalandirma").first().removeClass("active");
+                    } else if ($(this).closest("ul.admin").find("li.sayfalandirma").first().next().hasClass("active")) {
+                        $(this).closest("ul.admin").find("li.sayfalandirma").first().next().removeClass("active");
+                        $(this).closest("ul.admin").find("li.sayfalandirma").last().addClass("active");
+                    }
+                }
+            } else if ($(this).hasClass("noktailk")) {
+                if (sayi >= 3) {
+                    if (sayi >= 6) {
+                        var a = document.getElementById("1").innerHTML = (sayi - 5).toString();
+                        var a = document.getElementById("2").innerHTML = (sayi - 4).toString();
+                        var a = document.getElementById("3").innerHTML = (sayi - 3).toString();
+                        $(this).closest("ul.admin").find("li.sayfalandirma").last().addClass("active");
+
+                    }
+
+                    if (sayi - 3 == 3) {
+                        $(this).closest("ul.admin").find("li").find("a.noktailk").addClass("hidden");
+                        $(this).closest("ul.admin").find("li").find("a.noktason").removeClass("hidden");
+                        $(this).closest("ul.admin").find("li.sayfalandirma").last().addClass("active");
+
+
+                    } else if (sayi < 6) {
+                        var a = document.getElementById("1").innerHTML = "1";
+                        var a = document.getElementById("2").innerHTML = "2";
+                        var a = document.getElementById("3").innerHTML = "3";
+                        $(this).closest("ul.admin").find("li").find("a.noktailk").addClass("hidden");
+                        $(this).closest("ul.admin").find("li.sayfalandirma").last().addClass("active");
+
+                    }
+
+                    $(this).closest("ul.admin").find("li.sayfalandirma").last().addClass("active");
+                    $(this).closest("ul.admin").find("li.sayfalandirma").last().before().removeClass("active");
+
+                }
+            } else if ($(this).hasClass("noktason")) {
+
+                if (sayi <= yorumSayisi) {
+                    if (sayi == yorumSayisi) {
+                        $(this).closest("ul.admin").find("li").find("a.noktason").addClass("hidden");
+                    } else if (sayi + 3 <= yorumSayisi) {
+                        var a = document.getElementById("1").innerHTML = (sayi + 1).toString();
+                        var a = document.getElementById("2").innerHTML = (sayi + 2).toString();
+                        var a = document.getElementById("3").innerHTML = (sayi + 3).toString();
+
+                    } else {
+                        var a = document.getElementById("1").innerHTML = (yorumSayisi - 2).toString();
+                        var a = document.getElementById("2").innerHTML = (yorumSayisi - 1).toString();
+                        var a = document.getElementById("3").innerHTML = (yorumSayisi).toString();
+                    }
+                    if (sayi == 3) {
+                        $(this).closest("ul.admin").find("li").find("a.noktailk").removeClass("hidden");
+                    }
+                    if (sayi + 3 >= yorumSayisi) {
+                        $(this).closest("ul.admin").find("li").find("a.noktason").addClass("hidden");
+                    }
+
+                }
+
+
+
+            } else if (pageNumber.trim() == "Önceki") {
+                if (sayi != 3) {
+
+                    if (sayi == 4) {
+                        $(this).closest("ul.admin").find("li").find("a.noktailk").addClass("hidden");
+
+                    }
+                    if (sayi == yorumSayisi) {
+                        if ($(this).closest("ul.admin").find("li.sayfalandirma").first().next().hasClass("active")) {
+                            $(this).closest("ul.admin").find("li").find("a.noktason").removeClass("hidden");
+                            var a = document.getElementById("1").innerHTML = (sayi - 3).toString();
+                            var a = document.getElementById("2").innerHTML = (sayi - 2).toString();
+                            var a = document.getElementById("3").innerHTML = (sayi - 1).toString();
+                        }
+                        if ($(this).closest("ul.admin").find("li.sayfalandirma").last().hasClass("active")) {
+                            $(this).closest("ul.admin").find("li.sayfalandirma").last().removeClass("active");
+                            $(this).closest("ul.admin").find("li.sayfalandirma").first().next().addClass("active");
+                        }
+                    } else {
+                        var a = document.getElementById("1").innerHTML = (sayi - 3).toString();
+                        var a = document.getElementById("2").innerHTML = (sayi - 2).toString();
+                        var a = document.getElementById("3").innerHTML = (sayi - 1).toString();
+                    }
+                } else if (sayi == 3) {
+                    if ($(this).closest("ul.admin").find("li.sayfalandirma").first().next().hasClass("active")) {
+                        $(this).closest("ul.admin").find("li.sayfalandirma").first().next().removeClass("active");
+                        $(this).closest("ul.admin").find("li.sayfalandirma").first().addClass("active");
+                    } else if ($(this).closest("ul.admin").find("li.sayfalandirma").last().hasClass("active")) {
+                        $(this).closest("ul.admin").find("li.sayfalandirma").first().next().addClass("active");
+                        $(this).closest("ul.admin").find("li.sayfalandirma").last().removeClass("active");
+                    }
+                }
+
+
+
+
+
+            }
+
+
+            var pageNo = Number($(this).closest("ul.admin").find("li.active").text());
+
+            console.log(pageNo)
+
+            if (pageNo != 0) {
+
+                var divAdminYorum = $('#divAdminYorum');
+                $.ajax({
+                    type: 'GET',
+                    cache: false,
+
+                    dataType: 'html',
+                    contentType: 'application/json; charset=utf-8',
+                    url: '/Home/GetAdminYorum',
+                    data: { 'sayfaNo': pageNo },
+                    success: function (data) {
+                        console.log("Data geldi !!!");
+
+                        divAdminYorum.html(data);
+                    },
+                    failure: function (response) {
+                        //alert('Failed to retrieve products: ' + response.responseText);
+                        console.log(pageNumber)
+                    },
+                    error: function (response) {
+                        //alert('Error: ' + response.responseText);
+                        console.log(pageNumber)
+
+                    }
+                });
+            } else {
+                console.log("Boş seçildi!");
+            }
+
+
+
+
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+
+        $('.admin li.sayfalandirma').click(function () {
+
+            $('li.active').removeClass('active');
+            $(this).closest("li.sayfalandirma").addClass("active");
+            var pageNumber = $(this).text();
+
+
             console.log(pageNumber);
 
             if (pageNumber != 0) {
@@ -94,10 +584,13 @@
                         divAdminYorum.html(data);
                     },
                     failure: function (response) {
-                        alert('Failed to retrieve products: ' + response.responseText);
+                        //alert('Failed to retrieve products: ' + response.responseText);
+                        console.log(pageNumber)
                     },
                     error: function (response) {
-                        alert('Error: ' + response.responseText);
+                        //alert('Error: ' + response.responseText);
+                        console.log(pageNumber)
+
                     }
                 });
             } else {
@@ -112,7 +605,12 @@
     });
 </script>
 <style>
-    
+
+    #KullaniciYorumEkle-error, #AdminYorumEkle-error {
+        font-family: "Comic Sans MS", cursive, sans-serif;
+        color: red;
+    }
+
 
     .col-md-3 {
         border-color: #ddd !important;
@@ -138,13 +636,31 @@
             background-color: RoyalBlue;
             color: white;
         }
+
+    .kullanici li.active > a {
+        background-color: royalblue;
+        color: #fff;
+    }
+
+    .btnKullaniciYorum.focus, .btnKullaniciYorum:focus, .btnKullaniciYorum:hover {
+        color: lightblue;
+        text-decoration: none;
+    }
+
+    .kullanici > li > a:hover {
+        background-color: lightblue;
+    }
+
+    .admin > li > a:hover {
+        background-color: lightblue;
+    }
 </style>
 
 
-<div class="" style="margin-top:30px; display:flow-root;">
+<div class="" style="margin-top:30px;">
 
 
-    <div class="col-md-3" style="border-color:green; border-width:medium; display:block;">
+    <div class="col-md-3" style="border-color:green; border-width:medium;">
 
         <h4 style="text-align:center;">
             <i class="fas fa-users" style="color:green; font-size:x-large; margin-right:10px;"></i>Kullanıcı Yorumları
@@ -159,27 +675,52 @@
 
             </div>
 
-            <nav aria-label="Page navigation">
+            <nav aria-label="Page navigation" style="text-align:center;">
                 <ul class="pagination kullanici">
-                    <li>
+                    <li class="beforenext">
                         <a href="#" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
+                            <span aria-hidden="true">Önceki</span>
                         </a>
                     </li>
                     @{
                         int pageNumber = Model.kullaniciYorum.Count() / 5;
                         int y = Model.kullaniciYorum.Count() % 5 == 0 ? 0 : pageNumber++;
 
+                        <li class="noktailk beforenext"><a class="noktailk hidden" id=noktanokta href="#">...</a></li>
+
+
                         for (int i = 1; i <= pageNumber; i++)
                         {
-                            <li><a class="sayfalandirma" id=@i href="#">@i</a></li>
+                            <li class="sayfalandirma"><a class="sayfalandirma" id=@i href="#">@i</a></li>
+                            if (i % 3 == 0)
+                            {
+                                <li class="noktason beforenext"><a id=@i class="noktason" href="#">...</a></li>
+
+                                break;
+                            }
                         }
+
+
                     }
+                    <sayi class="hidden">
+                        @{
+                            var a = 0;
+                            if (Model.kullaniciYorum.Count() % 5 == 0)
+                            {
+                                a = (@Model.kullaniciYorum.Count() / 5);
+                            }
+                            else
+                            {
+                                a = ((@Model.kullaniciYorum.Count() / 5) + 1);
+                            }
+                            @a;
+                        }
 
+                    </sayi>
 
-                    <li>
+                    <li class="beforenext">
                         <a href="#" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
+                            <span aria-hidden="true">Sonraki</span>
                         </a>
                     </li>
                 </ul>
@@ -193,9 +734,9 @@
                 <div class="modal-content" style="margin-right:200px;">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" style="font-size:xx-large; margin-left:350px;">×</span></button>
-                        <h4 class="modal-title" id="myModalLabel">Ürün Ekle</h4>
+                        <h4 class="modal-title" id="myModalLabel">Mutfak Yorum Ekle</h4>
                     </div>
-                    <form method="post" action="/Home/AddKullaniciYorum" style="margin-left:50px; margin-top:20px;">
+                    <form method="post" name="kullaniciYorumEkleForm" action="/Home/AddKullaniciYorum" style="margin-left:50px; margin-top:20px;">
 
                         <div class="form-group">
                             <label>
@@ -205,8 +746,7 @@
                         </div>
                         <div class="form-group">
                             <label>Kullanici Yorumu:</label>
-                            @*<text type="text" name="KullaniciYorumEkle" class="form-control" />*@
-                            <textarea rows="5" cols="350" name="KullaniciYorumEkle" class="form-control" maxlength="250" placeholder="Yorum Ekleyiniz."></textarea>
+                            <textarea rows="5" cols="350" name="KullaniciYorumEkle" class="form-control txtKullaniciYorum KullaniciYorumEkle" maxlength="251" placeholder="Yorum Ekleyiniz."></textarea>
                         </div>
 
 
@@ -215,7 +755,7 @@
 
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Kapat</button>
-                            <button type="submit" class="btn btn-primary">Yorum Ekle</button>
+                            <button type="submit" id="btnKullaniciYorumEkle" class="btn btn-primary btnKullaniciYorumEkle">Yorum Ekle</button>
                         </div>
                     </form>
                 </div>
@@ -273,7 +813,9 @@
                             }
                             else
                             {
-                                <p>Güncel Duyuru Bulunmamaktadır.</p>
+                                <p style="text-align:center;font-size:xx-large; height:500px; padding-top:200px" >Güncel Duyuru Bulunmamaktadır.</p>
+                            
+
                             }
                         }
                     </div>
@@ -297,27 +839,57 @@
             <div id="divAdminYorum" class="panel-group">
                 @Html.Partial("_PartialHomepageAdminMutfakYorum", Model)
             </div>
-            
-            <nav aria-label="Page navigation">
+
+            <nav aria-label="Page navigation" style="text-align:center;">
+
                 <ul class="pagination admin">
-                    <li>
+                    <li class="beforenext">
                         <a href="#" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
+                            <span aria-hidden="true">Önceki</span>
                         </a>
                     </li>
                     @{
-                        int pageNumber = 1;
-                        for (int i = 0; i <= Model.adminMutfakYorum.Count(); i = i + 5)
+                        int pageNumber = Model.adminMutfakYorum.Count() / 5;
+                        int y = Model.adminMutfakYorum.Count() % 5 == 0 ? 0 : pageNumber++;
+
+                        <li class="noktailk beforenext"><a class="noktailk hidden" id=noktanokta href="#">...</a></li>
+
+
+                        for (int i = 1; i <= pageNumber; i++)
                         {
-                            <li><a class="sayfalandirma" id=@pageNumber href="#">@pageNumber</a></li>
-                            pageNumber++;
+                            <li class="sayfalandirma"><a class="sayfalandirma" id=@i href="#">@i</a></li>
+                            if (i % 3 == 0)
+                            {
+                                if (Model.adminMutfakYorum.Count() / 5 > 3)
+                                {
+                                    <li class="noktason beforenext"><a id=@i class="noktason" href="#">...</a></li>
+                                }
+
+                                break;
+                            }
                         }
+
+
                     }
+                    <sayiadmin class="hidden">
+                        @{
+                            var a = 0;
+                            if (Model.adminMutfakYorum.Count() % 5 == 0)
+                            {
+                                a = (@Model.adminMutfakYorum.Count() / 5);
+                            }
+                            else
+                            {
+                                a = ((@Model.adminMutfakYorum.Count() / 5) + 1);
+                            }
+                            @a;
+                        }
 
+                    </sayiadmin>
 
-                    <li>
+                    <li class="beforenext">
                         <a href="#" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
+                            <span aria-hidden="true">Sonraki</span>
                         </a>
                     </li>
                 </ul>
@@ -329,9 +901,9 @@
                 <div class="modal-content" style="margin-right:200px;">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" style="font-size:xx-large; margin-left:350px;">×</span></button>
-                        <h4 class="modal-title" id="myModalLabel">Ürün Ekle</h4>
+                        <h4 class="modal-title" id="myModalLabel">Admin Yorum Ekle</h4>
                     </div>
-                    <form method="post" action="/Home/AddAdminMutfakYorum" style="margin-left:50px; margin-top:20px;">
+                    <form method="post" action="/Home/AddAdminMutfakYorum" name="AdminYorumEkleForm" style="margin-left:50px; margin-top:20px;">
                         <div class="form-group">
                             <label>
                                 Kullanıcı Adı:
@@ -341,8 +913,7 @@
 
                         <div class="form-group">
                             <label>Admin Mutfak Yorumu:</label>
-                            @*<text type="text" name="KullaniciYorumEkle" class="form-control" />*@
-                            <textarea rows="5" cols="350" placeholder="Mutfak yorumu Ekleyiniz." name="AdminYorumEkle" class="form-control" maxlength="250"></textarea>
+                            <textarea rows="5" cols="350" placeholder="Mutfak yorumu Ekleyiniz." name="AdminYorumEkle" class="form-control AdminYorumEkle" maxlength="251"></textarea>
                         </div>
                         <br />
                         <div class="modal-footer">
