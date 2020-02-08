@@ -4,16 +4,12 @@
     ViewBag.Title = "Products";
     Layout = "~/Views/Shared/_Layout2.cshtml";
 }
-
-
-
 <script>
     $(function () {
         // a tagimizde bulunan .view classımıza click olduğunda
         $("body").on("click", "#btnAnnouncement", function () {
 
             console.log("post oncesi")
-
 
             $.ajax({
                 type: "POST",
@@ -77,35 +73,16 @@
         });
     })
 </script>
-
-
-
-
-
-
 @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "MyForm" }))
 {
-
-
-
     <script>
         function myFunction(val) {
             var inputs = document.querySelectorAll('.copyTo')
             inputs.forEach(function (input) {
                 input.value = val
-
             });
         }
-
     </script>
-
-
-    <script type="text/javascript">
-
-
-    </script>
-
-
     <script type="text/javascript">
         $(document).ready(function () {
             $('#selectall').click(function (event) {  //on click
@@ -115,62 +92,46 @@
                     $(":checkbox").attr("checked", false);
                 }
             });
-
         });
     </script>
-
-
-
     <script>
         $(document).ready(function () {
             $.fn.datepicker.defaults.format = "dd/mm/yyyy";
             $('.datepicker').datepicker(); //
         });
     </script>
-
-
     <div class="panel panel-primary" style="margin-top: 50px;">
         <div class="panel-heading" style="text-align:center;">
             <h4>Duyuru Ekle</h4>
         </div>
         <div class="panel panel-body">
-            <div class="container">
 
-                <div class="col-md-2" style="font-size:medium;padding-top:5px;">
-                    <p>Tarih Aralığı seçin:</p>
-                </div>
-
-                <div class="col-md-3">
-                    @Html.EditorFor(model => model[0].StartDate, new { htmlAttributes = new { @class = "form-control  datepicker" } })
-
-                </div>
-                <div class="col-md-1" style="margin-right:-60px;">
-                    <p style="font-size:x-large;">/</p>
-                </div>
-
-                <div class="col-md-3">
-                    @Html.EditorFor(model => model[0].EndDate, new { htmlAttributes = new { @class = "form-control  datepicker" } })
-                </div>
-            </div>
-
-
-            <br />
-            <br />
-
-
-            <div class="col-md-3" style="padding-top:3px;">
+            <div class="col-md-1" style="padding-top:3px;">
                 <input id="selectall" name="selectall" type="checkbox"><label for='selectAll'>Select All</label>
             </div>
-            <div class="col-md-offset-7">
+
+            <div class="col-md-2" style="font-size:medium;padding-top:5px;">
+                <p>Tarih Aralığı seçin:</p>
+            </div>
+
+            <div class="col-md-2">
+                @Html.EditorFor(model => model[0].StartDate, new { htmlAttributes = new { @class = "form-control  datepicker" } })
+
+            </div>
+            <div class="col-md-1" style="margin-right:-60px;">
+                <p style="font-size:x-large;">/</p>
+            </div>
+
+            <div class="col-md-2">
+                @Html.EditorFor(model => model[0].EndDate, new { htmlAttributes = new { @class = "form-control  datepicker" } })
+            </div>
+            <div class="col-md-4" style="margin-left:20px">
                 <input type="text" name="txt" value="" onkeyup="myFunction(this.value)" class="form-control" placeholder="Copy To All">
 
             </div>
             <br />
-
             <table id="myTable" class="table">
-
                 @{
-
                     if (Model.Count() != 0)
                     {
                         <tr>
@@ -206,50 +167,34 @@
                                 <td>
                                     @Html.DisplayFor(modelItem => item.UrunAdi)
                                 </td>
-
                                 <td>
                                     @Html.DisplayFor(modelItem => item.StokMiktari)
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.UrunTipiString)
                                 </td>
-
                                 <td>
                                     @Html.DisplayFor(modelItem => item.DolapAdi)
                                 </td>
-
-
                                 <td>
                                     @Html.TextBoxFor(modelItem => Model[index].UretimMiktari, new { @class = "form-control copyTo" })
                                 </td>
-
-
                             </tr>
 
                             index++;
                         }
-
                     }
                     else
                     {
                         <caption style="text-align:center;font-size:xx-large">Güncel Ürün Bulunmamaktadır...</caption>
                     }
                 }
-
-
-
-
             </table>
-
             <div class="col-md-offset-9">
                 <input id="btnAnnouncement" type="button" value="Duyuru Ekle" class="btn btn-success" data-toggle="modal" style="float:right; margin-top:20px; float:inherit;" />
             </div>
-
         </div>
-       
     </div>
-
-
 }
 
 
@@ -261,16 +206,13 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" style="font-size:xx-large; margin-left:500px;">×</span></button>
                 <h4 class="modal-title" id="myModalLabel">Duyuru Ekle</h4>
             </div>
-
-
             <div class="modal-body">
-               
+
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Kapat</button>
                 <button type="submit" id="btnAddAnnouncement" class="btn btn-primary">Duyuruyu Ekle</button>
             </div>
-
         </div>
     </div>
 </div>

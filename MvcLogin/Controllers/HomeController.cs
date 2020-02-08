@@ -107,8 +107,8 @@ namespace MvcLogin.Controllers
             List<string> UrunTipiString = null;
             if (StokKontrolEntitiesProvider.FindLastAnnouncement() != 0)
             {
-                 duyuruBilgi = StokKontrolEntitiesProvider.GetLastDuyuruBilgiToList(StokKontrolEntitiesProvider.FindLastAnnouncement());
-                 UrunTipiString = new List<string>();
+                duyuruBilgi = StokKontrolEntitiesProvider.GetLastDuyuruBilgiToList(StokKontrolEntitiesProvider.FindLastAnnouncement());
+                UrunTipiString = new List<string>();
 
                 foreach (var item in duyuruBilgi)
                 {
@@ -726,7 +726,10 @@ namespace MvcLogin.Controllers
                 foreach (Kullanıcılar kullanıcı in kullanıcılar)
                 {
 
-                    model2.Kullanici.Add(kullanıcı);
+                    if (kullanıcı.GrupId != 3)
+                    {
+                        model2.Kullanici.Add(kullanıcı);
+                    }
 
 
                 }
@@ -790,7 +793,7 @@ namespace MvcLogin.Controllers
         [System.Web.Mvc.HttpPost]
         public ActionResult PersonalDebst(PersonalDebtsModel gelenler)
         {
-            if (Session["grup"].Equals(3))
+            if (Session["grup"].Equals(3) && gelenler.SecilenAy != 0)
             {
                 List<Kullanıcılar> kullanıcılar = StokKontrolEntitiesProvider.getAllUserList();
                 List<KullanıcılarModel> model = new List<KullanıcılarModel>();
@@ -805,14 +808,17 @@ namespace MvcLogin.Controllers
 
                 foreach (Kullanıcılar kullanıcı in kullanıcılar)
                 {
+                    if (kullanıcı.GrupId != 3)
+                    {
+                        model2.Kullanici.Add(kullanıcı);
 
-                    model2.Kullanici.Add(kullanıcı);
+                    }
 
                 }
                 ModelState.Clear();
 
 
-                for (int i = 0; i < gelenler.Kullanici.Count(); i++)
+                for (int i = 0; i < model2.Kullanici.Count(); i++)
                 {
                     if (model2.Kullanici[i].GuncelBorc == null)
                     {
@@ -839,14 +845,18 @@ namespace MvcLogin.Controllers
 
                                 StokKontrolEntitiesProvider.SaveChanges();
 
-                                model2.GuncelBorc[i] = StokKontrolEntitiesProvider.getToplamBorcByObjectId(gelenler.Kullanici[i].ObjectId);
+                                //model2.GuncelBorc[i] = StokKontrolEntitiesProvider.getToplamBorcByObjectId(gelenler.Kullanici[i].ObjectId);
+
 
                             }
                         }
                     }
                 }
 
-
+                for (int index = 0; index < model2.Kullanici.Count(); index++)
+                {
+                    model2.GuncelBorc.Add(StokKontrolEntitiesProvider.getToplamBorcByObjectId(model2.Kullanici[index].ObjectId));
+                }
 
 
 
