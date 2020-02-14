@@ -14,91 +14,6 @@ namespace MvcLogin.Controllers
     [AuthFilter]
     public class HomeController : BaseController
     {
-        // GET: Home
-        [AuthFilter]
-        public ActionResult Index()
-        {
-            if (Session["grup"].Equals(1))
-            {
-
-                List<Kullanıcılar> kullanıcılar = StokKontrolEntitiesProvider.getAllUserList();
-
-                return View(kullanıcılar);
-            }
-            return RedirectToAction("Index2", "Home");
-        }
-
-        [AuthFilter]
-        public ActionResult Index2()
-        {
-            if (Session["grup"].Equals(2))
-            {
-                List<Kullanıcılar> kullanıcılar = StokKontrolEntitiesProvider.getAllUserList();
-                return View(kullanıcılar);
-            }
-            return RedirectToAction("Index3", "Home");
-        }
-
-        [AuthFilter]
-        public ActionResult Index3()
-        {
-            if (Session["grup"].Equals(3))
-            {
-                List<Kullanıcılar> kullanıcılar = StokKontrolEntitiesProvider.getAllUserList();
-                return View(kullanıcılar);
-            }
-            return RedirectToAction("Index", "Login");
-        }
-
-        public ActionResult Edit(int? kisiid)
-        {
-            Kullanıcılar kullanıcı = null;
-            if (kisiid != null)
-            {
-
-                kullanıcı = StokKontrolEntitiesProvider.getPersonByUserId(kisiid);
-            }
-            return View(kullanıcı);
-        }
-        [System.Web.Mvc.HttpPost]
-        public ActionResult Edit(Kullanıcılar model, int? kisiid)
-        {
-
-            Kullanıcılar kullanıcı = StokKontrolEntitiesProvider.editUser(model, kisiid);
-            if (kullanıcı != null)
-            {
-                int sonuc = StokKontrolEntitiesProvider.SaveChanges();
-
-
-
-                return RedirectToAction("Index3", "Home");
-            }
-            return View();
-        }
-
-        public ActionResult Delete(int? kisiid)
-        {
-            Kullanıcılar kisi = null;
-            if (kisiid != null)
-            {
-                kisi = StokKontrolEntitiesProvider.getPersonByUserId(kisiid);
-            }
-            return View(kisi);
-        }
-        [System.Web.Mvc.HttpPost, System.Web.Mvc.ActionName("Delete")]
-        public ActionResult DeleteUser(int? kisiid)
-        {
-            Kullanıcılar kisi = null;
-            if (kisiid != null)
-            {
-                kisi = StokKontrolEntitiesProvider.removeUser(kisiid);
-
-
-                return RedirectToAction("Index3", "Home");
-            }
-            return View(kisi);
-        }
-
         public ActionResult Homepage()
         {
             List<AdminMutfakYorum> adminMutfakYorum = StokKontrolEntitiesProvider.GetAllAdminMutfakYorum();
@@ -112,9 +27,9 @@ namespace MvcLogin.Controllers
 
                 foreach (var item in duyuruBilgi)
                 {
-                    if (StokKontrolEntitiesProvider.getProductNameByObjectId(item.Urun.ObjectId).UrunTipi != null)
+                    if (StokKontrolEntitiesProvider.GetProductNameByObjectId(item.Urun.ObjectId).UrunTipi != null)
                     {
-                        UrunTipiString.Add(StokKontrolEntitiesProvider.getProductNameByObjectId(item.Urun.ObjectId).UrunTipi.UrunTipi1);
+                        UrunTipiString.Add(StokKontrolEntitiesProvider.GetProductNameByObjectId(item.Urun.ObjectId).UrunTipi.UrunTipi1);
 
                     }
                     else
@@ -219,8 +134,8 @@ namespace MvcLogin.Controllers
         {
             if (Session["grup"].Equals(3))
             {
-                List<Urun> urunler = StokKontrolEntitiesProvider.getAllProducts();
-                List<UrunTipi> urunTipleri = StokKontrolEntitiesProvider.getAllUrunTipi();
+                List<Urun> urunler = StokKontrolEntitiesProvider.GetAllProducts();
+                List<UrunTipi> urunTipleri = StokKontrolEntitiesProvider.GetAllUrunTipi();
 
                 List<UrunModel> model = new List<UrunModel>();
                 foreach (Urun urun in urunler)
@@ -247,8 +162,8 @@ namespace MvcLogin.Controllers
         {
             if (Session["grup"].Equals(3))
             {
-                List<Urun> urunler = StokKontrolEntitiesProvider.getAllProducts();
-                List<UrunTipi> urunTipleri = StokKontrolEntitiesProvider.getAllUrunTipi();
+                List<Urun> urunler = StokKontrolEntitiesProvider.GetAllProducts();
+                List<UrunTipi> urunTipleri = StokKontrolEntitiesProvider.GetAllUrunTipi();
                 List<UrunModel> model = new List<UrunModel>();
 
                 for (int i = 0; i < urunler.Count(); i++)
@@ -271,12 +186,6 @@ namespace MvcLogin.Controllers
                 StokKontrolEntitiesProvider.SaveChanges();
 
 
-                //foreach (Urun urun in urunler)
-                //{
-
-                //    model.Add(new UrunModel(urun));
-
-                //}
 
                 foreach (Urun urun in urunler)
                 {
@@ -302,14 +211,24 @@ namespace MvcLogin.Controllers
             {
                 if (Session["grup"].Equals(3))
                 {
-                    List<Urun> urunler = StokKontrolEntitiesProvider.getAllProducts();
+                    List<Urun> urunler = StokKontrolEntitiesProvider.GetAllProducts();
+                    List<UrunTipi> urunTipleri = StokKontrolEntitiesProvider.GetAllUrunTipi();
 
                     List<UrunModel> model = new List<UrunModel>();
+           
+
                     foreach (Urun urun in urunler)
                     {
-                        model.Add(new UrunModel(urun));
-                    }
+                        if (urun.UrunTipi != null)
+                        {
+                            model.Add(new UrunModel(urun, urunTipleri, urun.UrunTipi.UrunTipi1));
+                        }
+                        else
+                        {
+                            model.Add(new UrunModel(urun, urunTipleri));
+                        }
 
+                    }
 
 
                     return View(model);
@@ -319,27 +238,18 @@ namespace MvcLogin.Controllers
             {
                 List<DuyuruBilgi> duyuruBilgi = StokKontrolEntitiesProvider.GetLastDuyuruBilgiToList(Convert.ToInt32(duyuruId));
                 List<UrunModel> model = new List<UrunModel>();
-                List<Urun> urunler = StokKontrolEntitiesProvider.getAllProducts();
+                List<Urun> urunler = StokKontrolEntitiesProvider.GetAllProducts();
                 foreach (var item in duyuruBilgi)
                 {
-                    //model[index].UrunAdi = item.Urun.UrunAdi;
-                    //model[index].UretimMiktari = Convert.ToInt32(item.Adet);
-                    //model[index].DolapAdi = item.
                     model.Add(new UrunModel(item.Urun, Convert.ToInt32(item.Adet)));
-
-
                 }
                 foreach (Urun urun in urunler)
                 {
-
                     if (model.Where(x => x.UrunAdi == urun.UrunAdi).FirstOrDefault() == null)
                     {
                         model.Add(new UrunModel(urun));
                     }
-
                 }
-
-
                 return View(model);
             }
             return RedirectToAction("Index", "Login");
@@ -394,16 +304,16 @@ namespace MvcLogin.Controllers
             {
                 if (item.Selected == true)
                 {
-                    if (StokKontrolEntitiesProvider.getProductNameByObjectId(item.ObjectId).UrunTipi != null)
+                    if (StokKontrolEntitiesProvider.GetProductNameByObjectId(item.ObjectId).UrunTipi != null)
                     {
-                        item.UrunTipiString = StokKontrolEntitiesProvider.getProductNameByObjectId(item.ObjectId).UrunTipi.UrunTipi1;
+                        item.UrunTipiString = StokKontrolEntitiesProvider.GetProductNameByObjectId(item.ObjectId).UrunTipi.UrunTipi1;
 
                     }
                     else
                     {
                         item.UrunTipiString = "Birim";
                     }
-                    item.UrunAdi = StokKontrolEntitiesProvider.getProductNameByObjectId(item.ObjectId).UrunAdi;
+                    item.UrunAdi = StokKontrolEntitiesProvider.GetProductNameByObjectId(item.ObjectId).UrunAdi;
                 }
             }
 
@@ -417,7 +327,7 @@ namespace MvcLogin.Controllers
             {
                 if (Session["grup"].Equals(3))
                 {
-                    List<Urun> urunler = StokKontrolEntitiesProvider.getAllProducts();
+                    List<Urun> urunler = StokKontrolEntitiesProvider.GetAllProducts();
 
                     List<UrunModel> model = new List<UrunModel>();
                     foreach (Urun urun in urunler)
@@ -434,27 +344,18 @@ namespace MvcLogin.Controllers
             {
                 List<DuyuruBilgi> duyuruBilgi = StokKontrolEntitiesProvider.GetLastDuyuruBilgiToList(Convert.ToInt32(duyuruId));
                 List<UrunModel> model = new List<UrunModel>();
-                List<Urun> urunler = StokKontrolEntitiesProvider.getAllProducts();
+                List<Urun> urunler = StokKontrolEntitiesProvider.GetAllProducts();
                 foreach (var item in duyuruBilgi)
                 {
-                    //model[index].UrunAdi = item.Urun.UrunAdi;
-                    //model[index].UretimMiktari = Convert.ToInt32(item.Adet);
-                    //model[index].DolapAdi = item.
                     model.Add(new UrunModel(item.Urun, Convert.ToInt32(item.Adet)));
-
-
                 }
                 foreach (Urun urun in urunler)
                 {
-
                     if (model.Where(x => x.UrunAdi == urun.UrunAdi).FirstOrDefault() == null)
                     {
                         model.Add(new UrunModel(urun));
                     }
-
                 }
-
-
                 return View(model);
             }
             return RedirectToAction("Index", "Login");
@@ -545,16 +446,16 @@ namespace MvcLogin.Controllers
             {
                 if (item.Selected == true)
                 {
-                    if (StokKontrolEntitiesProvider.getProductNameByObjectId(item.ObjectId).UrunTipi != null)
+                    if (StokKontrolEntitiesProvider.GetProductNameByObjectId(item.ObjectId).UrunTipi != null)
                     {
-                        item.UrunTipiString = StokKontrolEntitiesProvider.getProductNameByObjectId(item.ObjectId).UrunTipi.UrunTipi1;
+                        item.UrunTipiString = StokKontrolEntitiesProvider.GetProductNameByObjectId(item.ObjectId).UrunTipi.UrunTipi1;
 
                     }
                     else
                     {
                         item.UrunTipiString = "Birim";
                     }
-                    item.UrunAdi = StokKontrolEntitiesProvider.getProductNameByObjectId(item.ObjectId).UrunAdi;
+                    item.UrunAdi = StokKontrolEntitiesProvider.GetProductNameByObjectId(item.ObjectId).UrunAdi;
                 }
             }
 
@@ -581,39 +482,21 @@ namespace MvcLogin.Controllers
                 string fileName3 = StokKontrolEntitiesProvider.GetObjectIdByAlisverisTarihi(alisverisModel).ToString();
 
                 string fileName = alisveris.ObjectId.ToString();
-                //string path = Server.MapPath("~/Uploads/" + fileName + ".jpeg");
-                //alisverisModel.Files.SaveAs(path);
-
                 string fileName2 = System.IO.Path.GetFileName(fileName);
-
-                //Set the Image File Path.
                 string filePath = "~/Uploads/" + fileName2 + ".jpg";
-
-                //Save the Image File in Folder.
                 alisverisModel.Files.SaveAs(Server.MapPath(filePath));
-
-
-
-
-
                 ModelState.Clear();
             }
-
-
             return View();
-
-
         }
-
 
         public ActionResult CurrentDebts()
         {
             if (Session["login"] != null)
             {
-                List<Kullanıcılar> kullanıcılar = StokKontrolEntitiesProvider.getAllUserList();
+                List<Kullanıcılar> kullanıcılar = StokKontrolEntitiesProvider.GetAllUserList();
                 PersonalDebtsModel model2 = new PersonalDebtsModel();
-                List<Aylar> Aylar2 = StokKontrolEntitiesProvider.getAllAylarList();
-
+                List<Aylar> Aylar2 = StokKontrolEntitiesProvider.GetAllAylarList();
                 foreach (var ay in Aylar2)
                 {
                     model2.Ay.Add(ay);
@@ -621,21 +504,13 @@ namespace MvcLogin.Controllers
 
                 foreach (Kullanıcılar kullanıcı in kullanıcılar)
                 {
-
                     model2.Kullanici.Add(kullanıcı);
-
-
                 }
                 for (int index = 0; index < model2.Kullanici.Count(); index++)
                 {
-                    model2.GuncelBorc.Add(StokKontrolEntitiesProvider.getToplamBorcByObjectId(model2.Kullanici[index].ObjectId));
+                    model2.GuncelBorc.Add(StokKontrolEntitiesProvider.GetToplamBorcByObjectId(model2.Kullanici[index].ObjectId));
                 }
-
-
                 return View(model2);
-
-
-
             }
             return RedirectToAction("Index", "Login");
         }
@@ -645,9 +520,9 @@ namespace MvcLogin.Controllers
         {
             if (SecilenAy != 0)
             {
-                List<Kullanıcılar> kullanıcılar = StokKontrolEntitiesProvider.getAllUserList();
+                List<Kullanıcılar> kullanıcılar = StokKontrolEntitiesProvider.GetAllUserList();
                 PersonalDebtsModel model = new PersonalDebtsModel();
-                List<Aylar> Aylar2 = StokKontrolEntitiesProvider.getAllAylarList();
+                List<Aylar> Aylar2 = StokKontrolEntitiesProvider.GetAllAylarList();
                 foreach (var ay in Aylar2)
                 {
                     model.Ay.Add(ay);
@@ -658,13 +533,13 @@ namespace MvcLogin.Controllers
                 {
 
 
-                    if (StokKontrolEntitiesProvider.getToplamBorcByDateAndObjectId2(SecilenAy, kullanıcı.ObjectId) == 0)
+                    if (StokKontrolEntitiesProvider.GetToplamBorcByDateAndObjectId2(SecilenAy, kullanıcı.ObjectId) == 0)
                     {
 
                     }
                     else
                     {
-                        model.GuncelBorc.Add(StokKontrolEntitiesProvider.getToplamBorcByDateAndObjectId2(SecilenAy, kullanıcı.ObjectId));
+                        model.GuncelBorc.Add(StokKontrolEntitiesProvider.GetToplamBorcByDateAndObjectId2(SecilenAy, kullanıcı.ObjectId));
                         model.Kullanici.Add(kullanıcı);
                         model.SecilenAy = SecilenAy;
                     }
@@ -682,26 +557,17 @@ namespace MvcLogin.Controllers
             }
             else
             {
-                List<Kullanıcılar> kullanıcılar = StokKontrolEntitiesProvider.getAllUserList();
+                List<Kullanıcılar> kullanıcılar = StokKontrolEntitiesProvider.GetAllUserList();
                 PersonalDebtsModel model = new PersonalDebtsModel();
                 int index = 0;
                 foreach (Kullanıcılar kullanıcı in kullanıcılar)
                 {
-
-
-                    if (StokKontrolEntitiesProvider.getToplamBorcByDateAndObjectId2(SecilenAy, kullanıcı.ObjectId) == 0)
+                    if (StokKontrolEntitiesProvider.GetToplamBorcByDateAndObjectId2(SecilenAy, kullanıcı.ObjectId) != 0)
                     {
-
-                    }
-                    else
-                    {
-                        model.GuncelBorc.Add(StokKontrolEntitiesProvider.getToplamBorcByDateAndObjectId2(SecilenAy, kullanıcı.ObjectId));
+                        model.GuncelBorc.Add(StokKontrolEntitiesProvider.GetToplamBorcByDateAndObjectId2(SecilenAy, kullanıcı.ObjectId));
                         model.Kullanici.Add(kullanıcı);
-
                     }
-
                     index++;
-
                 }
                 return PartialView("_PartialCurrentDebts", model);
 
@@ -712,37 +578,27 @@ namespace MvcLogin.Controllers
         {
             if (Session["grup"].Equals(3))
             {
-                List<Kullanıcılar> kullanıcılar = StokKontrolEntitiesProvider.getAllUserList();
-
+                List<Kullanıcılar> kullanıcılar = StokKontrolEntitiesProvider.GetAllUserList();
                 PersonalDebtsModel model2 = new PersonalDebtsModel();
-
-                List<Aylar> Aylar2 = StokKontrolEntitiesProvider.getAllAylarList();
-
+                List<Aylar> Aylar2 = StokKontrolEntitiesProvider.GetAllAylarList();
                 foreach (var ay in Aylar2)
                 {
                     model2.Ay.Add(ay);
                 }
-
                 foreach (Kullanıcılar kullanıcı in kullanıcılar)
                 {
-
                     if (kullanıcı.GrupId != 3)
                     {
                         model2.Kullanici.Add(kullanıcı);
                     }
-
-
                 }
                 for (int index = 0; index < model2.Kullanici.Count(); index++)
                 {
-                    model2.GuncelBorc.Add(StokKontrolEntitiesProvider.getToplamBorcByObjectId(model2.Kullanici[index].ObjectId));
+                    model2.GuncelBorc.Add(StokKontrolEntitiesProvider.GetToplamBorcByObjectId(model2.Kullanici[index].ObjectId));
                 }
-
-
                 return View(model2);
             }
             return RedirectToAction("Index", "Login");
-
         }
 
 
@@ -750,20 +606,20 @@ namespace MvcLogin.Controllers
         {
             if (SecilenAy != 0)
             {
-                List<Kullanıcılar> kullanıcılar = StokKontrolEntitiesProvider.getAllUserList();
+                List<Kullanıcılar> kullanıcılar = StokKontrolEntitiesProvider.GetAllUserList();
                 PersonalDebtsModel model = new PersonalDebtsModel();
                 int index = 0;
                 foreach (Kullanıcılar kullanıcı in kullanıcılar)
                 {
 
 
-                    if (StokKontrolEntitiesProvider.getToplamBorcByDateAndObjectId2(SecilenAy, kullanıcı.ObjectId) == 0)
+                    if (StokKontrolEntitiesProvider.GetToplamBorcByDateAndObjectId2(SecilenAy, kullanıcı.ObjectId) == 0)
                     {
 
                     }
                     else
                     {
-                        model.GuncelBorc.Add(StokKontrolEntitiesProvider.getToplamBorcByDateAndObjectId2(SecilenAy, kullanıcı.ObjectId));
+                        model.GuncelBorc.Add(StokKontrolEntitiesProvider.GetToplamBorcByDateAndObjectId2(SecilenAy, kullanıcı.ObjectId));
                         model.Kullanici.Add(kullanıcı);
 
                     }
@@ -795,12 +651,12 @@ namespace MvcLogin.Controllers
         {
             if (Session["grup"].Equals(3) && gelenler.SecilenAy != 0)
             {
-                List<Kullanıcılar> kullanıcılar = StokKontrolEntitiesProvider.getAllUserList();
+                List<Kullanıcılar> kullanıcılar = StokKontrolEntitiesProvider.GetAllUserList();
                 List<KullanıcılarModel> model = new List<KullanıcılarModel>();
                 Borclandirma borclandirma = new Borclandirma();
                 PersonalDebtsModel model2 = new PersonalDebtsModel();
 
-                List<Aylar> Aylar2 = StokKontrolEntitiesProvider.getAllAylarList();
+                List<Aylar> Aylar2 = StokKontrolEntitiesProvider.GetAllAylarList();
                 foreach (var ay in Aylar2)
                 {
                     model2.Ay.Add(ay);
@@ -835,7 +691,6 @@ namespace MvcLogin.Controllers
                             else
                             {
 
-                                //model2.Kullanici[i].GuncelBorc += gelenler.Borclandirma[j];
                                 StokKontrolEntitiesProvider.Borclandirma.Add(new Borclandirma
                                 {
                                     KisiId = model2.Kullanici[i].ObjectId,
@@ -845,7 +700,6 @@ namespace MvcLogin.Controllers
 
                                 StokKontrolEntitiesProvider.SaveChanges();
 
-                                //model2.GuncelBorc[i] = StokKontrolEntitiesProvider.getToplamBorcByObjectId(gelenler.Kullanici[i].ObjectId);
 
 
                             }
@@ -855,12 +709,12 @@ namespace MvcLogin.Controllers
 
                 for (int index = 0; index < model2.Kullanici.Count(); index++)
                 {
-                    model2.GuncelBorc.Add(StokKontrolEntitiesProvider.getToplamBorcByObjectId(model2.Kullanici[index].ObjectId));
+                    model2.GuncelBorc.Add(StokKontrolEntitiesProvider.GetToplamBorcByObjectId(model2.Kullanici[index].ObjectId));
                 }
 
 
 
-                ViewBag.Aylar2 = StokKontrolEntitiesProvider.getAllAylarList();
+                ViewBag.Aylar2 = StokKontrolEntitiesProvider.GetAllAylarList();
 
                 StokKontrolEntitiesProvider.SaveChanges();
 
@@ -881,7 +735,7 @@ namespace MvcLogin.Controllers
             if (Session["grup"].Equals(3))
             {
 
-                List<Alisveris> alisveris = StokKontrolEntitiesProvider.getAllAlisverisList();
+                List<Alisveris> alisveris = StokKontrolEntitiesProvider.GetAllAlisverisList();
 
 
 

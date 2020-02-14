@@ -15,7 +15,7 @@ namespace MvcLogin.Models
         //public List<KullanıcılarModel> 
         
 
-        public int getToplamBorcByObjectId( int objectId)
+        public int GetToplamBorcByObjectId( int objectId)
         {
             if (Borclandirma.Where(x => x.KisiId == objectId).Count() ==0)
             {
@@ -24,7 +24,7 @@ namespace MvcLogin.Models
             return Borclandirma.Where(x => x.KisiId == objectId).Sum(x => x.BorcMiktari);
         }
 
-        public int getToplamBorcByDateAndObjectId2(int? ay, int objectId)
+        public int GetToplamBorcByDateAndObjectId2(int? ay, int objectId)
         {
             if (Borclandirma.Where(x => x.KisiId == objectId && x.BorlandirmaTarihiId==ay).Count() == 0)
             {

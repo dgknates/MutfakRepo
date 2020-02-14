@@ -49,6 +49,8 @@
                         //divTest.html(data);
 
                         divCurrentDebts.html(data);
+                        $('#myTable').DataTable();
+
                     },
                     failure: function (response) {
                         alert('Failed to retrieve products: ' + response.responseText);
@@ -58,7 +60,7 @@
                     }
                 });
             } else if (secilenAy == 0) {
-                 window.location.href = "CurrentDebts"
+                window.location.href = "CurrentDebts"
 
             } else {
                 console.log("Boş seçildi!");
@@ -96,7 +98,7 @@
                 @Html.Partial("_PartialCurrentDebts", Model)
             </div>
         </div>
-      
+
     </div>
 
 

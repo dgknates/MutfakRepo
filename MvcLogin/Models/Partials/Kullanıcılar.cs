@@ -12,19 +12,17 @@ namespace MvcLogin.Models
     public partial class db_StokKontrolEntities
     {
 
-        public List<Kullanıcılar> getAllUserList()
+        public List<Kullanıcılar> GetAllUserList()
         {
-            return Kullanıcılar.Where(x => x.Deleted == false).ToList();
+            return Kullanıcılar.Where(x => x.Deleted == false && x.GrupId !=3).ToList();
         }
 
-
-
-        public Kullanıcılar getPersonByUserNameAndPasword(string userName, string password)
+        public Kullanıcılar GetPersonByUserNameAndPasword(string userName, string password)
         {
             return Kullanıcılar.FirstOrDefault(x => x.KullanıcıAdı == userName && x.Parola == password);
         }
 
-        public Kullanıcılar getPersonByUserId(int? userId)
+        public Kullanıcılar GetPersonByUserId(int? userId)
         {
             return Kullanıcılar.FirstOrDefault(x => x.ObjectId == userId);
         }
@@ -35,21 +33,11 @@ namespace MvcLogin.Models
             return sonuc;
         }
 
-        public Kullanıcılar editUser(Kullanıcılar model, int? kisiid)
+        
+
+        public Kullanıcılar RemoveUser(int? kisiid)
         {
-
-            Kullanıcılar kullanıcı = getPersonByUserId(kisiid);
-            //kullanıcı.KullanıcıAdı = model.KullanıcıAdı;
-            //kullanıcı.Parola = model.Parola;
-            kullanıcı.GuncelBorc = model.GuncelBorc;
-
-            return kullanıcı;
-
-        }
-
-        public Kullanıcılar removeUser(int? kisiid)
-        {
-            Kullanıcılar kullanıcı = getPersonByUserId(kisiid);
+            Kullanıcılar kullanıcı = GetPersonByUserId(kisiid);
             kullanıcı.Deleted = true;
             //Kullanıcılar.Remove(kullanıcı);
             SaveChanges();

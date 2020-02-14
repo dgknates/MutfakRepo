@@ -100,13 +100,18 @@
             $('.datepicker').datepicker(); //
         });
     </script>
+    <script>
+        $(document).ready(function () {
+            $('#myTable').DataTable();
+        });
+    </script>
     <div class="panel panel-primary" style="margin-top: 50px;">
         <div class="panel-heading" style="text-align:center;">
             <h4>Duyuru Ekle</h4>
         </div>
         <div class="panel panel-body">
 
-            <div class="col-md-1" style="padding-top:3px;">
+            <div class="col-md-1" style="padding-top:3px; width: max-content;">
                 <input id="selectall" name="selectall" type="checkbox"><label for='selectAll'>Select All</label>
             </div>
 
@@ -129,57 +134,66 @@
                 <input type="text" name="txt" value="" onkeyup="myFunction(this.value)" class="form-control" placeholder="Copy To All">
 
             </div>
+            
             <br />
+            <br />
+            <hr />
             <table id="myTable" class="table">
                 @{
                     if (Model.Count() != 0)
                     {
-                        <tr>
-                            <td>
-                            </td>
-                            <td>
-                            </td>
-                            <th>
-                                @Html.DisplayNameFor(model => model[0].UrunAdi)
-                            </th>
+                        <thead>
+                            <tr>
+                                
+                                <th>
 
-                            <th>
-                                @Html.DisplayNameFor(model => model[0].StokMiktari)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model[0].UrunTipi)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model[0].DolapAdi)
-                            </th>
-                            <th></th>
-                        </tr>
+                                </th>
+                                
+                                <th></th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model[0].UrunAdi)
+                                </th>
+
+                                <th>
+                                    @Html.DisplayNameFor(model => model[0].StokMiktari)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model[0].UrunTipi)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model[0].DolapAdi)
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
                         int index = 0;
                         foreach (var item in Model)
                         {
-                            <tr>
-                                <td>
-                                    @Html.HiddenFor(modelItem => Model[index].ObjectId)
-                                </td>
-                                <td>
-                                    @Html.CheckBoxFor(modelItem => Model[index].Selected, false)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.UrunAdi)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.StokMiktari)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.UrunTipiString)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.DolapAdi)
-                                </td>
-                                <td>
-                                    @Html.TextBoxFor(modelItem => Model[index].UretimMiktari, new { @class = "form-control copyTo" })
-                                </td>
-                            </tr>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        @Html.HiddenFor(modelItem => Model[index].ObjectId)
+                                    </td>
+                                    <td>
+                                        @Html.CheckBoxFor(modelItem => Model[index].Selected, false)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.UrunAdi)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.StokMiktari)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.UrunTipiString)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.DolapAdi)
+                                    </td>
+                                    <td>
+                                        @Html.TextBoxFor(modelItem => Model[index].UretimMiktari, new { @class = "form-control copyTo" })
+                                    </td>
+                                </tr>
+                            </tbody>
 
                             index++;
                         }

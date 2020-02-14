@@ -26,7 +26,7 @@ namespace MvcLogin.Models
             return alisveris;
         }
 
-        public List<Alisveris> getAllAlisverisList()
+        public List<Alisveris> GetAllAlisverisList()
         {
             return Alisveris.Where(x => x.Deleted == false).OrderByDescending(x=> x.AlisverisTarihi).ToList();
         }

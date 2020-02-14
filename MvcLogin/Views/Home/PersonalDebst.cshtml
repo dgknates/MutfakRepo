@@ -5,53 +5,51 @@
     Layout = "~/Views/Shared/_Layout2.cshtml";
 }
 
-<script src="~/Scripts/jquery-3.3.1.min.js"></script>
 @*<script type="text/javascript">
-    $(document).ready(function () {
-        $('#SecilenAy').change(function () {
-            var secilenAy = $('#SecilenAy').val();
-            if (secilenAy == 0) {
-                window.location.href = "PersonalDebst"
-            }
-            if (secilenAy != 0) {
-                console.log(secilenAy);
+        $(document).ready(function () {
+            $('#SecilenAy').change(function () {
+                var secilenAy = $('#SecilenAy').val();
+                if (secilenAy == 0) {
+                    window.location.href = "PersonalDebst"
+                }
+                if (secilenAy != 0) {
+                    console.log(secilenAy);
 
-                var divProductList = $('#divProductList');
-                //$.ajax({
-                //    type: 'GET',
-                //    cache: false,
-                //    /*
-                //        - contentType is the type of data you're sending, so application/json; charset=utf-8 is a common one, as is application/x-www-form-urlencoded; charset=UTF-8, which is the default.
-                //        - dataType is what you're expecting back from the server: json, html, text, etc. jQuery will use this to figure out how to populate the success function's parameter.
-                //     */
-                //    dataType: 'html',
-                //    contentType: 'application/json; charset=utf-8',
-                //    url: '/Home/GetPersonalDebst',
-                //    data: { 'SecilenAy': secilenAy },
-                //    success: function (data) {
-                //        console.log("Data geldi !!!");
-
-
-
-                //        divProductList.html(data);
-                //    },
-                //    failure: function (response) {
-                //        alert('Failed to retrieve products: ' + response.responseText);
-                //    },
-                //    error: function (response) {
-                //        alert('Error: ' + response.responseText);
-                //    }
-                //});
-                //$('#secilenAy').val(secilenAy)
-            } else {
-                console.log("Boş seçildi!");
-            }
+                    var divProductList = $('#divProductList');
+                    //$.ajax({
+                    //    type: 'GET',
+                    //    cache: false,
+                    //    /*
+                    //        - contentType is the type of data you're sending, so application/json; charset=utf-8 is a common one, as is application/x-www-form-urlencoded; charset=UTF-8, which is the default.
+                    //        - dataType is what you're expecting back from the server: json, html, text, etc. jQuery will use this to figure out how to populate the success function's parameter.
+                    //     */
+                    //    dataType: 'html',
+                    //    contentType: 'application/json; charset=utf-8',
+                    //    url: '/Home/GetPersonalDebst',
+                    //    data: { 'SecilenAy': secilenAy },
+                    //    success: function (data) {
+                    //        console.log("Data geldi !!!");
 
 
+
+                    //        divProductList.html(data);
+                    //    },
+                    //    failure: function (response) {
+                    //        alert('Failed to retrieve products: ' + response.responseText);
+                    //    },
+                    //    error: function (response) {
+                    //        alert('Error: ' + response.responseText);
+                    //    }
+                    //});
+                    //$('#secilenAy').val(secilenAy)
+                } else {
+                    console.log("Boş seçildi!");
+                }
+
+
+            });
         });
-    });
-</script>*@
-
+    </script>*@
 
 
 <script>
@@ -96,6 +94,16 @@
 
 @using (Html.BeginForm())
 {
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#myTable').DataTable();
+        });
+    </script>
+
+
     <div class="panel panel-primary" style="margin-top:50px;">
         <div class="panel-heading">
             <h4 style="text-align:center;">
@@ -116,15 +124,16 @@
                 <input type="text" name="txt" value="" onkeyup="myFunction(this.value)" class="form-control" placeholder="Copy To All">
 
             </div>
-            <br />
+            <hr />
 
-            <table class="table">
+            <table id="myTable" class="table">
                 <thead>
                     <tr>
-                        <td>
-                        </td>
-                        <td>
-                        </td>
+                        @*<td>
+                            </td>
+                            <td>
+                            </td>*@
+                        <th>#</th>
                         <th>
                             @Html.DisplayNameFor(model => model.Kullanici[0].Isim)
                         </th>
@@ -141,77 +150,82 @@
                         <th>
                             @Html.DisplayNameFor(model => model.Borclandirma)
                         </th>
-                        <th></th>
+                        @*<th></th>*@
                     </tr>
                 </thead>
-                @{ }
-                @for (int index = 0; index < Model.Kullanici.Count(); index++)
-                {
-                    if (Model.Kullanici[index].GrupId == 3)
-                    {
-                        @*<tbody>
-                            <tr>
-                                <td>
-                                    @Html.HiddenFor(modelItem => Model.Kullanici[index].ObjectId)
-                                </td>
-                                <td>
-                                    @Html.HiddenFor(modelItem => Model.Selected[index], false)
-                                </td>
-                                <td>
-                                    @Html.HiddenFor(modelItem => Model.Kullanici[index].Isim)
-                                </td>
+                <tbody>
+                    @{
 
-                                <td>
-                                    @Html.HiddenFor(modelItem => Model.Kullanici[index].Soyisim)
-                                </td>
+                        for (int index = 0; index < Model.Kullanici.Count(); index++)
+                        {
+                            if (Model.Kullanici[index].GrupId == 3)
+                            {
+                                @*<tbody>
+                                        <tr>
+                                            <td>
+                                                @Html.HiddenFor(modelItem => Model.Kullanici[index].ObjectId)
+                                            </td>
+                                            <td>
+                                                @Html.HiddenFor(modelItem => Model.Selected[index], false)
+                                            </td>
+                                            <td>
+                                                @Html.HiddenFor(modelItem => Model.Kullanici[index].Isim)
+                                            </td>
 
-                                <td>
-                                    @Html.HiddenFor(modelItem => Model.GuncelBorc[index])
-                                </td>
+                                            <td>
+                                                @Html.HiddenFor(modelItem => Model.Kullanici[index].Soyisim)
+                                            </td>
 
-
-                                <td>
-                                    @Html.HiddenFor(modelItem => Model.Borclandirma[index], new { @class = "form-control copyTo" })
-                                </td>
+                                            <td>
+                                                @Html.HiddenFor(modelItem => Model.GuncelBorc[index])
+                                            </td>
 
 
-                            </tr>
-                        </tbody>*@
+                                            <td>
+                                                @Html.HiddenFor(modelItem => Model.Borclandirma[index], new { @class = "form-control copyTo" })
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>*@
+                            }
+                            else
+                            {
+
+                                <tr>
+                                    <td>
+                                        @Html.HiddenFor(modelItem => Model.Kullanici[index].ObjectId)
+                                        @Html.CheckBoxFor(modelItem => Model.Selected[index], false)
+
+                                    </td>
+
+
+                                    <td>
+                                        @Html.DisplayFor(modelItem => Model.Kullanici[index].Isim)
+                                    </td>
+
+                                    <td>
+                                        @Html.DisplayFor(modelItem => Model.Kullanici[index].Soyisim)
+                                    </td>
+
+                                    <td>
+                                        @Html.DisplayFor(modelItem => Model.GuncelBorc[index])
+                                    </td>
+
+
+                                    <td>
+                                        @Html.TextBoxFor(modelItem => Model.Borclandirma[index], new { @class = "form-control copyTo" })
+                                    </td>
+
+
+                                </tr>
+
+
+
+                            }
+                        }
                     }
-                    else
-                    {
-                        <tbody>
-                            <tr>
-                                <td>
-                                    @Html.HiddenFor(modelItem => Model.Kullanici[index].ObjectId)
-                                </td>
-                                <td>
-                                    @Html.CheckBoxFor(modelItem => Model.Selected[index], false)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => Model.Kullanici[index].Isim)
-                                </td>
-
-                                <td>
-                                    @Html.DisplayFor(modelItem => Model.Kullanici[index].Soyisim)
-                                </td>
-
-                                <td>
-                                    @Html.DisplayFor(modelItem => Model.GuncelBorc[index])
-                                </td>
-
-
-                                <td>
-                                    @Html.TextBoxFor(modelItem => Model.Borclandirma[index], new { @class = "form-control copyTo" })
-                                </td>
-
-
-                            </tr>
-                        </tbody>
-
-
-                    }
-                }
+                </tbody>
 
 
 
@@ -220,9 +234,7 @@
 
 
 
-            @*<div id="divProductList">
-                    @Html.Partial("_PartialBorclandirmaList", Model)
-                </div>*@
+
             <div class="col-md-offset-9 col-md-3">
                 <input type="submit" value="Güncelle" class="btn btn-success" />
             </div>

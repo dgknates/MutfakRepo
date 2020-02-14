@@ -11,7 +11,7 @@ namespace MvcLogin.Models
 
     public partial class db_StokKontrolEntities
     {
-        public List<Aylar> getAllAylarList()
+        public List<Aylar> GetAllAylarList()
         {
             return Aylar.Where(x => x.Deleted == false).ToList();
         }

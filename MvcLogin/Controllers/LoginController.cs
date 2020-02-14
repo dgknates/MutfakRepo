@@ -20,7 +20,7 @@ namespace MvcLogin.Controllers
         public ActionResult Index(Kullanıcılar model)
         {
 
-            Kullanıcılar kullanıcı = StokKontrolEntitiesProvider.getPersonByUserNameAndPasword(model.KullanıcıAdı,model.Parola);
+            Kullanıcılar kullanıcı = StokKontrolEntitiesProvider.GetPersonByUserNameAndPasword(model.KullanıcıAdı,model.Parola);
             if (kullanıcı == default(Kullanıcılar))
             {
                 ModelState.AddModelError("KullanıcıAdı", "Hatalı kullanıcı adı ya da parola");

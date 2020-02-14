@@ -2,12 +2,12 @@
 
 
 
-
 <table id="myTable" class="table display">
     <thead>
         <tr>
-            <td>
-            </td>
+            <th>
+                #
+            </th>
 
             <th>
                 @Html.DisplayNameFor(model => model.Kullanici[0].Isim)
@@ -22,15 +22,13 @@
             </th>
 
             @*<th>
-                @Html.DisplayNameFor(model => model.SecilenAy)
-            </th>*@
+                    @Html.DisplayNameFor(model => model.SecilenAy)
+                </th>*@
             <th style="margin-left:-50px;">
-                
+
                 @Html.DisplayName("SeçilenBorçDönemi")
             </th>
 
-
-            <th></th>
         </tr>
     </thead>
 
@@ -46,21 +44,18 @@
             {
                 <tr>
                     <td>
+                        @(index + 1)
                         @Html.HiddenFor(modelItem => Model.Kullanici[index].ObjectId)
                     </td>
-
                     <td>
                         @Html.DisplayFor(modelItem => Model.Kullanici[index].Isim)
                     </td>
-
                     <td>
                         @Html.DisplayFor(modelItem => Model.Kullanici[index].Soyisim)
                     </td>
-
                     <td>
                         @Html.DisplayFor(modelItem => Model.GuncelBorc[index])
                     </td>
-
                     <td>
                         @{
                             if (Model.Ay[Model.SecilenAy].Tarih != null && Model.SecilenAy != 0)
@@ -71,7 +66,7 @@
                             {
                                 @*@Html.DisplayFor(modelItem => Model.Ay[Model.SecilenAy].Tarih)*@
                                 <p>Toplam borç.</p>
-                                
+
                             }
                             else
                             {
@@ -79,13 +74,7 @@
 
                         }
                     </td>
-
-
-
-
-
                 </tr>
-
             }
         }
     </tbody>

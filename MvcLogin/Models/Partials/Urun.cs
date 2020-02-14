@@ -11,7 +11,7 @@ namespace MvcLogin.Models
 
     public partial class db_StokKontrolEntities
     {
-        public List<Urun> getAllProducts()
+        public List<Urun> GetAllProducts()
         {
             return Urun.Where(x => x.Deleted == false).ToList();
         }
@@ -32,7 +32,7 @@ namespace MvcLogin.Models
             return urun;
         }
 
-        public Urun getProductNameByObjectId(int a)
+        public Urun GetProductNameByObjectId(int a)
         {
             return Urun.Where(x => x.ObjectId == a && x.Deleted == false).FirstOrDefault();
         }
