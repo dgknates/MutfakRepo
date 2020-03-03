@@ -30,7 +30,6 @@ namespace MvcLogin.Models
             {
                 return 0;
             }
-           
             return Borclandirma.Where(x => x.KisiId == objectId && x.BorlandirmaTarihiId == ay).Sum(x=> x.BorcMiktari);
         }
     }

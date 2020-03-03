@@ -40,13 +40,9 @@ namespace MvcLogin.Models
         public bool UpdateStokMiktari(int urunId, int? guncelleme)
         {
             Urun urun = Urun.Where(x => x.ObjectId == urunId && x.Deleted == false).FirstOrDefault();
-
-            urun.StokMiktari = Urun.Where(x => x.ObjectId == urunId && x.Deleted == false).FirstOrDefault().StokMiktari - guncelleme;
-
+            urun.StokMiktari = urun.StokMiktari - guncelleme;
             SaveChanges();
-
-
-            return Urun.Where(x => x.ObjectId == urunId && x.Deleted == false).FirstOrDefault().StokMiktari == Urun.Where(x => x.ObjectId == urunId && x.Deleted == false).FirstOrDefault().StokMiktari - guncelleme;
+            return urun.StokMiktari == urun.StokMiktari - guncelleme;
         }
 
        

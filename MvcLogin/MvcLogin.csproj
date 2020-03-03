@@ -599,6 +599,7 @@
     <Compile Include="Models\Partials\Urun.cs" />
     <Compile Include="Models\Partials\UrunTipi.cs" />
     <Compile Include="Models\ProjectModel\AlisverisModel.cs" />
+    <Compile Include="Models\ProjectModel\AnnouncementModel.cs" />
     <Compile Include="Models\ProjectModel\HomepageModel.cs" />
     <Compile Include="Models\ProjectModel\KullanıcılarModel.cs" />
     <Compile Include="Models\ProjectModel\PersonalDebtsModel.cs" />
@@ -672,7 +673,6 @@
     <Content Include="Views\Shared\_PartialBorclandirmaList.cshtml" />
     <Content Include="Views\Home\CurrentDebts.cshtml" />
     <Content Include="Views\Home\Announcement.cshtml" />
-    <Content Include="Views\Shared\_PartialAnnouncement.cshtml" />
     <Content Include="Views\Home\AddAnnouncement.cshtml" />
     <Content Include="Views\Home\Homepage.cshtml" />
     <Content Include="Views\Shared\_PartialHomepageKullaniciYorum.cshtml" />

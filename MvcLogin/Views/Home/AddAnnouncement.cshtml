@@ -1,14 +1,14 @@
-﻿@model List<MvcLogin.Models.UrunModel>
+﻿@model MvcLogin.Models.AnnouncementModel
 
 
 
 @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "MyForm2" }))
 {
     <p>Merhaba,</p>
-    <p>@Model[0].StartDate.ToShortDateString() ve @Model[0].EndDate.Date.ToShortDateString() tarihleri arasında</p>
+    <p>@Model.StartDate.ToShortDateString() ve @Model.EndDate.ToShortDateString() tarihleri arasında</p>
     <p>Haftalık kullanım limitlerimiz aşağıdaki gibidir;</p>
 
-    foreach (var item in Model)
+    foreach (var item in Model.urunList)
     {
         if (item.Selected == true)
         {

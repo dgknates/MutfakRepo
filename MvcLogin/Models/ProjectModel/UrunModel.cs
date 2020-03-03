@@ -49,6 +49,8 @@ namespace MvcLogin.Models
             AllUretim = 0;
             UrunTipi = urunTipleri;
             UrunTipiString = "Belirtilmedi.";
+            StartDate = DateTime.Now.Date;
+            EndDate = DateTime.Now.Date;
         }
         public UrunModel(Urun urun, List<UrunTipi> urunTipleri, string urunTipiString)
         {
@@ -59,7 +61,10 @@ namespace MvcLogin.Models
             UretimMiktari = 0;
             Selected = false;
             AllUretim = 0;
+            StartDate = DateTime.Now.Date;
+            EndDate = DateTime.Now.Date;
             UrunTipi = urunTipleri;
+
             if (urunTipiString!= null)
             {
                 UrunTipiString = urunTipiString;

@@ -20,17 +20,18 @@ namespace MvcLogin.Controllers
             List<KullaniciYorum> kullaniciYorum = StokKontrolEntitiesProvider.GetAllKullaniciYorum();
             List<DuyuruBilgi> duyuruBilgi = null;
             List<string> UrunTipiString = null;
-            if (StokKontrolEntitiesProvider.FindLastAnnouncement() != 0)
+            int lastAnnouncement = StokKontrolEntitiesProvider.FindLastAnnouncement();
+            if (lastAnnouncement != 0)
             {
-                duyuruBilgi = StokKontrolEntitiesProvider.GetLastDuyuruBilgiToList(StokKontrolEntitiesProvider.FindLastAnnouncement());
+                duyuruBilgi = StokKontrolEntitiesProvider.GetLastDuyuruBilgiToList(lastAnnouncement);
                 UrunTipiString = new List<string>();
 
                 foreach (var item in duyuruBilgi)
                 {
-                    if (StokKontrolEntitiesProvider.GetProductNameByObjectId(item.Urun.ObjectId).UrunTipi != null)
+                    Urun urun = StokKontrolEntitiesProvider.GetProductNameByObjectId(item.Urun.ObjectId);
+                    if (urun.UrunTipi != null)
                     {
-                        UrunTipiString.Add(StokKontrolEntitiesProvider.GetProductNameByObjectId(item.Urun.ObjectId).UrunTipi.UrunTipi1);
-
+                        UrunTipiString.Add(urun.UrunTipi.UrunTipi1);
                     }
                     else
                     {
@@ -40,9 +41,6 @@ namespace MvcLogin.Controllers
                 }
             }
             HomepageModel model = new HomepageModel(kullaniciYorum, duyuruBilgi, adminMutfakYorum, UrunTipiString);
-
-
-
 
             return View(model);
         }
@@ -63,12 +61,8 @@ namespace MvcLogin.Controllers
             {
                 return RedirectToAction("Homepage", "Home");
             }
-
-
-
         }
-
-
+        
         [System.Web.Mvc.HttpPost]
         public ActionResult AddAdminMutfakYorum(HomepageModel gelenler)
         {
@@ -87,8 +81,6 @@ namespace MvcLogin.Controllers
                 {
                     return RedirectToAction("Homepage", "Home");
                 }
-
-
             }
             else
             {
@@ -101,19 +93,16 @@ namespace MvcLogin.Controllers
             if (duyuruId != null)
             {
                 List<DuyuruBilgi> duyuruBilgi = StokKontrolEntitiesProvider.GetLastDuyuruBilgiToList(Convert.ToInt32(duyuruId));
-                List<UrunModel> model = new List<UrunModel>();
+                List<UrunModel> urunList = new List<UrunModel>();
+                AnnouncementModel model = new AnnouncementModel();
 
                 foreach (var item in duyuruBilgi)
                 {
-                    //model[index].UrunAdi = item.Urun.UrunAdi;
-                    //model[index].UretimMiktari = Convert.ToInt32(item.Adet);
-                    //model[index].DolapAdi = item.
-                    model.Add(new UrunModel(item.Urun, Convert.ToInt32(item.Adet)));
+                    urunList.Add(new UrunModel(item.Urun, Convert.ToInt32(item.Adet)));
                 }
+                model.urunList = urunList;
                 return Announcement(model);
             }
-
-
             return View();
         }
 
@@ -136,8 +125,8 @@ namespace MvcLogin.Controllers
             {
                 List<Urun> urunler = StokKontrolEntitiesProvider.GetAllProducts();
                 List<UrunTipi> urunTipleri = StokKontrolEntitiesProvider.GetAllUrunTipi();
-
                 List<UrunModel> model = new List<UrunModel>();
+                
                 foreach (Urun urun in urunler)
                 {
                     if (urun.UrunTipi != null)
@@ -148,11 +137,7 @@ namespace MvcLogin.Controllers
                     {
                         model.Add(new UrunModel(urun, urunTipleri));
                     }
-
                 }
-
-
-
                 return View(model);
             }
             return RedirectToAction("Index", "Login");
@@ -177,15 +162,10 @@ namespace MvcLogin.Controllers
                         if (urunler[i].ObjectId == gelenler[j].ObjectId && gelenler[j].Selected == true)
                         {
                             urunler[i].StokMiktari += gelenler[j].UretimMiktari;
-
                         }
                     }
                 }
-
-
                 StokKontrolEntitiesProvider.SaveChanges();
-
-
 
                 foreach (Urun urun in urunler)
                 {
@@ -197,7 +177,6 @@ namespace MvcLogin.Controllers
                     {
                         model.Add(new UrunModel(urun, urunTipleri));
                     }
-
                 }
                 ModelState.Clear();
                 return View(model);
@@ -213,54 +192,56 @@ namespace MvcLogin.Controllers
                 {
                     List<Urun> urunler = StokKontrolEntitiesProvider.GetAllProducts();
                     List<UrunTipi> urunTipleri = StokKontrolEntitiesProvider.GetAllUrunTipi();
-
-                    List<UrunModel> model = new List<UrunModel>();
-           
+                    AnnouncementModel model = new AnnouncementModel(1);
+                    List<UrunModel> urunList = new List<UrunModel>();
 
                     foreach (Urun urun in urunler)
                     {
                         if (urun.UrunTipi != null)
                         {
-                            model.Add(new UrunModel(urun, urunTipleri, urun.UrunTipi.UrunTipi1));
+                            urunList.Add(new UrunModel(urun, urunTipleri, urun.UrunTipi.UrunTipi1));
                         }
                         else
                         {
-                            model.Add(new UrunModel(urun, urunTipleri));
+                            urunList.Add(new UrunModel(urun, urunTipleri));
                         }
-
                     }
-
-
+                    model.urunList = urunList;
                     return View(model);
                 }
             }
             else
             {
                 List<DuyuruBilgi> duyuruBilgi = StokKontrolEntitiesProvider.GetLastDuyuruBilgiToList(Convert.ToInt32(duyuruId));
-                List<UrunModel> model = new List<UrunModel>();
+                List<UrunModel> urunList = new List<UrunModel>();
+                AnnouncementModel model = new AnnouncementModel(1);
+
                 List<Urun> urunler = StokKontrolEntitiesProvider.GetAllProducts();
+
                 foreach (var item in duyuruBilgi)
                 {
-                    model.Add(new UrunModel(item.Urun, Convert.ToInt32(item.Adet)));
+                    urunList.Add(new UrunModel(item.Urun, Convert.ToInt32(item.Adet)));
                 }
                 foreach (Urun urun in urunler)
                 {
-                    if (model.Where(x => x.UrunAdi == urun.UrunAdi).FirstOrDefault() == null)
+                    if (urunList.Where(x => x.UrunAdi == urun.UrunAdi).FirstOrDefault() == null)
                     {
-                        model.Add(new UrunModel(urun));
+                        urunList.Add(new UrunModel(urun));
                     }
                 }
+                model.urunList = urunList;
                 return View(model);
             }
             return RedirectToAction("Index", "Login");
         }
+
         [System.Web.Mvc.HttpPost]
-        public ActionResult Announcement(List<UrunModel> gelenler)
+        public ActionResult Announcement(AnnouncementModel gelenler)
         {
             if (Session["grup"].Equals(3))
             {
                 int lastAnnouncement = StokKontrolEntitiesProvider.FindLastAnnouncement();
-                foreach (var item in gelenler)
+                foreach (var item in gelenler.urunList)
                 {
                     if (item.UretimMiktari != 0 && item.Selected == true)
                     {
@@ -274,52 +255,43 @@ namespace MvcLogin.Controllers
             return RedirectToAction("Index", "Login");
         }
 
-
         [System.Web.Mvc.HttpPost]
-        public ActionResult PostAddAnnouncement(List<UrunModel> gelenler)
+        public ActionResult PostAddAnnouncement(AnnouncementModel gelenler)
         {
-
             if (Session["grup"].Equals(3))
             {
-                foreach (var item in gelenler)
+                foreach (var item in gelenler.urunList)
                 {
                     StokKontrolEntitiesProvider.AddDuyuruBilgi(item.ObjectId, item.AllUretim, StokKontrolEntitiesProvider.FindLastAnnouncement());
-
                 }
                 ModelState.Clear();
                 return View();
             }
             return RedirectToAction("Index", "Login");
-
         }
 
         [System.Web.Mvc.HttpPost]
-        public ActionResult AddAnnouncement(List<UrunModel> gelenler)
+        public ActionResult AddAnnouncement(AnnouncementModel gelenler)
         {
-
-            StokKontrolEntitiesProvider.AddAnnouncement(Convert.ToInt32(Session["UserObjectId"]), gelenler[0].StartDate, gelenler[0].EndDate);
-
-
-            foreach (var item in gelenler)
+            StokKontrolEntitiesProvider.AddAnnouncement(Convert.ToInt32(Session["UserObjectId"]), gelenler.StartDate, gelenler.EndDate);
+            foreach (var item in gelenler.urunList)
             {
                 if (item.Selected == true)
                 {
-                    if (StokKontrolEntitiesProvider.GetProductNameByObjectId(item.ObjectId).UrunTipi != null)
+                    Urun urun = StokKontrolEntitiesProvider.GetProductNameByObjectId(item.ObjectId);
+                    if (urun.UrunTipi != null)
                     {
-                        item.UrunTipiString = StokKontrolEntitiesProvider.GetProductNameByObjectId(item.ObjectId).UrunTipi.UrunTipi1;
-
+                        item.UrunTipiString = urun.UrunTipi.UrunTipi1;
                     }
                     else
                     {
                         item.UrunTipiString = "Birim";
                     }
-                    item.UrunAdi = StokKontrolEntitiesProvider.GetProductNameByObjectId(item.ObjectId).UrunAdi;
+                    item.UrunAdi = urun.UrunAdi;
                 }
             }
-
             return PartialView(gelenler);
         }
-
 
         public ActionResult EditAnnouncement(int? duyuruId)
         {
@@ -327,67 +299,74 @@ namespace MvcLogin.Controllers
             {
                 if (Session["grup"].Equals(3))
                 {
+                    AnnouncementModel model = new AnnouncementModel(1);
                     List<Urun> urunler = StokKontrolEntitiesProvider.GetAllProducts();
+                    List<UrunModel> urunList = new List<UrunModel>();
 
-                    List<UrunModel> model = new List<UrunModel>();
                     foreach (Urun urun in urunler)
                     {
-                        model.Add(new UrunModel(urun));
+                        urunList.Add(new UrunModel(urun));
                     }
-
-
-
+                    model.urunList = urunList;
                     return View(model);
                 }
             }
             else
             {
+                AnnouncementModel model = new AnnouncementModel(1);
                 List<DuyuruBilgi> duyuruBilgi = StokKontrolEntitiesProvider.GetLastDuyuruBilgiToList(Convert.ToInt32(duyuruId));
-                List<UrunModel> model = new List<UrunModel>();
+                List<UrunModel> urunList = new List<UrunModel>();
                 List<Urun> urunler = StokKontrolEntitiesProvider.GetAllProducts();
+
+                model.StartDate = duyuruBilgi[0].Duyuru.StartDate;
+                model.EndDate = duyuruBilgi[0].Duyuru.EndDate;
+
                 foreach (var item in duyuruBilgi)
                 {
-                    model.Add(new UrunModel(item.Urun, Convert.ToInt32(item.Adet)));
+                    urunList.Add(new UrunModel(item.Urun, Convert.ToInt32(item.Adet)));
                 }
                 foreach (Urun urun in urunler)
                 {
-                    if (model.Where(x => x.UrunAdi == urun.UrunAdi).FirstOrDefault() == null)
+                    if (urunList.Where(x => x.UrunAdi == urun.UrunAdi).FirstOrDefault() == null)
                     {
-                        model.Add(new UrunModel(urun));
+                        urunList.Add(new UrunModel(urun));
                     }
                 }
+                model.urunList = urunList;
                 return View(model);
             }
             return RedirectToAction("Index", "Login");
         }
+
         [System.Web.Mvc.HttpPost]
-        public ActionResult EditAnnouncement(List<UrunModel> gelenler)
+        public ActionResult EditAnnouncement(AnnouncementModel gelenler)
         {
             if (Session["grup"].Equals(3))
             {
                 int lastAnnouncement = StokKontrolEntitiesProvider.FindLastAnnouncement();
-                foreach (var item in gelenler)
+                List<DuyuruBilgi> duyuruBilgiList = StokKontrolEntitiesProvider.GetLastDuyuruBilgiToList(lastAnnouncement);
+                foreach (var item in gelenler.urunList)
                 {
+                    DuyuruBilgi duyuruBilgiItem = duyuruBilgiList.Where(x => x.UrunId == item.ObjectId).FirstOrDefault();
                     if (item.UretimMiktari != 0 && item.Selected == true)
                     {
-
-                        if (StokKontrolEntitiesProvider.GetLastDuyuruBilgiToList(lastAnnouncement).Where(x => x.UrunId == item.ObjectId).FirstOrDefault() != null)
+                        if (duyuruBilgiItem != null)
                         {
-                            if (item.UretimMiktari != StokKontrolEntitiesProvider.GetLastDuyuruBilgiToList(lastAnnouncement).Where(x => x.UrunId == item.ObjectId).FirstOrDefault().Adet)
+                            if (item.UretimMiktari != duyuruBilgiItem.Adet)
                             {
-                                if (StokKontrolEntitiesProvider.GetLastDuyuruBilgiToList(lastAnnouncement).Where(x => x.UrunId == item.ObjectId).FirstOrDefault().Adet == null)
+                                if (duyuruBilgiItem.Adet == null)
                                 {
                                     StokKontrolEntitiesProvider.UpdateStokMiktari(item.ObjectId, item.UretimMiktari);
                                 }
-                                else if (item.UretimMiktari < StokKontrolEntitiesProvider.GetLastDuyuruBilgiToList(lastAnnouncement).Where(x => x.UrunId == item.ObjectId).FirstOrDefault().Adet)
+                                else if (item.UretimMiktari < duyuruBilgiItem.Adet)
                                 {
-                                    int? guncellenecekMiktar = item.UretimMiktari - StokKontrolEntitiesProvider.GetLastDuyuruBilgiToList(lastAnnouncement).Where(x => x.UrunId == item.ObjectId).FirstOrDefault().Adet;
+                                    int? guncellenecekMiktar = item.UretimMiktari - duyuruBilgiItem.Adet;
                                     StokKontrolEntitiesProvider.UpdateStokMiktari(item.ObjectId, guncellenecekMiktar);
                                     StokKontrolEntitiesProvider.UpdateDuyuruBilgi(item.ObjectId, lastAnnouncement, item.UretimMiktari);
                                 }
-                                else if (item.UretimMiktari > StokKontrolEntitiesProvider.GetLastDuyuruBilgiToList(lastAnnouncement).Where(x => x.UrunId == item.ObjectId).FirstOrDefault().Adet)
+                                else if (item.UretimMiktari > duyuruBilgiItem.Adet)
                                 {
-                                    int? guncellenecekMiktar = item.UretimMiktari - StokKontrolEntitiesProvider.GetLastDuyuruBilgiToList(lastAnnouncement).Where(x => x.UrunId == item.ObjectId).FirstOrDefault().Adet;
+                                    int? guncellenecekMiktar = item.UretimMiktari - duyuruBilgiItem.Adet;
                                     StokKontrolEntitiesProvider.UpdateStokMiktari(item.ObjectId, guncellenecekMiktar);
                                     StokKontrolEntitiesProvider.UpdateDuyuruBilgi(item.ObjectId, lastAnnouncement, item.UretimMiktari);
                                 }
@@ -406,7 +385,6 @@ namespace MvcLogin.Controllers
                             StokKontrolEntitiesProvider.AddDuyuruBilgi(item.ObjectId, item.UretimMiktari, lastAnnouncement);
                             StokKontrolEntitiesProvider.UpdateStokMiktari(item.ObjectId, item.UretimMiktari);
                         }
-
                     }
                     else if (item.Selected == false && item.UretimMiktari == 0)
                     {
@@ -414,22 +392,30 @@ namespace MvcLogin.Controllers
                     }
                     else if (item.UretimMiktari == 0 && item.Selected == true)
                     {
-                        if (StokKontrolEntitiesProvider.GetLastDuyuruBilgiToList(lastAnnouncement).Where(x => x.UrunId == item.ObjectId).FirstOrDefault().Adet != null)
+                        if (duyuruBilgiItem.Adet != null)
                         {
-                            int? guncellenecekMiktar = item.UretimMiktari - StokKontrolEntitiesProvider.GetLastDuyuruBilgiToList(lastAnnouncement).Where(x => x.UrunId == item.ObjectId).FirstOrDefault().Adet;
+                            int? guncellenecekMiktar = item.UretimMiktari - duyuruBilgiItem.Adet;
                             StokKontrolEntitiesProvider.UpdateStokMiktari(item.ObjectId, guncellenecekMiktar);
                             StokKontrolEntitiesProvider.UpdateDuyuruBilgi(item.ObjectId, lastAnnouncement, item.UretimMiktari);
                             StokKontrolEntitiesProvider.RemoveDuyuruBilgi(item.ObjectId, lastAnnouncement);
                         }
                     }
-                    else if (StokKontrolEntitiesProvider.GetLastDuyuruBilgiToList(lastAnnouncement).Where(x => x.UrunId == item.ObjectId).FirstOrDefault().Adet != null)
+                    else if (duyuruBilgiItem.Adet != null)
                     {
-                        int? guncellenecekMiktar = -(StokKontrolEntitiesProvider.GetLastDuyuruBilgiToList(lastAnnouncement).Where(x => x.UrunId == item.ObjectId).FirstOrDefault().Adet);
+                        int? guncellenecekMiktar = -(duyuruBilgiItem.Adet);
                         StokKontrolEntitiesProvider.UpdateStokMiktari(item.ObjectId, guncellenecekMiktar);
                         StokKontrolEntitiesProvider.RemoveDuyuruBilgi(item.ObjectId, lastAnnouncement);
-
                     }
                 }
+                if (gelenler.StartDate != duyuruBilgiList[0].Duyuru.StartDate)
+                {
+                    StokKontrolEntitiesProvider.UpdateDuyuruStartDate(lastAnnouncement,gelenler.StartDate);
+                }
+                if (gelenler.EndDate != duyuruBilgiList[0].Duyuru.EndDate)
+                {
+                    StokKontrolEntitiesProvider.UpdateDuyuruEndDate(lastAnnouncement, gelenler.EndDate);
+                }
+
                 ModelState.Clear();
                 return RedirectToAction("Announcement", "Home");
             }
@@ -437,28 +423,28 @@ namespace MvcLogin.Controllers
         }
 
         [System.Web.Mvc.HttpPost]
-        public ActionResult EditAddAnnouncement(List<UrunModel> gelenler)
+        public ActionResult EditAddAnnouncement(AnnouncementModel gelenler)
         {
-
-
-
-            foreach (var item in gelenler)
+            foreach (var item in gelenler.urunList)
             {
                 if (item.Selected == true)
                 {
-                    if (StokKontrolEntitiesProvider.GetProductNameByObjectId(item.ObjectId).UrunTipi != null)
-                    {
-                        item.UrunTipiString = StokKontrolEntitiesProvider.GetProductNameByObjectId(item.ObjectId).UrunTipi.UrunTipi1;
+                    Urun urun = StokKontrolEntitiesProvider.GetProductNameByObjectId(item.ObjectId);
 
-                    }
-                    else
+                    if (urun != null && urun != default(Urun))
                     {
-                        item.UrunTipiString = "Birim";
+                        if (urun.UrunTipi != null)
+                        {
+                            item.UrunTipiString = urun.UrunTipi.UrunTipi1;
+                        }
+                        else
+                        {
+                            item.UrunTipiString = "Birim";
+                        }
+                        item.UrunAdi = urun.UrunAdi;
                     }
-                    item.UrunAdi = StokKontrolEntitiesProvider.GetProductNameByObjectId(item.ObjectId).UrunAdi;
                 }
             }
-
             return PartialView(gelenler);
         }
 
@@ -510,11 +496,11 @@ namespace MvcLogin.Controllers
                 {
                     model2.GuncelBorc.Add(StokKontrolEntitiesProvider.GetToplamBorcByObjectId(model2.Kullanici[index].ObjectId));
                 }
+
                 return View(model2);
             }
             return RedirectToAction("Index", "Login");
         }
-
 
         public ActionResult GetCurrentDebts(int SecilenAy)
         {
@@ -531,26 +517,18 @@ namespace MvcLogin.Controllers
                 int index = 0;
                 foreach (Kullanıcılar kullanıcı in kullanıcılar)
                 {
-
-
-                    if (StokKontrolEntitiesProvider.GetToplamBorcByDateAndObjectId2(SecilenAy, kullanıcı.ObjectId) == 0)
-                    {
-
-                    }
-                    else
+                    if (StokKontrolEntitiesProvider.GetToplamBorcByDateAndObjectId2(SecilenAy, kullanıcı.ObjectId) != 0)
                     {
                         model.GuncelBorc.Add(StokKontrolEntitiesProvider.GetToplamBorcByDateAndObjectId2(SecilenAy, kullanıcı.ObjectId));
                         model.Kullanici.Add(kullanıcı);
                         model.SecilenAy = SecilenAy;
                     }
+                    else
+                    {
 
+                    }
                     index++;
-
                 }
-
-
-
-
                 // model nesnesi oluştur sonra içini secilen aya göre doldur sonra modeli yolla
                 // var p = Parti....
                 return PartialView("_PartialCurrentDebts", model);
@@ -601,7 +579,6 @@ namespace MvcLogin.Controllers
             return RedirectToAction("Index", "Login");
         }
 
-
         public ActionResult GetPersonalDebst(int SecilenAy)
         {
             if (SecilenAy != 0)
@@ -611,8 +588,6 @@ namespace MvcLogin.Controllers
                 int index = 0;
                 foreach (Kullanıcılar kullanıcı in kullanıcılar)
                 {
-
-
                     if (StokKontrolEntitiesProvider.GetToplamBorcByDateAndObjectId2(SecilenAy, kullanıcı.ObjectId) == 0)
                     {
 
@@ -625,12 +600,7 @@ namespace MvcLogin.Controllers
                     }
 
                     index++;
-
                 }
-
-
-
-
                 // model nesnesi oluştur sonra içini secilen aya göre doldur sonra modeli yolla
                 // var p = Parti....
                 return PartialView("_PartialBorclandirmaList", model);
@@ -672,8 +642,6 @@ namespace MvcLogin.Controllers
 
                 }
                 ModelState.Clear();
-
-
                 for (int i = 0; i < model2.Kullanici.Count(); i++)
                 {
                     if (model2.Kullanici[i].GuncelBorc == null)
@@ -706,24 +674,12 @@ namespace MvcLogin.Controllers
                         }
                     }
                 }
-
                 for (int index = 0; index < model2.Kullanici.Count(); index++)
                 {
                     model2.GuncelBorc.Add(StokKontrolEntitiesProvider.GetToplamBorcByObjectId(model2.Kullanici[index].ObjectId));
                 }
-
-
-
                 ViewBag.Aylar2 = StokKontrolEntitiesProvider.GetAllAylarList();
-
                 StokKontrolEntitiesProvider.SaveChanges();
-
-
-
-
-
-
-
                 return View(model2);
             }
             return RedirectToAction("Index", "Login");

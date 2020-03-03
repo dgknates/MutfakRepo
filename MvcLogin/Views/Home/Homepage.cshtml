@@ -88,24 +88,61 @@
             if (pageNumber.trim() == "Sonraki") {
                 if ($(this).closest("ul.kullanici").find("li").find("a.sayfalandirma").first().text() == 1) {
 
-                    if ($(this).closest("ul.kullanici").find("li.sayfalandirma").first().next().hasClass("active") || $(this).closest("ul.kullanici").find("li.sayfalandirma").last().hasClass("active")) {
+                    if ($(this).closest("ul.kullanici").find("li.sayfalandirma").first().next().hasClass("active") && sayi > 3 || $(this).closest("ul.kullanici").find("li.sayfalandirma").last().hasClass("active") && sayi > 3) {
                         $(this).closest("ul.kullanici").find("li").find("a.noktailk").removeClass("hidden");
                     }
                     if ($(this).closest("ul.kullanici").find("li.sayfalandirma").first().next().hasClass("active")) {
-                        document.getElementById("1").innerHTML = (sayi - 1).toString();
-                        document.getElementById("2").innerHTML = (sayi).toString();
-                        document.getElementById("3").innerHTML = (sayi + 1).toString();
+                        if (yorumSayisi <= 3) {
+                            if ($(this).closest("ul.kullanici").find("li.sayfalandirma").first().hasClass("active")) {
+                                $(this).closest("ul.kullanici").find("li.sayfalandirma").first().next().addClass("active");
+                                $(this).closest("ul.kullanici").find("li.sayfalandirma").first().removeClass("active");
+                            } else if ($(this).closest("ul.kullanici").find("li.sayfalandirma").first().next().hasClass("active")) {
+                                $(this).closest("ul.kullanici").find("li.sayfalandirma").first().next().removeClass("active");
+                                $(this).closest("ul.kullanici").find("li.sayfalandirma").last().addClass("active");
+                            }
+                        } else {
+                            document.getElementById("1").innerHTML = (sayi - 1).toString();
+                            document.getElementById("2").innerHTML = (sayi).toString();
+                            document.getElementById("3").innerHTML = (sayi + 1).toString();
+                            if (sayi + 1 == yorumSayisi) {
+                                $(this).closest("ul.kullanici").find("li").find("a.noktason").addClass("hidden");
+                            }
+                        }
                     } else if ($(this).closest("ul.kullanici").find("li.sayfalandirma").last().hasClass("active")) {
-                        document.getElementById("1").innerHTML = (sayi - 1).toString();
-                        document.getElementById("2").innerHTML = (sayi).toString();
-                        document.getElementById("3").innerHTML = (sayi + 1).toString();
-                        $(this).closest("ul.kullanici").find("li.sayfalandirma").first().next().addClass("active");
-                        $(this).closest("ul.kullanici").find("li.sayfalandirma").last().removeClass("active");
+                        if (yorumSayisi < 3) {
+                            document.getElementById("1").innerHTML = (sayi - 1).toString();
+                            document.getElementById("2").innerHTML = (sayi).toString();
+                            document.getElementById("3").innerHTML = (sayi + 1).toString();
+                            $(this).closest("ul.kullanici").find("li.sayfalandirma").first().next().addClass("active");
+                            $(this).closest("ul.kullanici").find("li.sayfalandirma").last().removeClass("active");
+                        } else {
+                            if ((sayi + 1) <= yorumSayisi) {
+                                if (sayi + 1 == yorumSayisi) {
+                                    document.getElementById("1").innerHTML = (sayi - 1).toString();
+                                    document.getElementById("2").innerHTML = (sayi).toString();
+                                    document.getElementById("3").innerHTML = (sayi + 1).toString();
+                                    $(this).closest("ul.kullanici").find("li").find("a.noktason").addClass("hidden");
+                                    if (sayi + 2 == yorumSayisi) {
+                                        $(this).closest("ul.kullanici").find("li").find("a.noktason").addClass("hidden");
+                                    }
+                                } else {
+                                    document.getElementById("1").innerHTML = (sayi).toString();
+                                    document.getElementById("2").innerHTML = (sayi + 1).toString();
+                                    document.getElementById("3").innerHTML = (sayi + 2).toString();
+                                    $(this).closest("ul.kullanici").find("li.sayfalandirma").first().next().addClass("active");
+                                    $(this).closest("ul.kullanici").find("li.sayfalandirma").last().removeClass("active");
+                                    if (sayi + 2 == yorumSayisi) {
+                                        $(this).closest("ul.kullanici").find("li").find("a.noktason").addClass("hidden");
+                                    }
+                                }
+                            }
+                        }
                     } else {
-                        $(this).closest("ul.kullanici").find("li.sayfalandirma").first().next().addClass("active");
-                        $(this).closest("ul.kullanici").find("li.sayfalandirma").first().removeClass("active");
+                        if (!$(this).closest("ul.kullanici").find("li.sayfalandirma").first().next().hasClass("hidden")) {
+                            $(this).closest("ul.kullanici").find("li.sayfalandirma").first().next().addClass("active");
+                            $(this).closest("ul.kullanici").find("li.sayfalandirma").first().removeClass("active");
+                        }
                     }
-
                 }
                 else if (sayi < yorumSayisi) {
 
@@ -160,6 +197,7 @@
                         var a = document.getElementById("3").innerHTML = "3";
                         $(this).closest("ul.kullanici").find("li").find("a.noktailk").addClass("hidden");
                         $(this).closest("ul.kullanici").find("li.sayfalandirma").last().addClass("active");
+                        $(this).closest("ul.kullanici").find("li").find("a.noktason").removeClass("hidden");
 
                     }
 
@@ -188,17 +226,12 @@
                     if (sayi + 3 >= yorumSayisi) {
                         $(this).closest("ul.kullanici").find("li").find("a.noktason").addClass("hidden");
                     }
-
                 }
-
-
-
             } else if (pageNumber.trim() == "Önceki") {
-                if (sayi != 3) {
+                if (sayi > 3) {
 
                     if (sayi == 4) {
                         $(this).closest("ul.kullanici").find("li").find("a.noktailk").addClass("hidden");
-
                     }
                     if (sayi == yorumSayisi) {
                         if ($(this).closest("ul.kullanici").find("li.sayfalandirma").first().next().hasClass("active")) {
@@ -206,10 +239,13 @@
                             var a = document.getElementById("1").innerHTML = (sayi - 3).toString();
                             var a = document.getElementById("2").innerHTML = (sayi - 2).toString();
                             var a = document.getElementById("3").innerHTML = (sayi - 1).toString();
-                        }
-                        if ($(this).closest("ul.kullanici").find("li.sayfalandirma").last().hasClass("active")) {
+                        } else if ($(this).closest("ul.kullanici").find("li.sayfalandirma").last().hasClass("active")) {
                             $(this).closest("ul.kullanici").find("li.sayfalandirma").last().removeClass("active");
                             $(this).closest("ul.kullanici").find("li.sayfalandirma").first().next().addClass("active");
+                        } else if ($(this).closest("ul.kullanici").find("li.sayfalandirma").first().hasClass("active")) {
+                            var a = document.getElementById("1").innerHTML = (sayi - 3).toString();
+                            var a = document.getElementById("2").innerHTML = (sayi - 2).toString();
+                            var a = document.getElementById("3").innerHTML = (sayi - 1).toString();
                         }
                     } else {
                         var a = document.getElementById("1").innerHTML = (sayi - 3).toString();
@@ -224,14 +260,16 @@
                         $(this).closest("ul.kullanici").find("li.sayfalandirma").first().next().addClass("active");
                         $(this).closest("ul.kullanici").find("li.sayfalandirma").last().removeClass("active");
                     }
+                } else if (sayi == 2) {
+                    if ($(this).closest("ul.kullanici").find("li.sayfalandirma").first().next().hasClass("active")) {
+                        $(this).closest("ul.kullanici").find("li.sayfalandirma").first().next().removeClass("active");
+                        $(this).closest("ul.kullanici").find("li.sayfalandirma").first().addClass("active");
+                    } else if ($(this).closest("ul.kullanici").find("li.sayfalandirma").last().hasClass("active")) {
+                        $(this).closest("ul.kullanici").find("li.sayfalandirma").first().next().addClass("active");
+                        $(this).closest("ul.kullanici").find("li.sayfalandirma").last().removeClass("active");
+                    }
                 }
-
-
-
-
-
             }
-
 
             var pageNo = Number($(this).closest("ul.kullanici").find("li.active").text());
 
@@ -266,10 +304,6 @@
             } else {
                 console.log("Boş seçildi!");
             }
-
-
-
-
         });
     });
 </script>
@@ -283,20 +317,10 @@
         $('.kullanici li.sayfalandirma').click(function () {
             $('li.active').removeClass('active');
             $(this).closest("li.sayfalandirma").addClass("active");
-
-
             var pageNumber = $(this).text();
-
-
-
             var test = $(this).closest("ul.kullanici").find("li").find("a.sayfalandirma").last().text();
             var sayi = Number(test);
             var yorumSayisi = Number($('sayi').text().trim());
-
-
-
-
-
             if (pageNumber != 0 && pageNumber.trim() != "Sonraki" && pageNumber.trim() != "Önceki" && pageNumber != "...") {
 
                 var divKullaniciYorum = $('#divKullaniciYorum');
@@ -326,10 +350,6 @@
             } else {
                 console.log("Boş seçildi!");
             }
-
-
-
-
             pageNumber++;
         });
     });
@@ -351,7 +371,6 @@
                     if ($(this).closest("ul.admin").find("li.sayfalandirma").first().next().hasClass("active") || $(this).closest("ul.admin").find("li.sayfalandirma").last().hasClass("active")) {
                         if (yorumSayisi > 3) {
                             $(this).closest("ul.admin").find("li").find("a.noktailk").removeClass("hidden");
-
                         }
                     }
                     if ($(this).closest("ul.admin").find("li.sayfalandirma").first().next().hasClass("active")) {
@@ -364,30 +383,31 @@
                                 $(this).closest("ul.admin").find("li.sayfalandirma").last().addClass("active");
                             }
                         } else {
-                            document.getElementById("1").innerHTML = (sayi - 1).toString();
-                            document.getElementById("2").innerHTML = (sayi).toString();
-                            document.getElementById("3").innerHTML = (sayi + 1).toString();
+                            document.getElementById("11").innerHTML = (sayi - 1).toString();
+                            document.getElementById("12").innerHTML = (sayi).toString();
+                            document.getElementById("13").innerHTML = (sayi + 1).toString();
                         }
                     } else if ($(this).closest("ul.admin").find("li.sayfalandirma").last().hasClass("active")) {
                         if (yorumSayisi >= 3) {
 
                         } else {
-                            document.getElementById("1").innerHTML = (sayi - 1).toString();
-                            document.getElementById("2").innerHTML = (sayi).toString();
-                            document.getElementById("3").innerHTML = (sayi + 1).toString();
+                            document.getElementById("11").innerHTML = (sayi - 1).toString();
+                            document.getElementById("12").innerHTML = (sayi).toString();
+                            document.getElementById("13").innerHTML = (sayi + 1).toString();
                             $(this).closest("ul.admin").find("li.sayfalandirma").first().next().addClass("active");
                             $(this).closest("ul.admin").find("li.sayfalandirma").last().removeClass("active");
                         }
                     } else {
-                        $(this).closest("ul.admin").find("li.sayfalandirma").first().next().addClass("active");
-                        $(this).closest("ul.admin").find("li.sayfalandirma").first().removeClass("active");
+                        if (!$(this).closest("ul.admin").find("li.sayfalandirma").first().next().hasClass("hidden")) {
+                            $(this).closest("ul.admin").find("li.sayfalandirma").first().next().addClass("active");
+                            $(this).closest("ul.admin").find("li.sayfalandirma").first().removeClass("active");
+                        }
                     }
-
                 }
                 else if (sayi < yorumSayisi) {
 
 
-                    if (document.getElementById("2").innerHTML == (yorumSayisi - 1).toString()) {
+                    if (document.getElementById("12").innerHTML == (yorumSayisi - 1).toString()) {
                         $(this).closest("ul.admin").find("li.sayfalandirma").first().next().removeClass("active");
                         $(this).closest("ul.admin").find("li.sayfalandirma").last().addClass("active");
                     } else if ($(this).closest("ul.admin").find("li.sayfalandirma").first().hasClass("active")) {
@@ -397,12 +417,11 @@
 
                     if (sayi + 1 <= yorumSayisi) {
 
-                        document.getElementById("1").innerHTML = (sayi - 1).toString();
-                        document.getElementById("2").innerHTML = (sayi).toString();
-                        document.getElementById("3").innerHTML = (sayi + 1).toString();
+                        document.getElementById("11").innerHTML = (sayi - 1).toString();
+                        document.getElementById("12").innerHTML = (sayi).toString();
+                        document.getElementById("13").innerHTML = (sayi + 1).toString();
                         if (sayi + 1 == yorumSayisi || sayi == yorumSayisi) {
                             $(this).closest("ul.admin").find("li").find("a.noktason").addClass("hidden");
-
                         }
                     }
 
@@ -418,28 +437,22 @@
             } else if ($(this).hasClass("noktailk")) {
                 if (sayi >= 3) {
                     if (sayi >= 6) {
-                        var a = document.getElementById("1").innerHTML = (sayi - 5).toString();
-                        var a = document.getElementById("2").innerHTML = (sayi - 4).toString();
-                        var a = document.getElementById("3").innerHTML = (sayi - 3).toString();
+                        var a = document.getElementById("11").innerHTML = (sayi - 5).toString();
+                        var a = document.getElementById("12").innerHTML = (sayi - 4).toString();
+                        var a = document.getElementById("13").innerHTML = (sayi - 3).toString();
                         $(this).closest("ul.admin").find("li.sayfalandirma").last().addClass("active");
-
                     }
-
                     if (sayi - 3 == 3) {
                         $(this).closest("ul.admin").find("li").find("a.noktailk").addClass("hidden");
                         $(this).closest("ul.admin").find("li").find("a.noktason").removeClass("hidden");
                         $(this).closest("ul.admin").find("li.sayfalandirma").last().addClass("active");
-
-
                     } else if (sayi < 6) {
-                        var a = document.getElementById("1").innerHTML = "1";
-                        var a = document.getElementById("2").innerHTML = "2";
-                        var a = document.getElementById("3").innerHTML = "3";
+                        var a = document.getElementById("11").innerHTML = "1";
+                        var a = document.getElementById("12").innerHTML = "2";
+                        var a = document.getElementById("13").innerHTML = "3";
                         $(this).closest("ul.admin").find("li").find("a.noktailk").addClass("hidden");
                         $(this).closest("ul.admin").find("li.sayfalandirma").last().addClass("active");
-
                     }
-
                     $(this).closest("ul.admin").find("li.sayfalandirma").last().addClass("active");
                     $(this).closest("ul.admin").find("li.sayfalandirma").last().before().removeClass("active");
 
@@ -450,14 +463,14 @@
                     if (sayi == yorumSayisi) {
                         $(this).closest("ul.admin").find("li").find("a.noktason").addClass("hidden");
                     } else if (sayi + 3 <= yorumSayisi) {
-                        var a = document.getElementById("1").innerHTML = (sayi + 1).toString();
-                        var a = document.getElementById("2").innerHTML = (sayi + 2).toString();
-                        var a = document.getElementById("3").innerHTML = (sayi + 3).toString();
+                        var a = document.getElementById("11").innerHTML = (sayi + 1).toString();
+                        var a = document.getElementById("12").innerHTML = (sayi + 2).toString();
+                        var a = document.getElementById("13").innerHTML = (sayi + 3).toString();
 
                     } else {
-                        var a = document.getElementById("1").innerHTML = (yorumSayisi - 2).toString();
-                        var a = document.getElementById("2").innerHTML = (yorumSayisi - 1).toString();
-                        var a = document.getElementById("3").innerHTML = (yorumSayisi).toString();
+                        var a = document.getElementById("11").innerHTML = (yorumSayisi - 2).toString();
+                        var a = document.getElementById("12").innerHTML = (yorumSayisi - 1).toString();
+                        var a = document.getElementById("13").innerHTML = (yorumSayisi).toString();
                     }
                     if (sayi == 3) {
                         $(this).closest("ul.admin").find("li").find("a.noktailk").removeClass("hidden");
@@ -465,11 +478,7 @@
                     if (sayi + 3 >= yorumSayisi) {
                         $(this).closest("ul.admin").find("li").find("a.noktason").addClass("hidden");
                     }
-
                 }
-
-
-
             } else if (pageNumber.trim() == "Önceki") {
                 if (sayi != 3) {
 
@@ -480,18 +489,18 @@
                     if (sayi == yorumSayisi) {
                         if ($(this).closest("ul.admin").find("li.sayfalandirma").first().next().hasClass("active")) {
                             $(this).closest("ul.admin").find("li").find("a.noktason").removeClass("hidden");
-                            var a = document.getElementById("1").innerHTML = (sayi - 3).toString();
-                            var a = document.getElementById("2").innerHTML = (sayi - 2).toString();
-                            var a = document.getElementById("3").innerHTML = (sayi - 1).toString();
+                            var a = document.getElementById("11").innerHTML = (sayi - 3).toString();
+                            var a = document.getElementById("12").innerHTML = (sayi - 2).toString();
+                            var a = document.getElementById("13").innerHTML = (sayi - 1).toString();
                         }
                         if ($(this).closest("ul.admin").find("li.sayfalandirma").last().hasClass("active")) {
                             $(this).closest("ul.admin").find("li.sayfalandirma").last().removeClass("active");
                             $(this).closest("ul.admin").find("li.sayfalandirma").first().next().addClass("active");
                         }
                     } else {
-                        var a = document.getElementById("1").innerHTML = (sayi - 3).toString();
-                        var a = document.getElementById("2").innerHTML = (sayi - 2).toString();
-                        var a = document.getElementById("3").innerHTML = (sayi - 1).toString();
+                        var a = document.getElementById("11").innerHTML = (sayi - 3).toString();
+                        var a = document.getElementById("12").innerHTML = (sayi - 2).toString();
+                        var a = document.getElementById("13").innerHTML = (sayi - 1).toString();
                     }
                 } else if (sayi == 3) {
                     if ($(this).closest("ul.admin").find("li.sayfalandirma").first().next().hasClass("active")) {
@@ -502,13 +511,7 @@
                         $(this).closest("ul.admin").find("li.sayfalandirma").last().removeClass("active");
                     }
                 }
-
-
-
-
-
             }
-
 
             var pageNo = Number($(this).closest("ul.admin").find("li.active").text());
 
@@ -543,10 +546,6 @@
             } else {
                 console.log("Boş seçildi!");
             }
-
-
-
-
         });
     });
 </script>
@@ -692,10 +691,9 @@
                         for (int i = 1; i <= pageNumber; i++)
                         {
                             <li class="sayfalandirma"><a class="sayfalandirma" id=@i href="#">@i</a></li>
-                            if (i % 3 == 0)
+                            if (i % 3 == 0 && pageNumber > 3)
                             {
                                 <li class="noktason beforenext"><a id=@i class="noktason" href="#">...</a></li>
-
                                 break;
                             }
                         }
@@ -813,8 +811,8 @@
                             }
                             else
                             {
-                                <p style="text-align:center;font-size:xx-large; height:500px; padding-top:200px" >Güncel Duyuru Bulunmamaktadır.</p>
-                            
+                                <p style="text-align:center;font-size:xx-large; height:500px; padding-top:200px">Güncel Duyuru Bulunmamaktadır.</p>
+
 
                             }
                         }
@@ -857,12 +855,12 @@
 
                         for (int i = 1; i <= pageNumber; i++)
                         {
-                            <li class="sayfalandirma"><a class="sayfalandirma" id=@i href="#">@i</a></li>
+                            <li class="sayfalandirma"><a class="sayfalandirma" id=@(i+10) href="#">@i</a></li>
                             if (i % 3 == 0)
                             {
                                 if (Model.adminMutfakYorum.Count() / 5 > 3)
                                 {
-                                    <li class="noktason beforenext"><a id=@i class="noktason" href="#">...</a></li>
+                                    <li class="noktason beforenext"><a id=@(i+10) class="noktason" href="#">...</a></li>
                                 }
 
                                 break;

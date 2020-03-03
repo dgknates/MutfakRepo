@@ -25,22 +25,21 @@ namespace MvcLogin.Models
 
         public List<DuyuruBilgi> GetLastDuyuruBilgiToList(int duyuruId)
         {
-            if (DuyuruBilgi.Where(x => x.DuyuruId == duyuruId).ToList().Count() == 0)
+            List<DuyuruBilgi> duyuruBilgiList = DuyuruBilgi.Where(x => x.DuyuruId == duyuruId).ToList();
+            if (duyuruBilgiList.Count() == 0)
             {
-                Duyuru.OrderByDescending(x => x.ObjectId).FirstOrDefault(x => x.Deleted == false).Deleted = true;
+                Duyuru duyuru = Duyuru.OrderByDescending(x => x.ObjectId).FirstOrDefault(x => x.Deleted == false);
+                duyuru.Deleted = true;
                 SaveChanges();
-                return GetLastDuyuruBilgiToList(Duyuru.OrderByDescending(x => x.ObjectId).FirstOrDefault(x => x.Deleted == false).ObjectId);
+                return GetLastDuyuruBilgiToList(duyuru.ObjectId);
             }
             return DuyuruBilgi.Where(x => x.DuyuruId == duyuruId && x.Deleted == false).ToList();
         }
-
-
         public bool UpdateDuyuruBilgi(int urunId, int duyuruId, int? stokMiktariYeni)
         {
             DuyuruBilgi duyuruBilgi = DuyuruBilgi.Where(x => x.UrunId == urunId && x.DuyuruId == duyuruId && x.Deleted == false).FirstOrDefault();
             duyuruBilgi.Adet = stokMiktariYeni;
             SaveChanges();
-
             return true;
         }
 

@@ -10,7 +10,7 @@ namespace MvcLogin.Models
     }
     public partial class db_StokKontrolEntities
     {
-        public Duyuru AddAnnouncement(int kisiId, DateTime startDate, DateTime endDate)
+        public Duyuru AddAnnouncement(int kisiId, DateTime? startDate, DateTime? endDate)
         {
             Duyuru duyuru = new Duyuru
             {
@@ -26,9 +26,10 @@ namespace MvcLogin.Models
 
         public int FindLastAnnouncement()
         {
-            if (Duyuru.OrderByDescending(x => x.ObjectId).FirstOrDefault(x => x.Deleted == false) !=null)
+            Duyuru duyuru = Duyuru.OrderByDescending(x => x.ObjectId).FirstOrDefault(x => x.Deleted == false);
+            if (duyuru != null)
             {
-                return Duyuru.OrderByDescending(x => x.ObjectId).FirstOrDefault(x => x.Deleted == false).ObjectId;
+                return duyuru.ObjectId;
             }
             else
             {
@@ -36,8 +37,42 @@ namespace MvcLogin.Models
             }
         }
 
+        public Duyuru GetLastAnnouncement()
+        {
+            Duyuru lastAnnouncement = Duyuru.OrderByDescending(x => x.ObjectId).FirstOrDefault(x => x.Deleted == false);
+            if (lastAnnouncement != null && lastAnnouncement != default(Duyuru))
+            {
+                return lastAnnouncement;
+            }
+            else
+            {
+                return default(Duyuru);
+            }
+        }
 
-       
+        public bool UpdateDuyuruStartDate(int duyuruId, DateTime? startDate)
+        {
+            List<DuyuruBilgi> duyuruBilgiList = GetLastDuyuruBilgiToList(duyuruId);
+            foreach (var item in duyuruBilgiList)
+            {
+                item.Duyuru.StartDate = startDate;
+            }
+            SaveChanges();
+            return true;
+        }
+
+        public bool UpdateDuyuruEndDate(int duyuruId, DateTime? endDate)
+        {
+            List<DuyuruBilgi> duyuruBilgiList = GetLastDuyuruBilgiToList(duyuruId);
+            foreach (var item in duyuruBilgiList)
+            {
+                item.Duyuru.EndDate = endDate;
+            }
+            SaveChanges();
+            return true;
+        }
+
+
 
     }
 }

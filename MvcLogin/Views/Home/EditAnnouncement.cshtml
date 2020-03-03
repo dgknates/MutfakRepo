@@ -1,4 +1,4 @@
-﻿@model List<MvcLogin.Models.UrunModel>
+﻿@model MvcLogin.Models.AnnouncementModel
 
 @{
     ViewBag.Title = "Products";
@@ -143,7 +143,7 @@
                 </div>
 
                 <div class="col-md-3">
-                    @Html.EditorFor(model => model[0].StartDate, new { htmlAttributes = new { @class = "form-control  datepicker" } })
+                    @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @class = "form-control  datepicker" } })
 
                 </div>
                 <div class="col-md-1" style="margin-right:-60px;">
@@ -151,7 +151,7 @@
                 </div>
 
                 <div class="col-md-3">
-                    @Html.EditorFor(model => model[0].EndDate, new { htmlAttributes = new { @class = "form-control  datepicker" } })
+                    @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @class = "form-control  datepicker" } })
                 </div>
             </div>
 
@@ -177,28 +177,28 @@
 
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model[0].UrunAdi)
+                            @Html.DisplayNameFor(model => model.urunList[0].UrunAdi)
                         </th>
 
                         <th>
-                            @Html.DisplayNameFor(model => model[0].StokMiktari)
+                            @Html.DisplayNameFor(model => model.urunList[0].StokMiktari)
                         </th>
 
                         <th>
-                            @Html.DisplayNameFor(model => model[0].DolapAdi)
+                            @Html.DisplayNameFor(model => model.urunList[0].DolapAdi)
                         </th>
                         <th></th>
                     </tr>
                 </thead>
                 @{ int index = 0; }
-                @foreach (var item in Model)
+                @foreach (var item in Model.urunList)
                 {
                     <tbody>
 
                         <tr>
                             <td>
-                                @Html.HiddenFor(modelItem => Model[index].ObjectId)
-                                @Html.CheckBoxFor(modelItem => Model[index].Selected, false)
+                                @Html.HiddenFor(modelItem => Model.urunList[index].ObjectId)
+                                @Html.CheckBoxFor(modelItem => Model.urunList[index].Selected, false)
                             </td>
 
                             <td>
@@ -215,7 +215,7 @@
 
 
                             <td>
-                                @Html.TextBoxFor(modelItem => Model[index].UretimMiktari, new { @class = "form-control copyTo" })
+                                @Html.TextBoxFor(modelItem => Model.urunList[index].UretimMiktari, new { @class = "form-control copyTo" })
                             </td>
 
 
