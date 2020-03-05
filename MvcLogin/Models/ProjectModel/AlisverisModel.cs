@@ -18,7 +18,6 @@ namespace MvcLogin.Models
             MarketAdi = alisveris.MarketAdi;
             AlisverisTarihi = alisveris.AlisverisTarihi;
             FisTutari = alisveris.FisTutari;
-            
         }
         
         public int ObjectId { get; set; }

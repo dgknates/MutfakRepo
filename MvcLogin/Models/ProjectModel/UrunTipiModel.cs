@@ -7,5 +7,6 @@ namespace MvcLogin.Models.ProjectModel
 {
     public class UrunTipiModel
     {
+
     }
 }

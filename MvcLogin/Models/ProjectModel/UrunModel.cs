@@ -74,11 +74,6 @@ namespace MvcLogin.Models
                 UrunTipiString = "Belirtilmedi.";
             }
         }
-
-
-
-
-
         public int ObjectId { get; set; }
         public string UrunAdi { get; set; }
         public int? StokMiktari { get; set; }

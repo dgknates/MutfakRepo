@@ -18,14 +18,12 @@ namespace MvcLogin.Models
 
         public Urun AddProduct(string urunAdi, int? stokMiktari, int dolapId, int urunTipi)
         {
-
             Urun urun = new Urun
             {
                 UrunAdi = urunAdi,
                 StokMiktari = stokMiktari,
                 DolapId = dolapId,
                 UrunTipId = urunTipi
-
             };
             Urun.Add(urun);
             SaveChanges();

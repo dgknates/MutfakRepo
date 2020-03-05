@@ -5,7 +5,7 @@
 @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "MyForm2" }))
 {
     <p>Merhaba,</p>
-    <p>@Model.StartDate.ToShortDateString() ve @Model.EndDate.ToShortDateString() tarihleri arasında</p>
+    <p>@Model.StartDate.Value.ToShortDateString() ve @Model.EndDate.Value.ToShortDateString() tarihleri arasında</p>
     <p>Haftalık kullanım limitlerimiz aşağıdaki gibidir;</p>
 
     foreach (var item in Model.urunList)

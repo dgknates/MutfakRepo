@@ -4,8 +4,9 @@
     Layout = "~/Views/Shared/_Layout2.cshtml";
 }
 
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
 
-<script src="https://cdn.jsdelivr.net/jquery/1.12.4/jquery.min.js"></script>
+@*<script src="https://cdn.jsdelivr.net/jquery/1.12.4/jquery.min.js"></script>*@
 <script src="https://cdn.jsdelivr.net/jquery.validation/1.15.1/jquery.validate.min.js"></script>
 
 
@@ -74,7 +75,6 @@
     });
 </script>
 
-
 <script type="text/javascript">
     $(document).ready(function () {
         $('.kullanici li.beforenext').click(function () {
@@ -92,6 +92,7 @@
                         $(this).closest("ul.kullanici").find("li").find("a.noktailk").removeClass("hidden");
                     }
                     if ($(this).closest("ul.kullanici").find("li.sayfalandirma").first().next().hasClass("active")) {
+
                         if (yorumSayisi <= 3) {
                             if ($(this).closest("ul.kullanici").find("li.sayfalandirma").first().hasClass("active")) {
                                 $(this).closest("ul.kullanici").find("li.sayfalandirma").first().next().addClass("active");
@@ -109,6 +110,7 @@
                             }
                         }
                     } else if ($(this).closest("ul.kullanici").find("li.sayfalandirma").last().hasClass("active")) {
+
                         if (yorumSayisi < 3) {
                             document.getElementById("1").innerHTML = (sayi - 1).toString();
                             document.getElementById("2").innerHTML = (sayi).toString();
@@ -307,8 +309,6 @@
         });
     });
 </script>
-
-
 
 <script type="text/javascript">
     $(document).ready(function () {
@@ -603,6 +603,7 @@
         });
     });
 </script>
+
 <style>
 
     #KullaniciYorumEkle-error, #AdminYorumEkle-error {
@@ -653,6 +654,14 @@
     .admin > li > a:hover {
         background-color: lightblue;
     }
+
+    .dataTables_info{
+        float:none !important;
+    }
+    .dataTables_paginate{
+        float:none !important;
+        text-align:center !important;
+    }
 </style>
 
 
@@ -668,61 +677,21 @@
 
         @using (Html.BeginForm())
         {
+            <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+            <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+            <script>
+                $(document).ready(function () {
+                    $('#myTable').DataTable({
+                        searching: false,
+                        ordering: false,
+                       "lengthMenu": [5,10 ]
+                    });
+                });
+            </script>
+
             <div id="divKullaniciYorum" class="panel-group ">
-
                 @Html.Partial("_PartialHomepageKullaniciYorum", Model)
-
             </div>
-
-            <nav aria-label="Page navigation" style="text-align:center;">
-                <ul class="pagination kullanici">
-                    <li class="beforenext">
-                        <a href="#" aria-label="Previous">
-                            <span aria-hidden="true">Önceki</span>
-                        </a>
-                    </li>
-                    @{
-                        int pageNumber = Model.kullaniciYorum.Count() / 5;
-                        int y = Model.kullaniciYorum.Count() % 5 == 0 ? 0 : pageNumber++;
-
-                        <li class="noktailk beforenext"><a class="noktailk hidden" id=noktanokta href="#">...</a></li>
-
-
-                        for (int i = 1; i <= pageNumber; i++)
-                        {
-                            <li class="sayfalandirma"><a class="sayfalandirma" id=@i href="#">@i</a></li>
-                            if (i % 3 == 0 && pageNumber > 3)
-                            {
-                                <li class="noktason beforenext"><a id=@i class="noktason" href="#">...</a></li>
-                                break;
-                            }
-                        }
-
-
-                    }
-                    <sayi class="hidden">
-                        @{
-                            var a = 0;
-                            if (Model.kullaniciYorum.Count() % 5 == 0)
-                            {
-                                a = (@Model.kullaniciYorum.Count() / 5);
-                            }
-                            else
-                            {
-                                a = ((@Model.kullaniciYorum.Count() / 5) + 1);
-                            }
-                            @a;
-                        }
-
-                    </sayi>
-
-                    <li class="beforenext">
-                        <a href="#" aria-label="Next">
-                            <span aria-hidden="true">Sonraki</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
         }
 
 
@@ -834,64 +803,21 @@
         </h4>
         @using (Html.BeginForm())
         {
+
+            <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+            <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+            <script>
+                $(document).ready(function () {
+                    $('#myTableAdmin').DataTable({
+                        searching: false,
+                        ordering: false,
+                        "lengthMenu": [5, 10]
+                    });
+                });
+            </script>
             <div id="divAdminYorum" class="panel-group">
                 @Html.Partial("_PartialHomepageAdminMutfakYorum", Model)
             </div>
-
-            <nav aria-label="Page navigation" style="text-align:center;">
-
-                <ul class="pagination admin">
-                    <li class="beforenext">
-                        <a href="#" aria-label="Previous">
-                            <span aria-hidden="true">Önceki</span>
-                        </a>
-                    </li>
-                    @{
-                        int pageNumber = Model.adminMutfakYorum.Count() / 5;
-                        int y = Model.adminMutfakYorum.Count() % 5 == 0 ? 0 : pageNumber++;
-
-                        <li class="noktailk beforenext"><a class="noktailk hidden" id=noktanokta href="#">...</a></li>
-
-
-                        for (int i = 1; i <= pageNumber; i++)
-                        {
-                            <li class="sayfalandirma"><a class="sayfalandirma" id=@(i+10) href="#">@i</a></li>
-                            if (i % 3 == 0)
-                            {
-                                if (Model.adminMutfakYorum.Count() / 5 > 3)
-                                {
-                                    <li class="noktason beforenext"><a id=@(i+10) class="noktason" href="#">...</a></li>
-                                }
-
-                                break;
-                            }
-                        }
-
-
-                    }
-                    <sayiadmin class="hidden">
-                        @{
-                            var a = 0;
-                            if (Model.adminMutfakYorum.Count() % 5 == 0)
-                            {
-                                a = (@Model.adminMutfakYorum.Count() / 5);
-                            }
-                            else
-                            {
-                                a = ((@Model.adminMutfakYorum.Count() / 5) + 1);
-                            }
-                            @a;
-                        }
-
-                    </sayiadmin>
-
-                    <li class="beforenext">
-                        <a href="#" aria-label="Next">
-                            <span aria-hidden="true">Sonraki</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
         }
 
         <div class="modal fade" id="AddAdminMutfakYorum" tabindex="-1" role="dialog" aria-labelledby="">

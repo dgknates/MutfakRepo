@@ -37,11 +37,9 @@ namespace MvcLogin.Controllers
                     {
                         UrunTipiString.Add("Birim");
                     }
-
                 }
             }
             HomepageModel model = new HomepageModel(kullaniciYorum, duyuruBilgi, adminMutfakYorum, UrunTipiString);
-
             return View(model);
         }
         [System.Web.Mvc.HttpPost]
@@ -370,14 +368,6 @@ namespace MvcLogin.Controllers
                                     StokKontrolEntitiesProvider.UpdateStokMiktari(item.ObjectId, guncellenecekMiktar);
                                     StokKontrolEntitiesProvider.UpdateDuyuruBilgi(item.ObjectId, lastAnnouncement, item.UretimMiktari);
                                 }
-                                else
-                                {
-
-                                }
-                            }
-                            else
-                            {
-
                             }
                         }
                         else
@@ -496,7 +486,6 @@ namespace MvcLogin.Controllers
                 {
                     model2.GuncelBorc.Add(StokKontrolEntitiesProvider.GetToplamBorcByObjectId(model2.Kullanici[index].ObjectId));
                 }
-
                 return View(model2);
             }
             return RedirectToAction("Index", "Login");
@@ -513,7 +502,6 @@ namespace MvcLogin.Controllers
                 {
                     model.Ay.Add(ay);
                 }
-
                 int index = 0;
                 foreach (Kullanıcılar kullanıcı in kullanıcılar)
                 {
@@ -548,7 +536,6 @@ namespace MvcLogin.Controllers
                     index++;
                 }
                 return PartialView("_PartialCurrentDebts", model);
-
             }
         }
 
@@ -588,17 +575,11 @@ namespace MvcLogin.Controllers
                 int index = 0;
                 foreach (Kullanıcılar kullanıcı in kullanıcılar)
                 {
-                    if (StokKontrolEntitiesProvider.GetToplamBorcByDateAndObjectId2(SecilenAy, kullanıcı.ObjectId) == 0)
-                    {
-
-                    }
-                    else
+                    if (StokKontrolEntitiesProvider.GetToplamBorcByDateAndObjectId2(SecilenAy, kullanıcı.ObjectId) != 0)
                     {
                         model.GuncelBorc.Add(StokKontrolEntitiesProvider.GetToplamBorcByDateAndObjectId2(SecilenAy, kullanıcı.ObjectId));
                         model.Kullanici.Add(kullanıcı);
-
                     }
-
                     index++;
                 }
                 // model nesnesi oluştur sonra içini secilen aya göre doldur sonra modeli yolla
@@ -608,14 +589,8 @@ namespace MvcLogin.Controllers
             else
             {
                 return RedirectToAction("PersonalDebst", "Home");
-
             }
         }
-
-
-
-
-
         [System.Web.Mvc.HttpPost]
         public ActionResult PersonalDebst(PersonalDebtsModel gelenler)
         {
@@ -658,18 +633,13 @@ namespace MvcLogin.Controllers
                             }
                             else
                             {
-
                                 StokKontrolEntitiesProvider.Borclandirma.Add(new Borclandirma
                                 {
                                     KisiId = model2.Kullanici[i].ObjectId,
                                     BorcMiktari = gelenler.Borclandirma[j],
                                     BorlandirmaTarihiId = gelenler.SecilenAy
                                 });
-
                                 StokKontrolEntitiesProvider.SaveChanges();
-
-
-
                             }
                         }
                     }
@@ -683,23 +653,15 @@ namespace MvcLogin.Controllers
                 return View(model2);
             }
             return RedirectToAction("Index", "Login");
-
         }
 
         public ActionResult ShoppingList()
         {
             if (Session["grup"].Equals(3))
             {
-
                 List<Alisveris> alisveris = StokKontrolEntitiesProvider.GetAllAlisverisList();
-
-
-
-
-
                 return View(alisveris);
             }
-
             return View();
         }
 
@@ -708,7 +670,6 @@ namespace MvcLogin.Controllers
         {
             return View();
         }
-
         //string kullaniciad ve sifre bizim formumuzda bulunan inputların namedir.
         [System.Web.Mvc.HttpPost]
         public ActionResult AddProduct(string urunAdi, int? stokMiktari, FormCollection urunTipi, FormCollection formCollection)
@@ -718,16 +679,11 @@ namespace MvcLogin.Controllers
             StokKontrolEntitiesProvider.AddProduct(urunAdi, stokMiktari, Convert.ToInt32(a), Convert.ToInt32(b));
             return RedirectToAction("Products", "Home");
         }
-
-
         public ActionResult Logout()
         {
             Session["login"] = null;
             return RedirectToAction("Index", "Login");
         }
-
-
-
     }
 }
 

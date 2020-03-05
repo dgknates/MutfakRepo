@@ -26,7 +26,6 @@ namespace MvcLogin.Models
             {
                 kullaniciYorum.Add(item);
             }
-
             if (_duyuruBilgi != null)
             {
                 foreach (var item in _duyuruBilgi)
@@ -38,7 +37,6 @@ namespace MvcLogin.Models
             {
                 adminMutfakYorum.Add(item);
             }
-
             if (_urunTipiString != null)
             {
                 foreach (var item in _urunTipiString)
@@ -46,19 +44,12 @@ namespace MvcLogin.Models
                     UrunTipiString.Add(item);
                 }
             }
-
-            
-
         }
-
-
-
         public List<KullaniciYorum> kullaniciYorum { get; set; }
         public List<DuyuruBilgi> duyuruBilgi { get; set; }
         public List<AdminMutfakYorum> adminMutfakYorum { get; set; }
         public List<string> UrunTipiString { get; set; }
         public string KullaniciYorumEkle { get; set; }
         public string AdminYorumEkle { get; set; }
-
     }
 }

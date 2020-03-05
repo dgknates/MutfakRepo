@@ -18,19 +18,8 @@ namespace MvcLogin.Models
         }
         public PersonalDebtsModel(Kullanıcılar kullanıcılar)
         {
-            //Kullanici.ObjectId = kullanıcılar.ObjectId;
-            //Kullanici.Isim = kullanıcılar.Isim;
-            //Kullanici.Soyisim = kullanıcılar.Soyisim;
-            //Kullanici.GuncelBorc = kullanıcılar.GuncelBorc;
-            //Borclandirma = 0;
-            //Selected = false;
-            //AllBorclandirma = 0;
-            //Kullanici.GrupId = kullanıcılar.GrupId;
             Kullanici.Add(kullanıcılar);
         }
-
-      
-
         public int personalDebts { get; set; }
         public List<Kullanıcılar> Kullanici { get; set; }
         public List<Aylar> Ay { get; set; }

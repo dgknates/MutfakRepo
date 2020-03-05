@@ -11,7 +11,6 @@ namespace MvcLogin.Models
         {
 
         }
-
         public KullanıcılarModel(Kullanıcılar kullanıcılar)
         {
             ObjectId = kullanıcılar.ObjectId;
@@ -22,11 +21,7 @@ namespace MvcLogin.Models
             Selected = false;
             AllBorclandirma = 0;
             GrupId = kullanıcılar.GrupId;
-           
         }
-
-      
-
         public int ObjectId { get; set; }
         public string Isim { get; set; }
         public string Soyisim { get; set; }
@@ -40,14 +35,5 @@ namespace MvcLogin.Models
         //public string[] Aylar { get; set; }
         public List<Aylar> Aylar2 { get ; set; }
         public int? GuncelBorc2 { get; set; }
-
-
-        
-
     }
-
-    
-
-
-
 }
