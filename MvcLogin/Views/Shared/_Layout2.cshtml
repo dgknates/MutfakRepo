@@ -119,8 +119,8 @@
                 @*@Html.ActionLink(Session["username"].ToString() + "/Logout", "Logout", "Home", new { area = "" }, new { @class = " fas fa-sign-out-alt navbar-brand asdf" })*@
 
                 <a class="navbar-brand asdf" href="/Home/Logout" style="font-family: 'Font Awesome 5 Free';font-weight: bolder;font-size: 20px;">
-                    admin <i class=" fas fa-sign-out-alt"></i>
-                </a>
+                    @Session["username"].ToString() <i class=" fas fa-sign-out-alt"></i>
+                </a>    
 
             </span>
 
@@ -136,11 +136,16 @@
 
                     <li><a href="@Url.Action("Homepage", "Home")" class="navbar-brand"><i class="fas fa-home navbar-brand"> Anasayfa</i></a></li>
                     <li><a href="@Url.Action("CurrentDebts", "Home")" class="navbar-brand"><i class="fas fa-lira-sign navbar-brand"> Güncel Borçlar</i></a></li>
-                    <li class="active"><a href="@Url.Action("Products", "Home")" class="navbar-brand "><i class="fas fa-box-open navbar-brand"> Stok Durumu</i></a></li>
-                    <li><a href="@Url.Action("Shopping", "Home")" class="navbar-brand" style="padding-right:55px;"><i class="fas fa-shopping-cart navbar-brand"> Alışveriş</i></a></li>
-                    <li><a href="@Url.Action("PersonalDebst", "Home")" class="navbar-brand"><i class="fas fa-wallet navbar-brand"> Borçlandırma</i></a></li>
                     <li><a href="@Url.Action("ShoppingList", "Home")" class="navbar-brand"><i class="fas fa-clipboard-list navbar-brand"> Alışveriş Listesi</i></a></li>
-                    <li><a href="@Url.Action("Announcement", "Home")" class="navbar-brand"><i class="fas fa-bullhorn navbar-brand"> Duyuru Ekle</i></a></li>
+                    @{
+                        if (Session["grup"].Equals(3))
+                        {
+                            <li><a href="@Url.Action("PersonalDebst", "Home")" class="navbar-brand"><i class="fas fa-wallet navbar-brand"> Borçlandırma</i></a></li>
+                            <li><a href="@Url.Action("Shopping", "Home")" class="navbar-brand" style="padding-right:55px;"><i class="fas fa-shopping-cart navbar-brand"> Alışveriş</i></a></li>
+                            <li class="active"><a href="@Url.Action("Products", "Home")" class="navbar-brand "><i class="fas fa-box-open navbar-brand"> Stok Durumu</i></a></li>
+                            <li><a href="@Url.Action("Announcement", "Home")" class="navbar-brand"><i class="fas fa-bullhorn navbar-brand"> Duyuru Ekle</i></a></li>
+                        }
+                    }
 
                 </ul>
             </div>

@@ -657,15 +657,9 @@ namespace MvcLogin.Controllers
 
         public ActionResult ShoppingList()
         {
-            if (Session["grup"].Equals(3))
-            {
                 List<Alisveris> alisveris = StokKontrolEntitiesProvider.GetAllAlisverisList();
                 return View(alisveris);
-            }
-            return View();
         }
-
-
         public ActionResult AddProduct()
         {
             return View();

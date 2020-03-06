@@ -32,7 +32,7 @@ namespace MvcLogin.Controllers
                 Session["UserObjectId"] = kullanıcı.ObjectId;
                 Session["username"] = kullanıcı.KullanıcıAdı;
                 Session["grup"] = kullanıcı.GrupId;
-                return RedirectToAction("CurrentDebts","Home");
+                return RedirectToAction("Homepage","Home");
             }
         }
     }
